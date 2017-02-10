@@ -5,6 +5,7 @@ package ef1.unit;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -35,7 +36,7 @@ public class TestEchoApplication {
 			fail("OutputStream null passed to echoApplication but EchoException not thrown");
 		}
 		catch(EchoException e){
-			String expected = "OutputStream not provided";
+			String expected = "echo: OutputStream not provided";
 			String actual = e.getMessage();
 			assertEquals(expected, actual);
 		}
@@ -52,7 +53,7 @@ public class TestEchoApplication {
 			fail("Arguments null passed to echoApplication but EchoException not thrown");
 		}
 		catch(EchoException e){
-			String expected = "Null arguments";
+			String expected = "echo: Null arguments";
 			String actual = e.getMessage();
 			assertEquals(expected, actual);
 		}
@@ -62,7 +63,7 @@ public class TestEchoApplication {
 	@Test
 	public void testArgumentIsEmpty() {
 		InputStream inputStream = System.in;
-		OutputStream outputStream = System.out;
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		String[] arguments = {};
 		
 		try {
@@ -82,7 +83,7 @@ public class TestEchoApplication {
 	@Test
 	public void testArgumentIsWords() {
 		InputStream inputStream = System.in;
-		OutputStream outputStream = System.out;
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		String[] arguments = {"Hello", "World"};
 		
 		try {
