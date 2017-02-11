@@ -17,13 +17,12 @@ public class PwdApplication implements Application{
 		String currDir = "";
 		
 		if (args.length == 0) {
-			currDir = Environment.currentDirectory + System.lineSeparator();
-			
+			currDir = Environment.currentDirectory + "\n"; //System.lineSeparator();
+		
 		    try {
-		    	
-                stdout.write(currDir.getBytes());
+		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
-                e.printStackTrace();    
+               e.printStackTrace();    
             }
 		} else {
 			throw new PwdException("Invalid Arguments");
