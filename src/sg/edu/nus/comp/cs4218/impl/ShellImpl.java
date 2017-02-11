@@ -10,9 +10,12 @@ import sg.edu.nus.comp.cs4218.Shell;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.app.CatApplication;
+import sg.edu.nus.comp.cs4218.impl.app.CdApplication;
 import sg.edu.nus.comp.cs4218.impl.app.EchoApplication;
 import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
+import sg.edu.nus.comp.cs4218.impl.app.PwdApplication;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
+import sg.edu.nus.comp.cs4218.impl.cmd.CallCommand;
 
 /**
  * A Shell is a command interpreter and forms the backbone of the entire
@@ -115,6 +118,7 @@ public class ShellImpl implements Shell {
 	public static void runApp(String app, String[] argsArray,
 			InputStream inputStream, OutputStream outputStream)
 			throws AbstractApplicationException, ShellException {
+		//System.out.println(app);
 		Application absApp = null;
 		if (("cat").equals(app)) {// cat [FILE]...
 			absApp = new CatApplication();
@@ -124,6 +128,10 @@ public class ShellImpl implements Shell {
 			absApp = new HeadApplication();
 		} else if (("tail").equals(app)) {// tail [OPTIONS] [FILE]
 			absApp = new TailApplication();
+		} else if (("pwd").equals(app)) {// tail [OPTIONS] [FILE]
+			absApp = new PwdApplication();
+		} else if (("cd").equals(app)) {// tail [OPTIONS] [FILE]
+			absApp = new CdApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
@@ -286,7 +294,8 @@ public class ShellImpl implements Shell {
 				if (("").equals(readLine)) {
 					continue;
 				}
-				//shell.parseAndEvaluate(readLine, System.out);
+				shell.parseAndEvaluate(readLine, System.out);
+			
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -297,7 +306,9 @@ public class ShellImpl implements Shell {
 	public void parseAndEvaluate(String cmdline, OutputStream stdout)
 			throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
-		
+		CallCommand call = new CallCommand(cmdline);
+		call.parse();
+		call.evaluate(null, stdout);
 	}
 
 	@Override

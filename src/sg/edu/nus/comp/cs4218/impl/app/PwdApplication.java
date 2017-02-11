@@ -16,9 +16,11 @@ public class PwdApplication implements Application{
 			throws PwdException {
 		String currDir = "";
 		
-		if (args.length == 0) {
-			currDir = Environment.currentDirectory + "\n"; //System.lineSeparator();
+		System.out.println(args.length);
 		
+		if (args.length == 0) {
+			currDir = Environment.currentDirectory + "\n";
+			
 		    try {
 		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
