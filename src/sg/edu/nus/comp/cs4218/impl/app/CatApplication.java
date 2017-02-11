@@ -45,15 +45,19 @@ public class CatApplication implements Application {
 	public void run(String[] args, InputStream stdin, OutputStream stdout)
 			throws CatException {
 
+		if(stdout == null)
+			throw new CatException("OutputStream not provided");
+		
 		if (args == null || args.length == 0) {
-			if (stdin == null || stdout == null) {
-				throw new CatException("Null Pointer Exception");
+			if (stdin == null) {
+				throw new CatException("InputStream not provided");
 			}
 			try {
 				int intCount;
 				while ((intCount = stdin.read()) != -1) {
 					stdout.write(intCount);
 				}
+				stdout.write("\n".getBytes());
 			} catch (Exception exIO) {
 				throw new CatException("Exception Caught");
 			}
@@ -77,17 +81,18 @@ public class CatApplication implements Application {
 
 				// file could be read. perform cat command
 				if (filePathArray.length != 0) {
-					for (int j = 0; j < filePathArray.length - 1; j++) {
+					for (int j = 0; j < filePathArray.length; j++) {
 						try {
 							byte[] byteFileArray = Files
 									.readAllBytes(filePathArray[j]);
 							stdout.write(byteFileArray);
+							stdout.write("\n".getBytes());
 						} catch (IOException e) {
 							throw new CatException(
 									"Could not write to output stream");
 						}
 					}
-
+					
 				}
 			}
 		}
@@ -102,6 +107,7 @@ public class CatApplication implements Application {
 	 * @throws CatException
 	 *             If the file is not readable
 	 */
+	
 	boolean checkIfFileIsReadable(Path filePath) throws CatException {
 		
 		if (Files.isDirectory(filePath)) {
