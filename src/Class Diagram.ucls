@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
+  <interface id="1" language="java" name="sg.edu.nus.comp.cs4218.Application" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/Application.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="236" x="1815" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" language="java" name="sg.edu.nus.comp.cs4218.Environment" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/Environment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="139" x="722" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="3" language="java" name="sg.edu.nus.comp.cs4218.Shell" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/Shell.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="302" x="1197" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="sg.edu.nus.comp.cs4218.Command" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/Command.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="224" x="901" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="5" language="java" name="sg.edu.nus.comp.cs4218.app.Grep" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Grep.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="211" x="1273" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="sg.edu.nus.comp.cs4218.app.Wc" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Wc.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="222" x="2111" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="sg.edu.nus.comp.cs4218.app.Sort" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Sort.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="333" width="251" x="1524" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="8" language="java" name="sg.edu.nus.comp.cs4218.app.Cal" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Cal.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="256" x="1815" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="sg.edu.nus.comp.cs4218.app.Sed" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Sed.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="288" x="2373" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="sg.edu.nus.comp.cs4218.app.Date" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/app/Date.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="172" x="1061" y="1107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="11" language="java" name="sg.edu.nus.comp.cs4218.exception.ShellException" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/exception/ShellException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="158" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="sg.edu.nus.comp.cs4218.exception.CatException" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/exception/CatException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="158" x="379" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="sg.edu.nus.comp.cs4218.exception.DirectoryNotFoundException" 
+    project="CS4218-Shell" file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/exception/DirectoryNotFoundException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="199" x="239" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="sg.edu.nus.comp.cs4218.exception.AbstractApplicationException" 
+    project="CS4218-Shell" file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/exception/AbstractApplicationException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="204" x="478" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="sg.edu.nus.comp.cs4218.exception.EchoException" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/exception/EchoException.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="158" x="577" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="sg.edu.nus.comp.cs4218.impl.ShellImpl" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/ShellImpl.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="639" width="302" x="1197" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="sg.edu.nus.comp.cs4218.impl.app.TailApplication" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/app/TailApplication.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="236" x="2367" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="sg.edu.nus.comp.cs4218.impl.app.HeadApplication" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/app/HeadApplication.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="236" x="1539" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="sg.edu.nus.comp.cs4218.impl.app.EchoApplication" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/app/EchoApplication.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="236" x="2091" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="sg.edu.nus.comp.cs4218.impl.app.CatApplication" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/app/CatApplication.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="236" x="1815" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="sg.edu.nus.comp.cs4218.impl.cmd.CallCommand" project="CS4218-Shell" 
+    file="/CS4218-Shell/src/sg/edu/nus/comp/cs4218/impl/cmd/CallCommand.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="441" width="256" x="901" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <realization id="23">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="24">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="25">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <realization id="32">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
+  <realization id="33">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
