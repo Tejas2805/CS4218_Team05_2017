@@ -42,9 +42,10 @@ public class CdApplication implements Application{
 			//System.out.println("------------------------------------------");
 			switch(dir){
 			case "-":
-				String s1 = "hellllooo\\\\dsfdsfdsf\\\\\\dsfds\\";
-				replaceContinuousBackSlash(s1);
+				String s1 = "/df";
+				isValidSyntax(s1);
 				break;
+			case "/":
 			case "\\":
 				rootDirectory();
 				break;
@@ -58,9 +59,6 @@ public class CdApplication implements Application{
 				//return to previous directory
 				previousDirectory();
 				break;	
-			case "/":
-				System.out.println("slash " + dir);
-				break;
 			
 			default:
 				changeDirectory(dir);
@@ -100,6 +98,10 @@ public class CdApplication implements Application{
 		String currDirPath = "";
 		int indexOfFirstBackSlash = currDir.indexOf('\\');
 		
+		isValidSyntax(dir);
+		//if(!isValidSyntax(dir)){
+		//	throw new CdException("The directory '" + dir + "' has invalid syntax.");
+		//}
 		
 		if(indexOfFirstBackSlash != -1){
 			currDirPath = currDir.substring(indexOfFirstBackSlash).toLowerCase();
@@ -171,6 +173,10 @@ public class CdApplication implements Application{
 		return dir;
 	}
 	
+	private String amendWrongSlash(String dir){
+		dir = dir.replace("/", "\\");
+		return dir;
+	}
 	
 	private String replaceContinuousBackSlash(String dir){
 		
@@ -189,6 +195,15 @@ public class CdApplication implements Application{
 		dir = removeLastBackSlash(dir);
 		//System.out.println(dir);
 		return dir;
+	}
+	
+	private void isValidSyntax(String dir) throws CdException{
+		
+		if(dir.matches(".*[/?<>:*|\"].*"))
+	    {
+			throw new CdException("The directory '" + dir + "' contains invalid syntax.");
+	    }
+		
 	}
 	
 	
