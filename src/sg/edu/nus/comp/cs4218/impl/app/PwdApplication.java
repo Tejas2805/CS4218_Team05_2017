@@ -1,6 +1,5 @@
 package sg.edu.nus.comp.cs4218.impl.app;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,11 +15,9 @@ public class PwdApplication implements Application{
 			throws PwdException {
 		String currDir = "";
 		
-		System.out.println(args.length);
-		
 		if (args.length == 0) {
-			currDir = Environment.currentDirectory + "\n";
-			
+			//Return the current working directory followed by a newline
+			currDir = Environment.currentDirectory + "\n\n";
 		    try {
 		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
