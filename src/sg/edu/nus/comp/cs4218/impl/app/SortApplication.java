@@ -71,7 +71,7 @@ public class SortApplication implements Sort{
 		}
 		
 		for(int i=0; i<fileList.size(); i++){
-			//System.out.println(fileList.get(i));
+			System.out.println(fileList.get(i));
 		}
 		
 	
@@ -225,6 +225,53 @@ public class SortApplication implements Sort{
 		return true;
 	}
 	
+	/**
+	 * Determine if the ASCII value belongs to a special char
+	 * @param asciiValue ASCII value of char
+	 * @return boolean true if the ASCII value belongs to a special char, false if not
+	 */
+	private boolean isSpecialChar(int asciiValue){
+		
+		if(asciiValue >= 48 && asciiValue <= 59){
+			return false;
+		}
+		if(asciiValue >= 65 && asciiValue <= 90){
+			return false;
+		}
+		if(asciiValue >= 97 && asciiValue <= 122){
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Determine the alphabetically sorted list and the numerically sorted list in special char, number, capital & small letter
+	 * @param alphaList alphabetically sorted list
+	 * @param numList numerically sorted list
+	 * @return ArrayList<String> the merged list sorted in special char, number, capital & small letter
+	 */
+	private ArrayList<String> mergeAlphaNumList(ArrayList<String> alphaList, ArrayList<String> numList){
+		ArrayList<String> mergeList = new ArrayList<String>();
+		int index = 0;
+		for(int i=0; i < alphaList.size(); i++){
+			String alphaLine = alphaList.get(i);
+			byte[] asciiNewLine = alphaLine.getBytes(StandardCharsets.US_ASCII); 
+			if(isSpecialChar(asciiNewLine[0]) == true){
+				mergeList.add(alphaLine);
+			}else{
+				mergeList.addAll(numList);
+				index = i;
+				break;
+			}
+		}
+		for(int j = index; j < alphaList.size(); j++){
+			String alphaLine = alphaList.get(j);
+			mergeList.add(alphaLine);
+		}
+		
+		return mergeList;
+	}
 	
 	/**
 	 * This methods sorts and return a list of sentences sorted in ascending ASCII value
@@ -345,9 +392,15 @@ public class SortApplication implements Sort{
 		}
 		
 		//System.out.println(fileList);
-		br.close();
+		
 		numFileList = sortNumList(numFileList);
 		
+		//System.out.println(fileList);
+		//System.out.println(numFileList);
+		
+		fileList = mergeAlphaNumList(fileList, numFileList);
+		//System.out.println(fileList);
+		br.close();
 		return fileList;
 	}
 	
@@ -357,12 +410,12 @@ public class SortApplication implements Sort{
 	 * @return ArrayList<String> list sorted in numerical order
 	 */
 	private ArrayList<String> sortNumList(ArrayList<String> numFileList){
-		ArrayList<String> sortedNumList = new ArrayList<String>();
+		//ArrayList<String> sortedNumList = new ArrayList<String>();
 		
 		String oldLine = "";
 		String newLine = "";
 	
-		System.out.println("Start num list: " +  numFileList);
+		//System.out.println("Start num list: " +  numFileList);
 		
 		int N= numFileList.size();
 		
@@ -438,9 +491,9 @@ public class SortApplication implements Sort{
 			
 		}
 		
-		System.out.println("Sorted num list: " +  numFileList);
+		//System.out.println("Sorted num list: " +  numFileList);
 		
-		return sortedNumList;
+		return numFileList;
 	}
 	
 	
