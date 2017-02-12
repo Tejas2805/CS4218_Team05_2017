@@ -286,6 +286,7 @@ public class ShellImpl implements Shell {
 		while (true) {
 			try {
 				currentDir = Environment.currentDirectory;
+				currentDir = currentDir.replace("\\", "/");
 				System.out.print(currentDir + ">");
 				readLine = bReader.readLine();
 				if (readLine == null) {

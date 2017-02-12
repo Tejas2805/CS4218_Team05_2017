@@ -15,38 +15,32 @@ import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.Environment;
 import sg.edu.nus.comp.cs4218.exception.CdException;
 
+
+
 public class CdApplication implements Application{
+	
+	private String OS;
 	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) 
 			throws CdException {
-		//System.out.println("Inside cd");
-		/*
-		System.out.println("Args: " + args.length);
 		
-		for(int i =-0; i<args.length; i++){
-			System.out.println("args: " + args[i]);
-		}
-		*/
+		String osName = System.getProperty("os.name");
+		OS = getOsType(osName);
+		
+		
+		
+		
+		
 		if(args.length == 0){
 			String root = System.getProperty("user.home"); //.dir
 			Environment.currentDirectory = root;
 		}
 		else{
-			
 			String dir = args[0];
-			//File file = new File("");
 			
-			//String currDir = Environment.currentDirectory;
-			//System.out.println("current dir : " + currDir);
-			//System.out.println("------------------------------------------");
 			switch(dir){
-			case "-":
-				String s1 = "/df";
-				isValidSyntax(s1);
-				break;
 			case "/":
-			case "\\":
 				rootDirectory();
 				break;
 			case "~":
@@ -59,12 +53,21 @@ public class CdApplication implements Application{
 				//return to previous directory
 				previousDirectory();
 				break;	
-			
 			default:
-				changeDirectory(dir);
+				validateDirectory(dir);
 				break;
 			}
 		
+		}
+	}
+	
+	private String getOsType(String os){
+		os = os.toLowerCase();
+		
+		if(os.contains("win")){
+			return "win";
+		}else{
+			return "mac";
 		}
 	}
 	
@@ -74,7 +77,7 @@ public class CdApplication implements Application{
 			previousDirectory();
 			dir = Environment.currentDirectory;
 		}
-		while(dir.contains("\\"));		
+		while(dir.contains("/"));		
 	}
 	
 	private void homeDirectory(){
@@ -83,68 +86,67 @@ public class CdApplication implements Application{
 	}
 	
 	private void previousDirectory(){
-		String currDir = Environment.currentDirectory;
-		int lastBackSlashIndex = currDir.lastIndexOf('\\');
-		if(lastBackSlashIndex != -1){
-			String prevDir = currDir.substring(0, lastBackSlashIndex);
+		String currDir = Environment.currentDirectory.replace("\\", "/");
+		
+		int lastFrontSlashIndex = currDir.lastIndexOf('/');
+		if(lastFrontSlashIndex != -1){
+			String prevDir = currDir.substring(0, lastFrontSlashIndex);
 			Environment.currentDirectory = prevDir;
 		}
-		
+		//System.out.println("Env dir: " + Environment.currentDirectory);
+	}
+	
+	private void validateDirectory(String dir) throws CdException{
+		checkAbsolutePath(dir);
+		if(OS == "win"){
+			checkValidSyntax(dir);
+		}
+		checkValidDirectory(dir);
 	}
 	
 	private void changeDirectory(String dir) throws CdException{
-		String currDir = Environment.currentDirectory;
+		String currDir = Environment.currentDirectory.replace("\\", "/");
 		String newDir = "";
-		String currDirPath = "";
-		int indexOfFirstBackSlash = currDir.indexOf('\\');
+		//String currDirPath = "";
+		//int indexOfFirstFrontSlash = currDir.indexOf('/');
 		
-		isValidSyntax(dir);
-		//if(!isValidSyntax(dir)){
-		//	throw new CdException("The directory '" + dir + "' has invalid syntax.");
-		//}
-		
-		if(indexOfFirstBackSlash != -1){
-			currDirPath = currDir.substring(indexOfFirstBackSlash).toLowerCase();
+		//Check valid syntax
+		if(dir.equals(".")){
+			return;
 		}
 		
-		dir = appendBackSlashToFront(dir);
+		/*
+		if(indexOfFirstFrontSlash != -1){
+			currDirPath = currDir.substring(indexOfFirstFrontSlash).toLowerCase();
+		}
+		*/
 		
+		dir = appendFrontSlashToFront(dir);
 		
-		//System.out.println(dir);
-		//System.out.println(currDir.substring(indexOfFirstBackSlash));
-		
+		newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(dir));
+		/*
 		if(dir.toLowerCase().contains(currDirPath)){
-			System.out.println("if");
+			//Absoulute path
 			int currDirLen = currDirPath.length();
 			
 			String inputDirPath = dir.substring(0, currDirLen).toLowerCase() ;
 		
-			//System.out.println(inputDirPath);
-			//System.out.println(currDirPath);
-			
 			if(inputDirPath.equals(currDirPath)){
 				String inputDir = dir.substring(inputDirPath.length());
-				//System.out.println(inputDir);
-				newDir = replaceContinuousBackSlash(currDir + inputDir);
-			}else{
-				
+				newDir = replaceContinuousFrontSlash(currDir + inputDir);
 			}
-			
 		}
 		else{
-			System.out.println("else");
-			newDir =replaceContinuousBackSlash(currDir + appendBackSlashToFront(dir));
+			newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(dir));
 		}
-		
-		//System.out.println(newDir);
+		*/
 		File fileDir = new File(newDir);
-		
-		
+	
 		if(fileDir.exists() == false){
 			throw new CdException("The directory '" + dir + "' does not exist.");
 		}
 		if(fileDir.isDirectory() == false){
-			throw new CdException("The directory is in dir'" + dir + "' does not exist.");
+			throw new CdException("The directory '" + dir + "' does not exist.");
 		}
 		
 		Environment.currentDirectory = newDir;//removeBackSlash(newDir);
@@ -156,54 +158,91 @@ public class CdApplication implements Application{
 	 * Return: string 
 	 */
 	
-	private String appendBackSlashToFront(String dir){
-		if(dir.charAt(0) != '\\'){
-			dir = "\\" + dir;
+	private String appendFrontSlashToFront(String dir){
+		if(dir.charAt(0) != '/'){
+			dir = "/" + dir;
 		}
 		return dir;
 	}
 	
-	private String removeLastBackSlash(String dir){
+	private String removeLastFrontSlash(String dir){
 		int dirLen = dir.length();
 		
-		if(dir.charAt(dirLen-1) == '\\'){
+		if(dir.charAt(dirLen-1) == '/'){
 			dir = dir.substring(0, dirLen-1);
 		}
-		//System.out.println("1 " + dir);
 		return dir;
 	}
 	
-	private String amendWrongSlash(String dir){
-		dir = dir.replace("/", "\\");
-		return dir;
-	}
 	
-	private String replaceContinuousBackSlash(String dir){
+	
+	private String replaceContinuousFrontSlash(String dir){
 		
 		for(int i=0; i<dir.length()-1; i++){
-			if(dir.charAt(i) == '\\'){
-				if(dir.charAt(i+1) == '\\'){
-					dir = dir.replace("\\\\", "\\");
+			if(dir.charAt(i) == '/'){
+				if(dir.charAt(i+1) == '/'){
+					dir = dir.replace("//", "/");
 				}
 			}
 		}
 		
-		if(dir.contains("\\\\")){
-			dir = dir.replace("\\\\", "\\");
+		if(dir.contains("//")){
+			dir = dir.replace("//", "/");
 		}
 		
-		dir = removeLastBackSlash(dir);
-		//System.out.println(dir);
+		dir = removeLastFrontSlash(dir);
 		return dir;
 	}
 	
-	private void isValidSyntax(String dir) throws CdException{
+	private void checkAbsolutePath(String dir) throws CdException{
+		if(dir.charAt(0) == '/'){
+			throw new CdException("The directory '" + dir + "' contains a '/' at the front which indicates it is an absoulte path");
+		}
+	}
+	
+	private void checkValidSyntax(String dir) throws CdException{
 		
-		if(dir.matches(".*[/?<>:*|\"].*"))
+		if(dir.matches(".*[\\?<>:*|\"].*"))
 	    {
-			throw new CdException("The directory '" + dir + "' contains invalid syntax.");
+			throw new CdException("The directory '" + dir + "' contains invalid syntax \\?<>:*|\".");
 	    }
 		
+	}
+	
+	private void checkValidDirectory(String dir) throws CdException{
+		
+		if(dir.contains("/")){	
+			//dir = dir.replace("\\", "\\\\");
+			//String[] dirParts = dir.split("\\\\");
+			
+			
+			String[] dirParts = dir.split("/");
+
+			for (int i =0 ;i<dirParts.length; i++){	
+				if(!dirParts[i].equals("")){
+					/*
+					if(dirParts[i].contains(".")){
+						if(!dirParts[i].equals(".") && !dirParts[i].equals("..")){
+							throw new CdException("More dots The directory '" + dir + "' is invalid");
+						}
+					}
+					*/
+					//if(dirParts[i].equals(".") && i != 0){
+					//	throw new CdException("Wrong dots The directory '" + dir + "' is invalid");
+					//}
+					if(dirParts[i].equals("..")){
+						previousDirectory();
+					}
+					else{
+						changeDirectory(dirParts[i]);
+					}
+				}
+			}
+		
+		}
+		else{
+			changeDirectory(dir);
+		}
 	}
 	
 	
