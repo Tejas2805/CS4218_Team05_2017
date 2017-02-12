@@ -93,7 +93,6 @@ public class CdApplication implements Application{
 			String prevDir = currDir.substring(0, lastFrontSlashIndex);
 			Environment.currentDirectory = prevDir;
 		}
-		//System.out.println("Env dir: " + Environment.currentDirectory);
 	}
 	
 	private void validateDirectory(String dir) throws CdException{
@@ -107,39 +106,15 @@ public class CdApplication implements Application{
 	private void changeDirectory(String dir) throws CdException{
 		String currDir = Environment.currentDirectory.replace("\\", "/");
 		String newDir = "";
-		//String currDirPath = "";
-		//int indexOfFirstFrontSlash = currDir.indexOf('/');
-		
-		//Check valid syntax
+	
 		if(dir.equals(".")){
 			return;
 		}
-		
-		/*
-		if(indexOfFirstFrontSlash != -1){
-			currDirPath = currDir.substring(indexOfFirstFrontSlash).toLowerCase();
-		}
-		*/
-		
+			
 		dir = appendFrontSlashToFront(dir);
 		
 		newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(dir));
-		/*
-		if(dir.toLowerCase().contains(currDirPath)){
-			//Absoulute path
-			int currDirLen = currDirPath.length();
-			
-			String inputDirPath = dir.substring(0, currDirLen).toLowerCase() ;
 		
-			if(inputDirPath.equals(currDirPath)){
-				String inputDir = dir.substring(inputDirPath.length());
-				newDir = replaceContinuousFrontSlash(currDir + inputDir);
-			}
-		}
-		else{
-			newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(dir));
-		}
-		*/
 		File fileDir = new File(newDir);
 	
 		if(fileDir.exists() == false){
@@ -212,24 +187,12 @@ public class CdApplication implements Application{
 	private void checkValidDirectory(String dir) throws CdException{
 		
 		if(dir.contains("/")){	
-			//dir = dir.replace("\\", "\\\\");
-			//String[] dirParts = dir.split("\\\\");
 			
 			
 			String[] dirParts = dir.split("/");
 
 			for (int i =0 ;i<dirParts.length; i++){	
 				if(!dirParts[i].equals("")){
-					/*
-					if(dirParts[i].contains(".")){
-						if(!dirParts[i].equals(".") && !dirParts[i].equals("..")){
-							throw new CdException("More dots The directory '" + dir + "' is invalid");
-						}
-					}
-					*/
-					//if(dirParts[i].equals(".") && i != 0){
-					//	throw new CdException("Wrong dots The directory '" + dir + "' is invalid");
-					//}
 					if(dirParts[i].equals("..")){
 						previousDirectory();
 					}
