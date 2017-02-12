@@ -1,6 +1,5 @@
 package sg.edu.nus.comp.cs4218.impl.app;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,13 +16,12 @@ public class PwdApplication implements Application{
 		String currDir = "";
 		
 		if (args.length == 0) {
-			currDir = Environment.currentDirectory + System.lineSeparator();
-			
+			//Return the current working directory followed by a newline
+			currDir = Environment.currentDirectory + "\n\n";
 		    try {
-		    	
-                stdout.write(currDir.getBytes());
+		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
-                e.printStackTrace();    
+               e.printStackTrace();    
             }
 		} else {
 			throw new PwdException("Invalid Arguments");
