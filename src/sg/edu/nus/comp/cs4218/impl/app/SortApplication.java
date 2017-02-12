@@ -58,7 +58,7 @@ public class SortApplication implements Sort{
 		
 		try {
 			if(isSortByNum == true){
-				System.out.println("sort by num");
+				//System.out.println("sort by num");
 				fileList = sortByAsciiNum(fileName);
 			}
 			if(isSortByNum == false){
@@ -71,7 +71,7 @@ public class SortApplication implements Sort{
 		}
 		
 		for(int i=0; i<fileList.size(); i++){
-			System.out.println(fileList.get(i));
+			//System.out.println(fileList.get(i));
 		}
 		
 	
@@ -83,6 +83,8 @@ public class SortApplication implements Sort{
 	 * @return int new ASCII value
 	 */
 	private int asciiNumAlpha(int asciiValue){
+		
+		
 		
 		if(asciiValue >= 48 && asciiValue <= 59){
 			return asciiValue * 10;
@@ -199,7 +201,7 @@ public class SortApplication implements Sort{
 		}
 		
 		//System.out.println(fileList);
-
+		br.close();
 		return fileList;
 	}
 	
@@ -343,8 +345,9 @@ public class SortApplication implements Sort{
 		}
 		
 		//System.out.println(fileList);
+		br.close();
 		numFileList = sortNumList(numFileList);
-
+		
 		return fileList;
 	}
 	
@@ -358,15 +361,15 @@ public class SortApplication implements Sort{
 		
 		String oldLine = "";
 		String newLine = "";
+	
+		System.out.println("Start num list: " +  numFileList);
 		
-		if(numFileList.size() > 0){
-			oldLine = numFileList.get(0);
-		}
+		int N= numFileList.size();
 		
-		for(int i=0; i<numFileList.size(); i++){
+		for(int i=0; i < N; i++){
 			boolean flag = true;
 			
-			for(int j=0; j < numFileList.size() - i - 1; j++){
+			for(int j=0; j < (N - i -1 ); j++){
 				oldLine = numFileList.get(j);
 				newLine = numFileList.get(j+1);
 			
@@ -378,40 +381,70 @@ public class SortApplication implements Sort{
 					numFileList.set(j+1, oldLine);
 				}
 				if(oldLineValue == newLineValue){
+					
+					
 					//compare second word
+					int indexOldLine= oldLine.trim().indexOf(" ");
+					int indexNewLine = newLine.trim().indexOf(" ");
+					
+				
+					
+					if(indexOldLine == -1){
+						numFileList.set(j, oldLine);
+						numFileList.set(j+1, newLine);
+					}else if(indexNewLine == -1){
+						numFileList.set(j, newLine);
+						numFileList.set(j+1, oldLine);
+					}else{
+						
+						String noFirstOldLine = oldLine.substring(indexOldLine+1);
+						String noFirstNewLine = newLine.substring(indexNewLine+1);
+						
+						byte[] asciiOldLine = noFirstOldLine.getBytes(StandardCharsets.US_ASCII); 
+						byte[] asciiNewLine = noFirstNewLine.getBytes(StandardCharsets.US_ASCII); 
+						
+						int shorterLineLen = Math.min(noFirstOldLine.length(), noFirstNewLine.length());
+						
+						for(int k=0; k < shorterLineLen; k++){
+						
+							int asciiOldLineValue =  asciiNumAlpha(asciiOldLine[k]);
+							int asciiNewLineValue =  asciiNumAlpha(asciiNewLine[k]);
+							
+							
+							if(asciiOldLineValue < asciiNewLineValue){
+								numFileList.set(j, oldLine);
+								numFileList.set(j+1, newLine);
+								break;
+							}
+							if(asciiOldLineValue > asciiNewLineValue){
+								numFileList.set(j+1, oldLine);
+								numFileList.set(j, newLine);
+								break;
+							}
+						}
+					}
+					
+					
 				}
+				
 				
 			
 			}
+		
 			if (flag == true) {
 				break;
 			}
 			
+			
 		}
 		
-		System.out.println(numFileList);
+		System.out.println("Sorted num list: " +  numFileList);
 		
 		return sortedNumList;
 	}
 	
-	void optimizedBubbleSort(int array[], int n) {
-       for (int i = 0; i < n; i++) {
-              boolean flag = true;
-              for (int j = 0; j < n - i - 1; j++) {
-                     if (array[j] > array[j + 1]) {
-                           flag = false;
-                           int temp = array[j + 1];
-                           array[j + 1] = array[j];
-                           array[j] = temp;
-                     }
-              }
-              // No Swapping happened, array is sorted
-              if (flag) {
-                     return;
-              }
-       }
-	}
- 	
+	
+	
 	
 	@Override
 	public String sortStringsSimple(String toSort) {
