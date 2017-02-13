@@ -10,9 +10,12 @@ import sg.edu.nus.comp.cs4218.Shell;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.app.CatApplication;
+import sg.edu.nus.comp.cs4218.impl.app.CdApplication;
 import sg.edu.nus.comp.cs4218.impl.app.EchoApplication;
 import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
+import sg.edu.nus.comp.cs4218.impl.app.PwdApplication;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
+import sg.edu.nus.comp.cs4218.impl.cmd.CallCommand;
 
 /**
  * A Shell is a command interpreter and forms the backbone of the entire
@@ -74,7 +77,7 @@ public class ShellImpl implements Shell {
 				// System.out.println("backquote" + bqStr);
 				OutputStream bqOutputStream = new ByteArrayOutputStream();
 				ShellImpl shell = new ShellImpl();
-				//shell.parseAndEvaluate(bqStr, bqOutputStream);
+				shell.parseAndEvaluate(bqStr, bqOutputStream);
 
 				ByteArrayOutputStream outByte = (ByteArrayOutputStream) bqOutputStream;
 				byte[] byteArray = outByte.toByteArray();
@@ -124,6 +127,16 @@ public class ShellImpl implements Shell {
 			absApp = new HeadApplication();
 		} else if (("tail").equals(app)) {// tail [OPTIONS] [FILE]
 			absApp = new TailApplication();
+		} else if (("cd").equals(app)){
+			absApp = new CdApplication();
+		} else if (("pwd").equals(app)){
+			absApp = new PwdApplication();
+		} else if (("cal").equals(app)){
+			//absApp = new CalApplication();
+		} else if (("grep").equals(app)){
+			//absApp = new GrepApplication();
+		} else if (("sort").equals(app)){
+			//absApp = new SortApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
@@ -284,9 +297,11 @@ public class ShellImpl implements Shell {
 					break;
 				}
 				if (("").equals(readLine)) {
+					System.out.println("test1");
 					continue;
 				}
-				//shell.parseAndEvaluate(readLine, System.out);
+				//System.out.println(readLine);
+				shell.parseAndEvaluate(readLine, System.out);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -297,6 +312,12 @@ public class ShellImpl implements Shell {
 	public void parseAndEvaluate(String cmdline, OutputStream stdout)
 			throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
+		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
+		for(int i=0;i<cmds.length;i++){
+			//System.out.println(cmds[1]);
+			call.parse();
+			call.evaluate(null, stdout);
+		}
 		
 	}
 

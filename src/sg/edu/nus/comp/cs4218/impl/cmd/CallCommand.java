@@ -86,7 +86,7 @@ public class CallCommand implements Command {
 			outputStream = ShellImpl.openOutputRedir(outputStreamS);
 		}
 		ShellImpl.runApp(app, argsArray, inputStream, outputStream);
-		ShellImpl.closeInputStream(inputStream);
+		//ShellImpl.closeInputStream(inputStream);
 		ShellImpl.closeOutputStream(outputStream);
 	}
 
