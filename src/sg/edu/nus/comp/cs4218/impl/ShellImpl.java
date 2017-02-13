@@ -314,7 +314,9 @@ public class ShellImpl implements Shell {
 		// TODO Auto-generated method stub
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
+			//System.out.println(cmds[0]);
 			//System.out.println(cmds[1]);
+			CallCommand call = new CallCommand(cmds[i]);
 			call.parse();
 			call.evaluate(null, stdout);
 		}
