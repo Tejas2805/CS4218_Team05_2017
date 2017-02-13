@@ -83,7 +83,7 @@ public class HeadApplication implements Application {
 				if(lineCount<=0){
 					throw new HeadException("Invalid Line Count");
 				}
-				Path path = Paths.get(args[0]);
+				Path path = Paths.get(args[2]);
 				BufferedReader br = Files.newBufferedReader(path);
 				String line;
 				for (int i = 0; i < DEFAULT_LINE_COUNT; i++) {
@@ -96,6 +96,8 @@ public class HeadApplication implements Application {
 			}catch (IOException ioe) {
 				throw new HeadException(ioe.getMessage());
 		}
+		}else{
+			throw new HeadException("Invalid Format");
 		}
 		
 	}
