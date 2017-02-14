@@ -28,19 +28,7 @@ public class TailApplication implements Application{
 			throw new TailException(NULL_ALL);
 		}// TODO Auto-generated method stub
 		if(args.length==0){
-			try{
-				for(int i=0;i< DEFAULT_LINE_COUNT;i++){
-					int outputMsg;
-					while((outputMsg = stdin.read()) != -1){
-						stdout.write(outputMsg);
-					}
-				}
-				
-			}catch (IOException io) {
-				throw new TailException(io.getMessage());
-			}catch (Exception e){
-				throw new TailException(e.getMessage());
-		}
+			throw new TailException("Invalid Command Format\nUsage: tail [-n lines] [file]");
 		
 	}
 		if(args.length==1){
@@ -67,22 +55,7 @@ public class TailApplication implements Application{
 		}
 		}
 		if(args.length==2){
-			try{
-				int lineCount = Integer.parseInt(args[1]);
-				if(lineCount<=0){
-					throw new TailException("Invalid Line Count");
-				}
-				for(int i=0;i< lineCount;i++){
-					int outputMsg;
-					while((outputMsg = stdin.read()) != -1){
-						stdout.write(outputMsg);
-					}
-				}
-			}catch (IOException io) {
-				throw new TailException(io.getMessage());
-			}catch (Exception e){
-			
-		}
+			throw new TailException("Invalid Command Format\nUsage: tail [-n lines] [file]");
 		}
 		if(args.length==3){
 			try (RandomAccessFile file = new RandomAccessFile(args[0], "r")) {
@@ -110,6 +83,8 @@ public class TailApplication implements Application{
 			}catch (Exception e){
 				throw new TailException(e.getMessage());
 		}
+		}else{
+			throw new TailException("Invalid Command Format\nUsage: tail [-n lines] [file]");
 		}
 	}
 	private boolean checkNullInput(String[] args, InputStream stdin, OutputStream stdout) {

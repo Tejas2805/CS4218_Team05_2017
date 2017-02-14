@@ -26,19 +26,9 @@ public class HeadApplication implements Application {
 			throw new HeadException(NULL_ALL);
 		}
 		if(args.length==0){
-			try{
-				for(int i=0;i< DEFAULT_LINE_COUNT;i++){
-					int outputMsg;
-					while((outputMsg = stdin.read()) != -1){
-						stdout.write(outputMsg);
-					}
-				}
-				
-			}catch (IOException io) {
-				throw new HeadException(io.getMessage());
-			}catch (Exception e){
-				throw new HeadException(e.getMessage());
-		}
+			
+				throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
+		
 		// TODO Auto-generated method stub
 		
 	}
@@ -60,22 +50,7 @@ public class HeadApplication implements Application {
 		}
 		}
 		if(args.length==2){
-			try{
-				int lineCount = Integer.parseInt(args[1]);
-				if(lineCount<=0){
-					throw new HeadException("Invalid Line Count");
-				}
-				for(int i=0;i< lineCount;i++){
-					int outputMsg;
-					while((outputMsg = stdin.read()) != -1){
-						stdout.write(outputMsg);
-					}
-				}
-			}catch (IOException io) {
-				throw new HeadException(io.getMessage());
-			}catch (Exception e){
-				throw new HeadException(e.getMessage());
-		}
+			throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
 			}
 		if(args.length==3){
 			try{
@@ -86,7 +61,7 @@ public class HeadApplication implements Application {
 				Path path = Paths.get(args[2]);
 				BufferedReader br = Files.newBufferedReader(path);
 				String line;
-				for (int i = 0; i < DEFAULT_LINE_COUNT; i++) {
+				for (int i = 0; i < lineCount; i++) {
 					if ((line = br.readLine()) == null) {
 						break;
 					}
@@ -97,7 +72,7 @@ public class HeadApplication implements Application {
 				throw new HeadException(ioe.getMessage());
 		}
 		}else{
-			throw new HeadException("Invalid Format");
+			throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
 		}
 		
 	}
