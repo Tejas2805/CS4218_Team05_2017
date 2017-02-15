@@ -26,8 +26,17 @@ public class HeadApplication implements Application {
 			throw new HeadException(NULL_ALL);
 		}
 		if(args.length==0){
-			
-				throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
+			for (int i = 0; i < DEFAULT_LINE_COUNT; i++) {
+				try {
+					int intCount;
+					while ((intCount = stdin.read()) != -1) {
+						stdout.write(intCount);
+					}
+
+				} catch (IOException io) {
+					throw new HeadException(io.getMessage());
+				}
+			}
 		
 		// TODO Auto-generated method stub
 		
@@ -50,8 +59,20 @@ public class HeadApplication implements Application {
 		}
 		}
 		if(args.length==2){
-			throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
+			try {
+				int lineCount = Integer.parseInt(args[1]);
+			for (int i = 0; i < lineCount ; i++) {
+				
+					
+					int intCount;
+					while ((intCount = stdin.read()) != -1) {
+						stdout.write(intCount);
+					}
+			}} catch (IOException io) {
+					throw new HeadException(io.getMessage());
+				}
 			}
+			
 		if(args.length==3){
 			try{
 				int lineCount = Integer.parseInt(args[1]);
