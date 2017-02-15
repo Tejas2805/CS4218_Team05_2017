@@ -36,9 +36,10 @@ public class SortApplication implements Sort{
 
 		}else if(args.length == 2){
 			sortCondition = args[0];
+			fileName = args[1];
 			checkValidCondition(sortCondition);
 			checkValidFile(fileName);
-			fileName = args[1];
+			
 			results = sortAll(sortCondition + System.lineSeparator() + fileName);
 		}else{
 			throw new SortException("More than two arguements");
@@ -93,10 +94,12 @@ public class SortApplication implements Sort{
 			data = readFromFile(fileName);
 		}
 		String numberData = getNumberData(data);
-		String sortNumber = sortData(numberData);
+		String sortNumber = "";
 
 		if(isSortByNumCondition(sortCondtion)){
 			sortNumber = sortNumData(numberData);
+		}else{
+			sortNumber = sortData(numberData);
 		}
 
 		return sortNumber;
@@ -328,12 +331,21 @@ public class SortApplication implements Sort{
 	private String sortNumData(String data){
 		String [] dataArr = data.split(System.lineSeparator());
 		ArrayList<String> dataList = new ArrayList<String>();
+		ArrayList<String> numDataList = new ArrayList<String>();
 
 		for(String line : dataArr){
-			dataList.add(line);
+			if(isFirstWordNum(line)){
+				numDataList.add(line);
+			}else{
+				dataList.add(line);
+			}
 		}
-		ArrayList<String> fileList = dataList;//sortByNum(dataList);
-		return arrayListToString(fileList);
+		SortNumbers sortNum = new SortNumbers(); 
+		ArrayList<String> numList = sortNum.sortByNum(numDataList);
+		
+		ArrayList<String> asciiList = sortByAscii(dataList);
+		numList.addAll(asciiList);
+		return arrayListToString(numList);
 	}
 
 
@@ -415,6 +427,13 @@ public class SortApplication implements Sort{
 		return sortedList;
 	}
 
+	
+	
+	
+
+	
+	
+	
 	/**
 	 * This methods increase the ASCII value of number (0-9), capital (A-Z) & simple (a-z)
 	 * @param char the character to be compared
@@ -467,7 +486,6 @@ public class SortApplication implements Sort{
 		return file.exists();
 	}
 
-
 	/**
 	 * Determine if "-n" is present and sort number by numerical order 
 	 * @param condition the argument(e.g. "-n")
@@ -482,6 +500,25 @@ public class SortApplication implements Sort{
 		return isSortByNum;
 	}
 
+	/**
+	 * Determine if the first word of each line is a number
+	 * @param line the input line
+	 * @return boolean true if first word is a number, false if not
+	 */
+	private boolean isFirstWordNum(String line){
+		String firstWord = line.split(" ")[0];
+		
+		try { 
+	        Integer.parseInt(firstWord); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+		
+		return true;
+	}
+	
 	/**
 	 * Determine if the condition is valid. Throw exception if the condition is not "-n"
 	 * @param condition the argument(e.g. "-n")
