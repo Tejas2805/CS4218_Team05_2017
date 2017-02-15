@@ -3,6 +3,9 @@ package sg.edu.nus.comp.cs4218.impl.app;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.Environment;
@@ -12,14 +15,14 @@ import sg.edu.nus.comp.cs4218.exception.CdException;
 
 public class CdApplication implements Application{
 	
-	private String OS;
+	private String osType;
 	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) 
 			throws CdException {
 		
 		String osName = System.getProperty("os.name");
-		OS = getOsType(osName);
+		osType = getOsType(osName);
 		
 		if(args.length == 0){
 			String root = System.getProperty("user.home"); 
@@ -27,8 +30,11 @@ public class CdApplication implements Application{
 		}
 		else{
 			String dir = args[0];
+			String fileSepar = File.separator;
 			
-			if(dir.equals(File.separator)){
+			
+			
+			if(fileSepar.equals(dir)){
 				rootDirectory();
 			}else if("~".equals(dir)){
 				homeDirectory();
@@ -39,19 +45,19 @@ public class CdApplication implements Application{
 			}else{
 				specificDirectory(dir);
 			}
-
+		
 		}
 	}
 	
 	/**
 	 * This methods checks if the OS type is windows or mac
-	 * @param os The name of os
+	 * @param osName The name of os
 	 * @return String indicating "win" for windows and "mac" for mac
 	 */
-	private String getOsType(String os){
-		os = os.toLowerCase();
+	private String getOsType(String osName){
+		//String lowerOs = osName.toLowerCase();
 		
-		if(os.contains("win")){
+		if(osName.toLowerCase(Locale.ENGLISH).contains("win")){
 			return "win";
 		}else{
 			return "mac";
@@ -70,7 +76,7 @@ public class CdApplication implements Application{
 			previousDirectory();
 			dir = Environment.currentDirectory;
 		}
-		while(dir.contains("/"));		
+		while(dir.contains(File.separator));		
 	}
 	
 	/**
@@ -91,11 +97,11 @@ public class CdApplication implements Application{
 	 * @return none
 	 */
 	private void previousDirectory(){
-		String currDir = Environment.currentDirectory.replace("\\", "/");
+		String currDir = Environment.currentDirectory;//.replace("\\", "/");
 		
-		int lastFrontSlashIndex = currDir.lastIndexOf('/');
-		if(lastFrontSlashIndex != -1){
-			String prevDir = currDir.substring(0, lastFrontSlashIndex);
+		int lastSlashIndex = currDir.lastIndexOf(File.separator);
+		if(lastSlashIndex != -1){
+			String prevDir = currDir.substring(0, lastSlashIndex);
 			Environment.currentDirectory = prevDir;
 		}
 	}
@@ -108,7 +114,7 @@ public class CdApplication implements Application{
 	 */
 	private void specificDirectory(String dir) throws CdException{
 		checkAbsolutePath(dir);
-		if(OS == "win"){
+		if("win".equals(osType)){
 			checkValidSyntax(dir);
 		}
 		processDirectory(dir);
@@ -121,8 +127,8 @@ public class CdApplication implements Application{
 	 * @return none
 	 */
 	private void checkAbsolutePath(String dir) throws CdException{
-		if(dir.charAt(0) == '/'){
-			throw new CdException("The directory '" + dir + "' contains a '/' at the front which indicates it is an absoulte path");
+		if(String.valueOf(dir.charAt(0)).equals(File.separator)){
+			throw new CdException("The directory " + dir + " contains a " + File.separator + " at the front which indicates it is an absoulte path");
 		}
 	}
 	
@@ -133,9 +139,9 @@ public class CdApplication implements Application{
 	 * @return none
 	 */
 	private void checkValidSyntax(String dir) throws CdException{
-		if(dir.matches(".*[\\?<>:*|\"].*"))
+		if(dir.matches(".*[\\/?<>:*|\"].*"))
 	    {
-			throw new CdException("The directory '" + dir + "' contains invalid syntax \\?<>:*|\".");
+			throw new CdException("The directory '" + dir + "' contains invalid syntax \\/?<>:*|\".");
 	    }
 	}
 	
@@ -147,9 +153,10 @@ public class CdApplication implements Application{
 	 */
 	private void processDirectory(String dir) throws CdException{
 		
-		if(dir.contains("/")){			
-			String[] dirParts = dir.split("/");
-
+		if(dir.contains(File.separator)){		
+			
+			String[] dirParts = dir.split(Pattern.quote(File.separator));
+			
 			for (int i =0 ;i<dirParts.length; i++){	
 				if(!dirParts[i].equals("")){
 					if(dirParts[i].equals("..")){
@@ -173,23 +180,25 @@ public class CdApplication implements Application{
 	 * @return none
 	 */
 	private void changeDirectory(String dir) throws CdException{
-		String currDir = Environment.currentDirectory.replace("\\", "/");
-		String newDir = "";
+		String currDir = Environment.currentDirectory;//.replace("\\", "/");
+		String newDir = dir;
 	
-		if(dir.equals(".")){
+		if(".".equals(newDir)){
 			return;
 		}
 			
-		dir = appendFrontSlashToFront(dir);
+		newDir = appendFrontSlashToFront(newDir);
 		
-		newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(dir));
+		//newDir =replaceContinuousFrontSlash(currDir + appendFrontSlashToFront(newDir));
+		newDir = currDir + newDir;
+		
 		
 		File fileDir = new File(newDir);
 	
-		if(fileDir.exists() == false){
+		if(!fileDir.exists()){
 			throw new CdException("The directory '" + dir + "' does not exist.");
 		}
-		if(fileDir.isDirectory() == false){
+		if(!fileDir.isDirectory()){
 			throw new CdException("The directory '" + dir + "' does not exist.");
 		}
 		
@@ -202,10 +211,11 @@ public class CdApplication implements Application{
 	 * @return String directory with front slash '/' appended at the front
 	 */
 	private String appendFrontSlashToFront(String dir){
-		if(dir.charAt(0) != '/'){
-			dir = "/" + dir;
+		String newDir = dir;
+		if(!String.valueOf(dir.charAt(0)).equals(File.separator)){
+			newDir = File.separator + dir;
 		}
-		return dir;
+		return newDir;
 	}
 	
 	/**
@@ -215,11 +225,11 @@ public class CdApplication implements Application{
 	 */
 	private String removeLastFrontSlash(String dir){
 		int dirLen = dir.length();
-		
-		if(dir.charAt(dirLen-1) == '/'){
-			dir = dir.substring(0, dirLen-1);
+		String newDir = dir;
+		if(!String.valueOf(dir.charAt(dirLen-1)).equals(File.separator)){
+			newDir = dir.substring(0, dirLen-1);
 		}
-		return dir;
+		return newDir;
 	}
 	
 	/**
@@ -228,19 +238,17 @@ public class CdApplication implements Application{
 	 * @return String directory with continuous front slash replace with a single front slash '/'
 	 */
 	private String replaceContinuousFrontSlash(String dir){
-		
-		for(int i=0; i<dir.length()-1; i++){
-			if(dir.charAt(i) == '/'){
-				if(dir.charAt(i+1) == '/'){
-					dir = dir.replace("//", "/");
-				}
+		String newDir = dir;
+		for(int i=0; i<newDir.length()-1; i++){
+			if(newDir.charAt(i) == '/' && newDir.charAt(i+1) == '/'){
+				newDir = newDir.replace("//", "/");
 			}
 		}		
-		if(dir.contains("//")){
-			dir = dir.replace("//", "/");
+		if(newDir.contains("//")){
+			newDir = newDir.replace("//", "/");
 		}
-		dir = removeLastFrontSlash(dir);
-		return dir;
+		newDir = removeLastFrontSlash(newDir);
+		return newDir;
 	}
 	
 	
