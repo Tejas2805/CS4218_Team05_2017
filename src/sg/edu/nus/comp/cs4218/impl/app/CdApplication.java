@@ -28,24 +28,18 @@ public class CdApplication implements Application{
 		else{
 			String dir = args[0];
 			
-			switch(dir){
-			case "/":
+			if(dir.equals(File.separator)){
 				rootDirectory();
-				break;
-			case "~":
+			}else if("~".equals(dir)){
 				homeDirectory();
-				break;
-			case ".":
+			}else if(".".equals(dir)){
 				//remain in current directory, so do nothing
-				break;
-			case "..":
+			}else if("..".equals(dir)){
 				previousDirectory();
-				break;	
-			default:
+			}else{
 				specificDirectory(dir);
-				break;
 			}
-		
+
 		}
 	}
 	

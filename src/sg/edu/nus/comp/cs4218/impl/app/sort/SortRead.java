@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.cs4218.impl.app.Sort;
+package sg.edu.nus.comp.cs4218.impl.app.sort;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,10 +15,9 @@ public class SortRead {
 	 * @return String inputStream data to String
 	 */
 	public String readInputStream(InputStream inputStream) throws SortException {
-
 		BufferedReader bufReader = null;
 		StringBuilder strBuilder = new StringBuilder();
-
+		
 		String line;
 		try {
 
@@ -60,8 +59,7 @@ public class SortRead {
 				fileContent += line + System.lineSeparator();
 			}
 		} catch (IOException e) {
-			//throw new SortException("error reading file");
-			e.printStackTrace();
+			System.out.println("Sort: error reading file");
 		} finally {
 			try {
 				if (bufReader != null){
@@ -69,8 +67,7 @@ public class SortRead {
 				}
 
 			} catch (IOException ex) {
-				//throw new SortException("error closing buffer reader");
-				ex.printStackTrace();
+				System.out.println("Sort: error closing buffer reader");
 			}
 		}
 		return fileContent.trim();

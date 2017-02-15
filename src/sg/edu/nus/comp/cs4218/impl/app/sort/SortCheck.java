@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.cs4218.impl.app.Sort;
+package sg.edu.nus.comp.cs4218.impl.app.sort;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -87,7 +87,7 @@ public class SortCheck {
 	 * Determine if the file is valid. Throw exception if the file is not valid
 	 * @param fileName name of the file
 	 */
-	public void checkValidFile(String fileName) throws SortException{
+	public void checkValidFile(String fileName){
 		BufferedReader bufReader = null;
 		try {
 
@@ -96,18 +96,16 @@ public class SortCheck {
 			while ((line = bufReader.readLine()) != null) {
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e);
 			//throw new SortException("error reading file");
-			//e.printStackTrace();
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
+				System.out.println(ex);
 				//throw new SortException("error closing buffer reader");
-				//ex.printStackTrace();
 			}
 		}
 	}

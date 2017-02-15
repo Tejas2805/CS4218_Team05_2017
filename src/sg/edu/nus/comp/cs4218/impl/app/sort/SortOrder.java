@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.cs4218.impl.app.Sort;
+package sg.edu.nus.comp.cs4218.impl.app.sort;
 
 import java.util.ArrayList;
 
