@@ -1,8 +1,5 @@
 package sg.edu.nus.comp.cs4218.app;
 
-import java.nio.file.Path;
-import java.util.List;
-
 import sg.edu.nus.comp.cs4218.Application;
 
 public interface Grep extends Application {
@@ -19,14 +16,14 @@ public interface Grep extends Application {
 	 * given file
 	 * @param args  String containing command and arguments
 	 */
-	public List<String> grepFromMultipleFiles(Path[] filePaths);
+	public String grepFromOneFile(String args);
 
 	/**
 	 * Returns string containing lines which match the specified pattern in the
 	 * given files
 	 * @param args  String containing command and arguments
 	 */
-	public List<String> grepFromOneFile(Path filePath);
+	public String grepFromMultipleFiles(String args);
 
 	/**
 	 * Returns string when invalid pattern is specified in grep from Stdin
