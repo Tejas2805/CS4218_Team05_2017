@@ -28,6 +28,10 @@ public class CdApplication implements Application{
 		}
 		else{
 			String dir = args[0];
+			String dString = File.separator;
+			if(dir.equals(dString)){
+				rootDirectory();
+			}
 			
 			switch(dir){
 			case "/":
