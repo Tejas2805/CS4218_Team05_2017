@@ -84,7 +84,7 @@ public class SortOrder {
 					}
 					if( j+1 == newLineLen){
 						insertIndex = i;
-						isGreater = true;
+						isSmaller = true;
 					}				
 				}
 			}

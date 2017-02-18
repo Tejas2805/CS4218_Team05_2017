@@ -57,6 +57,7 @@ public class SortRead {
 			bufReader = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = bufReader.readLine()) != null) {
+				
 				fileContent += line + System.lineSeparator();
 			}
 		} catch (IOException e) {

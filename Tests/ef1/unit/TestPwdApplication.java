@@ -30,9 +30,9 @@ public class TestPwdApplication {
 	
 	@Test
     public void testPwdWithNoArg() throws PwdException{
-		 pwdApp.run(new String[] {}, null, stdout);
-		 System.out.print(stdout.toString());
-	     assertEquals(Environment.currentDirectory + System.lineSeparator() + System.lineSeparator(), stdout.toString());
+		pwdApp.run(new String[] {}, null, stdout);
+		System.out.print(stdout.toString());
+		assertEquals(Environment.currentDirectory + System.lineSeparator() + System.lineSeparator(), stdout.toString());
     }
 
     @After
