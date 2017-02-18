@@ -23,7 +23,7 @@ public class SortApplication implements Sort{
 		String fileName = "";
 		String sortCondition = "";
 		String results = "";
-	
+		
 		if(args.length == 0){
 			String readStdin = sortRead.readInputStream(stdin);
 			if(readStdin.length() == 0){
@@ -58,6 +58,7 @@ public class SortApplication implements Sort{
 		if(sortCheck.isFile(fileName)){
 			data = sortRead.readFromFile(fileName);
 		}
+		
 		String simpleData = getSimpleData(data);
 		String sortSimple = sortOrder.sortData(simpleData);
 
@@ -89,6 +90,7 @@ public class SortApplication implements Sort{
 		String data = fileName;
 		if(sortCheck.isFile(fileName)){
 			data = sortRead.readFromFile(fileName);
+		
 		}
 		String numberData = getNumberData(data);
 		String sortNumber = "";
@@ -110,6 +112,7 @@ public class SortApplication implements Sort{
 		String data = fileName;
 		if(sortCheck.isFile(fileName)){
 			data = sortRead.readFromFile(fileName);
+			
 		}
 		String specialCharData = getSpecialCharData(data);
 		String sortSpecialChar = sortOrder.sortData(specialCharData);
@@ -240,12 +243,16 @@ public class SortApplication implements Sort{
 	private String getSpecialCharData(String data){
 		String [] dataAarr = data.split(System.lineSeparator());
 		String specialCharData = "";
-
+		
 		for(String line : dataAarr){
+			if(line.isEmpty()){
+				continue;
+			}
 			char[] charArr = line.toCharArray();
 			if(sortCheck.isSpecialChar(charArr[0])){
 				specialCharData += line + System.lineSeparator();
 			}
+			
 		}
 		return specialCharData.trim();
 	}
@@ -259,6 +266,9 @@ public class SortApplication implements Sort{
 		String numberData = "";
 
 		for(String line : dataAarr){
+			if(line.isEmpty()){
+				continue;
+			}
 			char[] charArr = line.toCharArray();
 			if(charArr[0] >= 48 && charArr[0] <= 57){
 				numberData += line + System.lineSeparator();
@@ -276,6 +286,9 @@ public class SortApplication implements Sort{
 		String capitalData = "";
 
 		for(String line : dataAarr){
+			if(line.isEmpty()){
+				continue;
+			}
 			char[] charArr = line.toCharArray();
 			if(charArr[0] >= 65 && charArr[0] <= 90){
 				capitalData += line + System.lineSeparator();
@@ -293,6 +306,9 @@ public class SortApplication implements Sort{
 		String simpleData = "";
 
 		for(String line : dataAarr){
+			if(line.isEmpty()){
+				continue;
+			}
 			char[] charArr = line.toCharArray();
 			if(charArr[0] >= 97 && charArr[0] <= 122){
 				simpleData += line + System.lineSeparator();

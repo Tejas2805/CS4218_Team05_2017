@@ -3,9 +3,3 @@ Apple
 Hello Panda
 Hello world
 Sleepy woods
-#k#k
-#kkk
-$00
-$999
-()
-[]

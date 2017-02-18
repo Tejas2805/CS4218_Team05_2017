@@ -80,17 +80,18 @@ public class SortNumber {
 		ArrayList<String> numFileList = numList;
 		int indexOldLine= firstLine.trim().indexOf(" ");
 		int indexNewLine = secondLine.trim().indexOf(" ");
-
+		
 		if(indexOldLine == -1){
 			numFileList.set(index, firstLine);
 			numFileList.set(index+1, secondLine);
 		}else if(indexNewLine == -1){
-			numFileList.set(index, firstLine);
-			numFileList.set(index+1, secondLine);
+			numFileList.set(index+1, firstLine);
+			numFileList.set(index, secondLine);
 		}else{
 			String noFirstOldLine = firstLine.substring(indexOldLine+1);
 			String noFirstNewLine = secondLine.substring(indexNewLine+1);
-
+			
+			
 			char[] asciiOldLine = noFirstOldLine.toCharArray();
 			char[] asciiNewLine = noFirstNewLine.toCharArray();
 
