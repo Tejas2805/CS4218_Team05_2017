@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
+import java.util.Locale;
 
 import sg.edu.nus.comp.cs4218.app.Cal;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
@@ -12,13 +13,18 @@ import sg.edu.nus.comp.cs4218.exception.CatException;
 
 public class CalApplication implements Cal{
 
-
+	static final String THREE_SPACES = "   ";
+	static final String FOUR_SPACES = "    ";
+	static final String ONE_SPACE = " ";
 	
-	private boolean isStartWithMonday(String[] args)
+	private boolean isStartWithMonday(String... args)
 	{
-		for(String str: args)
-			if(str.compareTo("-m") == 0)
+		for(String str: args){
+			if(str.compareTo("-m") == 0){
 				return true;
+			}	
+		}
+			
 		return false;
 	}
 	
@@ -27,8 +33,10 @@ public class CalApplication implements Cal{
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		
 		String strArgs = "";
-		for(String str:args)
+		for(String str:args){
 			strArgs += str + "\n";
+		}
+			
 		
 		String output="";
 		
@@ -54,7 +62,7 @@ public class CalApplication implements Cal{
 				try{
 					Integer.parseInt(args[0]);
 				}catch(NumberFormatException e){
-					throw new CalException("Invalid year");
+					e.printStackTrace();
 				}
 				output = printCalForYear(strArgs);
 				
@@ -64,39 +72,39 @@ public class CalApplication implements Cal{
 		else if(args.length == 2){
 			
 			
-			if(bStartWithMonday==false){
-				try{
-				Integer.parseInt(args[0]);
-				Integer.parseInt(args[1]);
-				}catch(NumberFormatException ee){
-					throw new CalException("Invalid month/year");
-					
-				}
-
-				output = printCalForMonthYear(strArgs);
-			}else{
+			if(bStartWithMonday){
 				try{
 					Integer.parseInt(args[1]);
 				}catch(NumberFormatException ee){
-						throw new CalException("Invalid year");
-						
+						ee.printStackTrace();
 				}
 
 				output = printCalForYearMondayFirst(strArgs);
+			}else{
+
+				try{
+					Integer.parseInt(args[0]);
+					Integer.parseInt(args[1]);
+					}catch(NumberFormatException ee){
+						ee.printStackTrace();
+					}
+
+					output = printCalForMonthYear(strArgs);
 			}
 		}
 		else if(args.length == 3){
-			if(bStartWithMonday == false)
-				throw new CalException("Invalid arguments format");
-			else{
+			if(bStartWithMonday){
 				try{
 					Integer.parseInt(args[1]);
 					Integer.parseInt(args[2]);
 					}catch(NumberFormatException ee){
-						throw new CalException("Invalid month/year");
-						
+						ee.printStackTrace();
 				}
 				output = printCalForMonthYearMondayFirst(strArgs);
+			}
+				
+			else{
+				throw new CalException("Invalid arguments format");
 			}
 		}
 				
@@ -105,7 +113,7 @@ public class CalApplication implements Cal{
 		try {
 			stdout.write((output + "\n").getBytes());
 		} catch (IOException e) {
-			throw new CalException("Exception Caught");
+			e.printStackTrace();
 		}
 	}
 
@@ -122,7 +130,7 @@ public class CalApplication implements Cal{
 		String month = formatMonth(today.getMonth().toString());
 		String year = String.valueOf(today.getYear());
 		
-		output[0] = "    "+month + " " + year + "    ";
+		output[0] = FOUR_SPACES + month + ONE_SPACE+  year + FOUR_SPACES;
 		output[1] = "Su Mo Tu We Th Fr Sa";
 		
 		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
@@ -140,8 +148,10 @@ public class CalApplication implements Cal{
 		{
 			for(int col = 0; col < 7; col++)
 			{
-				if(day > maxDays)
+				if(day > maxDays){
 					break;
+				}
+				
 				dates[row][col] = day++;
 				
 			}
@@ -149,27 +159,35 @@ public class CalApplication implements Cal{
 		
 		for(int row = 0; row < 5; row++)
 		{
-			String s = "";
+			String str = "";
 			for(int col = 0; col < 7; col++)
 			{
 				
-				if(dates[row][col] == 0)
-					s += "   ";
+				if(dates[row][col] == 0){
+					str += THREE_SPACES;	
+				}
+					
 				else{
-					if(dates[row][col]> 9)
-						s += String.valueOf(dates[row][col]) + " ";
-					else
-						s += String.valueOf(dates[row][col]) + "  ";
+					if(dates[row][col]> 9){
+						str += String.valueOf(dates[row][col]) + " ";
+					}
+						
+					else{
+						str += String.valueOf(dates[row][col]) + "  ";
+					}
+						
 				}
 					
 				
 			}
-			output[row+2] = s;
+			output[row+2] = str;
 		}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -203,8 +221,10 @@ public class CalApplication implements Cal{
 		{
 			for(int col = 0; col < 7; col++)
 			{
-				if(day > maxDays)
+				if(day > maxDays){
 					break;
+				}
+					
 				dates[row][col] = day++;
 				
 			}
@@ -212,33 +232,35 @@ public class CalApplication implements Cal{
 		
 			for(int row = 0; row < 5; row++)
 			{
-				String s = "";
+				String str = "";
 				for(int col = 0; col < 7; col++)
 				{
 					
 					if(dates[row][col] == 0){
-						s += "   ";
+						str += "   ";
 					}
 						
 					else{
 						if(dates[row][col]> 9){
-							s += String.valueOf(dates[row][col]) + " ";
+							str += String.valueOf(dates[row][col]) + " ";
 						}
 							
 						else{
-							s += String.valueOf(dates[row][col]) + "  ";
+							str += String.valueOf(dates[row][col]) + "  ";
 						}
 							
 					}
 						
 					
 				}
-				output[row+2] = s;
+				output[row+2] = str;
 			}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -279,8 +301,10 @@ public class CalApplication implements Cal{
 		{
 			for(int col = 0; col < 7; col++)
 			{
-				if(day > maxDays)
+				if(day > maxDays){
 					break;
+				}
+					
 				dates[row][col] = day++;
 				
 			}
@@ -288,27 +312,35 @@ public class CalApplication implements Cal{
 		
 		for(int row = 0; row < 5; row++)
 		{
-			String s = "";
+			String str = "";
 			for(int col = 0; col < 7; col++)
 			{
 				
-				if(dates[row][col] == 0)
-					s += "   ";
+				if(dates[row][col] == 0){
+					str += "   ";
+				}
+					
 				else{
-					if(dates[row][col]> 9)
-						s += String.valueOf(dates[row][col]) + " ";
-					else
-						s += String.valueOf(dates[row][col]) + "  ";
+					if(dates[row][col]> 9){
+						str += String.valueOf(dates[row][col]) + " ";
+					}
+						
+					else{
+						str += String.valueOf(dates[row][col]) + "  ";
+					}
+						
 				}
 					
 				
 			}
-			output[row+2] = s;
+			output[row+2] = str;
 		}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -329,13 +361,13 @@ public class CalApplication implements Cal{
 		{
 			for(int i = row*3; i < 3*row+3; i++){
 				String aMonthCalendar = calendar[i];
-				String[] splitAMonthCalendar = aMonthCalendar.split("\n");
-				for(int j = 0; j < splitAMonthCalendar.length; j++){
+				String[] arrMthCal = aMonthCalendar.split("\n");
+				for(int j = 0; j < arrMthCal.length; j++){
 					
-					if(output[row*7+j] == null || output[row*7+j] == ""){
-						output[row*7+j] = splitAMonthCalendar[j];
+					if(output[row*7+j] == null || output[row*7+j].equals("")){
+						output[row*7+j] = arrMthCal[j];
 					}else{
-						output[row*7+j] += "   " + splitAMonthCalendar[j];
+						output[row*7+j] += "   " + arrMthCal[j];
 					}
 				}
 			}
@@ -343,8 +375,10 @@ public class CalApplication implements Cal{
 		}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -384,8 +418,10 @@ public class CalApplication implements Cal{
 		{
 			for(int col = 0; col < 7; col++)
 			{
-				if(day > maxDays)
+				if(day > maxDays){
 					break;
+				}
+					
 				dates[row][col] = day++;
 				
 			}
@@ -393,31 +429,35 @@ public class CalApplication implements Cal{
 		
 		for(int row = 0; row < 5; row++)
 		{
-			String s = "";
+			String str = "";
 			for(int col = 0; col < 7; col++)
 			{
 				
-				if(dates[row][col] == 0)
-					s += "   ";
+				if(dates[row][col] == 0){
+					str += "   ";
+				}
+					
 				else{
 					if(dates[row][col]> 9){
-						s += String.valueOf(dates[row][col]) + " ";
+						str += String.valueOf(dates[row][col]) + " ";
 					}
 						
 					else{
-						s += String.valueOf(dates[row][col]) + "  ";
+						str += String.valueOf(dates[row][col]) + "  ";
 					}
 						
 				}
 					
 				
 			}
-			output[row+2] = s;
+			output[row+2] = str;
 		}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -438,13 +478,13 @@ public class CalApplication implements Cal{
 		{
 			for(int i = row*3; i < 3*row+3; i++){
 				String aMonthCalendar = calendar[i];
-				String[] splitAMonthCalendar = aMonthCalendar.split("\n");
-				for(int j = 0; j < splitAMonthCalendar.length; j++){
+				String[] arrMthCal = aMonthCalendar.split("\n");
+				for(int j = 0; j < arrMthCal.length; j++){
 					
-					if(output[row*7+j] == null || output[row*7+j] == ""){
-						output[row*7+j] = splitAMonthCalendar[j];
+					if(output[row*7+j] == null || output[row*7+j].equals("")){
+						output[row*7+j] = arrMthCal[j];
 					}else{
-						output[row*7+j] += "   " + splitAMonthCalendar[j];
+						output[row*7+j] += "   " + arrMthCal[j];
 					}
 				}
 			}
@@ -452,8 +492,10 @@ public class CalApplication implements Cal{
 		}
 		
 		String realOutput = "";
-		for(String str: output)
+		for(String str: output){
 			realOutput += str + "\n";
+		}
+			
 		
 		return realOutput;
 	}
@@ -465,10 +507,10 @@ public class CalApplication implements Cal{
 		char[] charArrayMonth = strMonth.toCharArray();
 
 		//Change first letter to upper case
-		formattedMonth += (charArrayMonth[0] + "").toUpperCase();
+		formattedMonth += (charArrayMonth[0] + "").toUpperCase(Locale.ENGLISH);
 		
 		for(int i = 1; i < charArrayMonth.length; i++){
-			formattedMonth += (charArrayMonth[i] + "").toLowerCase();
+			formattedMonth += (charArrayMonth[i] + "").toLowerCase(Locale.ENGLISH);
 		}
 		
 		return formattedMonth;

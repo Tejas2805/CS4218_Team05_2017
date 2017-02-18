@@ -22,7 +22,7 @@ import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 public class GrepApplication implements Grep {
 	
 	FileHandler fileHandler = new FileHandler();
-
+	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		
