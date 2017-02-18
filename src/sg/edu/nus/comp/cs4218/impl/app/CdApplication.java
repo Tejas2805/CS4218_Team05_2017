@@ -32,8 +32,6 @@ public class CdApplication implements Application{
 			String dir = args[0];
 			String fileSepar = File.separator;
 			
-			
-			
 			if(fileSepar.equals(dir)){
 				rootDirectory();
 			}else if("~".equals(dir)){
