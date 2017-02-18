@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +19,6 @@ public class HeadApplication implements Application {
 	private static final String NULL_ALL = "args, stdin, stdout are null";
 	
 	private static final int DEFAULT_LINES = 10;
-	
 	private static final String NEWLINE = System.getProperty("line.separator");
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
@@ -53,7 +53,7 @@ public class HeadApplication implements Application {
 				//throw new HeadException(ioe.getMessage());
 		}
 		}else{
-			throw new HeadException("Invalid Command Format\nUsage: head [-n lines] [file]");
+			throw new HeadException("Invalid Command Format" + NEWLINE +"Usage: head [-n lines] [file]");
 		}
 	}
 
@@ -82,14 +82,18 @@ public class HeadApplication implements Application {
 
 	private void readWithLines(String[] args, InputStream stdin, OutputStream stdout) throws IOException {
 		int lineCount = Integer.parseInt(args[1]);
-for (int i = 0; i < lineCount ; i++) {
-		
-			
-			int intCount;
-			while ((intCount = stdin.read()) != -1) {
-				stdout.write(intCount);
+		BufferedReader buffReader = new BufferedReader(new InputStreamReader(stdin));
+		String line = null;
+
+		StringBuilder responseData = new StringBuilder();
+		for (int i = 0; i < lineCount; i++) {
+			if ((line = buffReader.readLine()) == null) {
+				break;
 			}
-}
+			stdout.write(line.getBytes());
+			stdout.write(NEWLINE.getBytes());
+		}
+
 	}
 
 

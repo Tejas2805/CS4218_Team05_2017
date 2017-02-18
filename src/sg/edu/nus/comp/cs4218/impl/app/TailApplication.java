@@ -71,7 +71,7 @@ public class TailApplication implements Application{
 				//throw new TailException(e.getMessage());
 		}
 		}else{
-			throw new TailException("Invalid Command Format\nUsage: tail [-n lines] [file]");
+			throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
 		}
 	}
 	private void readWithLineNumber(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
