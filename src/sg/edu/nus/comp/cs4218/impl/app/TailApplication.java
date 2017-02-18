@@ -82,22 +82,16 @@ public class TailApplication implements Application{
 			if(lineCount<=0){
 				throw new TailException("Invalid Line Count");
 			}
-			int intCount;
-			StringBuilder line = new StringBuilder();
-			while((intCount = stdin.read())!=-1){
-				line.append((char)intCount);
-				while((intCount = stdin.read())!=-1){
-					line.append((char)intCount);
-				}
-				if(counter<lineCount){
-					output.add(line.toString());
-					counter++;
-				}else{
+			BufferedReader buffReader = new BufferedReader(new InputStreamReader(stdin));
+			String line = null;
+			while((line = buffReader.readLine()) != null){
+				if(counter==lineCount){
 					output.remove(0);
-					output.add(line.toString());
+				}else{
+					counter++;
+				}output.add(line);
 			}
-			}
-			for (int i = 0; i < counter; i++) {
+			for(int i=0;i<counter;i++){
 				stdout.write(output.get(i).getBytes());
 				stdout.write(NEWLINE.getBytes());
 			}

@@ -85,7 +85,6 @@ public class HeadApplication implements Application {
 		BufferedReader buffReader = new BufferedReader(new InputStreamReader(stdin));
 		String line = null;
 
-		StringBuilder responseData = new StringBuilder();
 		for (int i = 0; i < lineCount; i++) {
 			if ((line = buffReader.readLine()) == null) {
 				break;
