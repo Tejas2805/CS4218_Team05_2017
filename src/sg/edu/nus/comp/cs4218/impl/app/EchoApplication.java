@@ -51,7 +51,7 @@ public class EchoApplication implements Application {
 				stdout.write("\n".getBytes());
 			}
 		} catch (IOException e) {
-			throw new EchoException("IOException");
+			e.printStackTrace();
 		}
 	}
 

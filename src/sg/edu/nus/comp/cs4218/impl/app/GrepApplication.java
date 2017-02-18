@@ -17,37 +17,55 @@ import sg.edu.nus.comp.cs4218.app.Grep;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.GrepException;
+import sg.edu.nus.comp.cs4218.impl.app.File.FileHandler;
 
 public class GrepApplication implements Grep {
 	
-	private Pattern pattern;
-	
+	FileHandler fileHandler = new FileHandler();
+
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		
 		
-		if(stdout == null)
+		if(stdout == null){
 			throw new GrepException("OutputStream not provided");
-		
-
+		}
 		String newArg = "";
 		String output;
 		
 		for(String arg : args){ newArg += arg + "\n";}
 		
 		if (args == null || args.length == 0) {
-			if (stdin == null) {
-				throw new GrepException("InputStream not provided");
-			} else {
-				//TODO
-				output = grepFromStdin(newArg); 
-			}
+			
+			output = ""; 
+			
 		}else {
 			int numOfFiles = args.length - 1;
 
 			switch(numOfFiles){
 			case 0:
-				output = "\n";
+				if(stdin == null){
+					throw new GrepException("InputStream not provided");
+				}
+				String stdinString = "";
+				try {
+					int intCharacter;
+					char character;
+					while ((intCharacter = stdin.read()) != -1) {
+						character = (char)intCharacter;
+						stdinString += character;
+					}
+					
+				} catch (Exception exIO) {
+					exIO.printStackTrace();
+				}
+				if(stdinString.compareTo("") == 0){
+					output = "";
+				}else{
+					newArg += stdinString;
+					output = grepFromStdin(newArg);
+				}
+				
 				break;
 			case 1:
 				output = grepFromOneFile(newArg);
@@ -61,57 +79,12 @@ public class GrepApplication implements Grep {
 		try {
 			stdout.write(output.getBytes());
 		} catch (IOException e) {
-			throw new CatException("Exception Caught");
+			e.printStackTrace();
 		}
 			
 	}
 
-	/**
-	 * Checks if a file is readable.
-	 * 
-	 * @param filePath
-	 *            The path to the file
-	 * @return True if the file is readable.
-	 * @throws CatException
-	 *             If the file is not readable
-	 * @throws GrepException 
-	 */
 	
-	boolean checkIfFileIsReadable(Path filePath) throws GrepException {
-		
-		if (Files.isDirectory(filePath)) {
-			throw new GrepException("This is a directory");
-		}
-		if (Files.exists(filePath) && Files.isReadable(filePath)) {
-			return true;
-		} else {
-			throw new GrepException("Could not read file");
-		}
-	}
-	
-	List<Path> getValidFilePathsFromString(String[] strFilePaths, int start, int end){
-		List<Path> validFilePaths = new ArrayList<>();
-		Path filePath;
-		
-		for(int i = start; i <=end; i++){
-			
-			try{
-				filePath = Paths.get(strFilePaths[i]);
-			}catch(InvalidPathException e){
-				continue;
-			}
-			
-			try {
-				if(checkIfFileIsReadable(filePath)){
-					validFilePaths.add(filePath);
-				}
-			} catch (GrepException e) {
-				continue;
-			}
-		}
-		
-		return validFilePaths;
-	}
 	
 	@Override
 	public String grepFromStdin(String args) {
@@ -146,10 +119,12 @@ public class GrepApplication implements Grep {
 			return "Invalid number of Arguments";
 		}
 		
-		List<Path> validFilePaths = getValidFilePathsFromString(eachArg, 1, 1);
+		List<Path> validFilePaths = fileHandler.getValidFilePathsFromString(eachArg, 1, 1);
 		
-		if(validFilePaths.size() == 0)
+		if(validFilePaths.isEmpty()){
 			return "\n";
+		}
+			
 		
 		return performGrep(strPattern, validFilePaths.get(0));
 	}
@@ -159,10 +134,9 @@ public class GrepApplication implements Grep {
 		pattern = Pattern.compile(strPattern);
 		String output="";
 		Matcher matcher =  pattern.matcher(line);
-		if(matcher.find())
-		{
-			if(matcher.group().length() >0)
-				return line + "\n";
+		if(matcher.find() &&matcher.group().length() >0)
+		{	
+			return line + "\n";	
 		}
 		
 		return "";
@@ -184,10 +158,9 @@ public class GrepApplication implements Grep {
 		Matcher matcher;
 		for(String line : linesInFile){
 			matcher =  pattern.matcher(line);
-			if(matcher.find())
+			if(matcher.find() && matcher.group().length() >0)
 			{
-				if(matcher.group().length() >0)
-					output += line +"\n";
+				output += line +"\n";	
 			}
 		}
 		
@@ -209,10 +182,12 @@ public class GrepApplication implements Grep {
 			return "Invalid number of Arguments";
 		}
 		
-		List<Path> validFilePaths = getValidFilePathsFromString(eachArg, 1, eachArg.length-1);
+		List<Path> validFilePaths = fileHandler.getValidFilePathsFromString(eachArg, 1, eachArg.length-1);
 		
-		if(validFilePaths.size() == 0)
+		if(validFilePaths.isEmpty()){
 			return "\n";
+		}
+			
 		
 		String output = "";
 		
@@ -231,15 +206,15 @@ public class GrepApplication implements Grep {
 		
 		String[] eachArg = args.split("\n");
 		 
-		if(eachArg.length == 0)
+		if(eachArg.length == 0){
 			return "No Pattern Found";
-		 
-		 // Check if pattern
-		 Pattern p;
-		 
+		}
+					
 		 try
 		 {
-			 p = Pattern.compile(eachArg[0]);
+			 // Check if pattern
+			 Pattern pattern = null;
+			 pattern = Pattern.compile(eachArg[0]);
 		 }catch(PatternSyntaxException e){
 			 return "Invalid Pattern";
 		 }
@@ -255,15 +230,17 @@ public class GrepApplication implements Grep {
 	public String grepInvalidPatternInFile(String args) {
 		 String[] eachArg = args.split("\n");
 		 
-		 if(eachArg.length == 0)
+		 if(eachArg.length == 0){
 			 return "No Pattern Found";
+		 }
+			 
 		 
 		 // Chheck if pattern is ok
-		 Pattern p;
+		 Pattern pattern;
 		 
 		 try
 		 {
-			 p = Pattern.compile(eachArg[0]);
+			 pattern = Pattern.compile(eachArg[0]);
 		 }catch(PatternSyntaxException e){
 			 return "Invalid Pattern";
 		 }
