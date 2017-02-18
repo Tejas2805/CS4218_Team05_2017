@@ -44,7 +44,7 @@ public class TestEchoApplication {
 	}
 	
 	@Test
-	public void testArguentIsNull() {
+	public void testArgumentIsNull() {
 		InputStream inputStream = System.in;
 		OutputStream outputStream = System.out;
 		

@@ -45,56 +45,76 @@ public class CatApplication implements Application {
 	public void run(String[] args, InputStream stdin, OutputStream stdout)
 			throws CatException {
 
-		if(stdout == null)
-			throw new CatException("OutputStream not provided");
+		if(stdout == null){
+			catWithNoOutputStream();
+		}
 		
 		if (args == null || args.length == 0) {
-			if (stdin == null) {
-				throw new CatException("InputStream not provided");
-			}
-			try {
-				int intCount;
-				while ((intCount = stdin.read()) != -1) {
-					stdout.write(intCount);
-				}
-				stdout.write("\n".getBytes());
-			} catch (Exception exIO) {
-				throw new CatException("Exception Caught");
-			}
+			catWithNoArguments(stdin, stdout);
 		} else {
 
-			int numOfFiles = args.length;
+			catWithArguments(args, stdout);
+		}
+	}
 
-			if (numOfFiles > 0) {
-				Path filePath;
-				Path[] filePathArray = new Path[numOfFiles];
-				Path currentDir = Paths.get(Environment.currentDirectory);
-				boolean isFileReadable = false;
+	/**
+	 * @param args
+	 * @param stdout
+	 * @throws CatException
+	 */
+	private void catWithArguments(String[] args, OutputStream stdout) throws CatException {
+		int numOfFiles = args.length;
 
-				for (int i = 0; i < numOfFiles; i++) {
-					filePath = currentDir.resolve(args[i]);
-					isFileReadable = checkIfFileIsReadable(filePath);
-					if (isFileReadable) {
-						filePathArray[i] = filePath;
-					}
-				}
+		if (numOfFiles > 0) {
+			Path filePath;
+			Path[] filePathArray = new Path[numOfFiles];
+			Path currentDir = Paths.get(Environment.currentDirectory);
+			boolean isFileReadable = false;
 
-				// file could be read. perform cat command
-				if (filePathArray.length != 0) {
-					for (int j = 0; j < filePathArray.length; j++) {
-						try {
-							byte[] byteFileArray = Files
-									.readAllBytes(filePathArray[j]);
-							stdout.write(byteFileArray);
-							stdout.write("\n".getBytes());
-						} catch (IOException e) {
-							throw new CatException(
-									"Could not write to output stream");
-						}
-					}
-					
+			for (int i = 0; i < numOfFiles; i++) {
+				filePath = currentDir.resolve(args[i]);
+				isFileReadable = checkIfFileIsReadable(filePath);
+				if (isFileReadable) {
+					filePathArray[i] = filePath;
 				}
 			}
+
+			// file could be read. perform cat command
+			if (filePathArray.length != 0) {
+				for (int j = 0; j < filePathArray.length; j++) {
+					try {
+						byte[] byteFileArray = Files
+								.readAllBytes(filePathArray[j]);
+						stdout.write(byteFileArray);
+						stdout.write("\n".getBytes());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		}
+	}
+
+	/**
+	 * @throws CatException
+	 */
+	private void catWithNoOutputStream() throws CatException {
+		throw new CatException("OutputStream not provided");
+	}
+
+	private void catWithNoArguments(InputStream stdin, OutputStream stdout) throws CatException {
+		if (stdin == null) {
+			throw new CatException("InputStream not provided");
+		}
+		try {
+			int intCount;
+			while ((intCount = stdin.read()) != -1) {
+				stdout.write(intCount);
+			}
+			stdout.write("\n".getBytes());
+		} catch (Exception exIO) {
+			exIO.printStackTrace();
 		}
 	}
 
