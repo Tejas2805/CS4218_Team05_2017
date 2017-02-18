@@ -2,7 +2,6 @@ package ef1.unit;
 
 import static org.junit.Assert.*;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.util.regex.Pattern;
 
