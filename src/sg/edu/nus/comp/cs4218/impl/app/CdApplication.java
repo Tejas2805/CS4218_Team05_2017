@@ -42,6 +42,7 @@ public class CdApplication implements Application{
 				previousDirectory();
 			}else{
 				specificDirectory(dir);
+				
 			}
 		
 		}

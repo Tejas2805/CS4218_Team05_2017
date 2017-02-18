@@ -6,10 +6,10 @@ import java.io.OutputStream;
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.app.Sort;
 import sg.edu.nus.comp.cs4218.exception.SortException;
-import sg.edu.nus.comp.cs4218.impl.app.Sort.SortCheck;
-import sg.edu.nus.comp.cs4218.impl.app.Sort.SortNumber;
-import sg.edu.nus.comp.cs4218.impl.app.Sort.SortOrder;
-import sg.edu.nus.comp.cs4218.impl.app.Sort.SortRead;
+import sg.edu.nus.comp.cs4218.impl.app.sort.SortCheck;
+import sg.edu.nus.comp.cs4218.impl.app.sort.SortNumber;
+import sg.edu.nus.comp.cs4218.impl.app.sort.SortOrder;
+import sg.edu.nus.comp.cs4218.impl.app.sort.SortRead;
 
 public class SortApplication implements Sort{
 	
