@@ -29,6 +29,7 @@ public class SortApplication implements Sort{
 			if(readStdin.length() == 0){
 				throw new SortException("Input stream empty");
 			}
+			//System.out.println(readStdin);
 			results = sortAll(sortCondition + System.lineSeparator() + readStdin);
 		}else if(args.length == 1){
 			fileName = args[0];
