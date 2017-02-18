@@ -52,6 +52,7 @@ public class TestSortApplication {
 		
 		String resultsSimple = sortApp.sortStringsSimple(toSort);
 		
+		
 		assertEquals("", resultsSimple);
 	}
 	
