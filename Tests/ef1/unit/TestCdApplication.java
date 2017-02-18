@@ -88,12 +88,30 @@ public class TestCdApplication {
 	
 	@Test
 	public void testCdToValidDirectory() throws CdException{
-		String[] args = {"tests"};
-		String validDir = Environment.currentDirectory + File.separator + args[0];
 		
+		String userDir = System.getProperty("user.home");
+		String [] userDirParts = userDir.split(Pattern.quote(File.separator));
 		
-		cdApp.run(args, null, null);
-		assertEquals(validDir, Environment.currentDirectory);
+		if(userDirParts.length != 1){
+			String currDir = userDir;
+			String prevDir = currDir;
+			
+			int lastSlashIndex = currDir.lastIndexOf(File.separator);
+			if(lastSlashIndex != -1){
+				prevDir = currDir.substring(0, lastSlashIndex);
+			}
+			Environment.currentDirectory = prevDir;
+			
+			String[] args = {userDirParts[userDirParts.length-1]};
+			
+			cdApp.run(args, null, null);
+				
+			assertEquals(prevDir + File.separator + args[0], Environment.currentDirectory);
+			
+		}else{
+			assertFalse(false);
+		}
+		
 	}
 	
 	

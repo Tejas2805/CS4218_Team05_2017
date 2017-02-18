@@ -23,7 +23,7 @@ public class SortApplication implements Sort{
 		String fileName = "";
 		String sortCondition = "";
 		String results = "";
-
+	
 		if(args.length == 0){
 			String readStdin = sortRead.readInputStream(stdin);
 			if(readStdin.length() == 0){

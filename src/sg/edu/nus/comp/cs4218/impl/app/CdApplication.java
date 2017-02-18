@@ -193,6 +193,7 @@ public class CdApplication implements Application{
 		
 		
 		File fileDir = new File(newDir);
+		
 	
 		if(!fileDir.exists()){
 			throw new CdException("The directory '" + dir + "' does not exist.");
