@@ -22,7 +22,7 @@ public class FileHandler {
 	 * @throws GrepException 
 	 */
 	
-	public boolean checkIfFileIsReadable(Path filePath) throws GrepException {
+	public boolean checkIfFileIsReadable(Path filePath) throws Exception {
 		
 		if (Files.isDirectory(filePath)) {
 			throw new GrepException("This is a directory");
@@ -30,7 +30,7 @@ public class FileHandler {
 		if (Files.exists(filePath) && Files.isReadable(filePath)) {
 			return true;
 		} else {
-			throw new GrepException("Could not read file");
+			throw new Exception("Could not read file");
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class FileHandler {
 				if(checkIfFileIsReadable(filePath)){
 					validFilePaths.add(filePath);
 				}
-			} catch (GrepException e) {
+			} catch (Exception e) {
 				continue;
 			}
 		}

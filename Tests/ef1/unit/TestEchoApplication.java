@@ -9,9 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -73,7 +71,7 @@ public class TestEchoApplication {
 			e.printStackTrace();
 		}
 		
-		String expected = "\n\n";
+		String expected = "";
 		String actual = outputStream.toString();
 		assertEquals(expected, actual);
 		
@@ -99,6 +97,27 @@ public class TestEchoApplication {
 		
 		
 	}
+	
+	@Test
+	public void testArgumentsIsWords() {
+		InputStream inputStream = System.in;
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		String[] arguments = {"Hello", "World"};
+		
+		try {
+			echoApplication.run(arguments, inputStream, outputStream);
+		} catch (EchoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String expected = "Hello World\n";
+		String actual = outputStream.toString();
+		assertEquals(expected, actual);
+		
+		
+	}
+	
 	
 	/**
 	 * @throws java.lang.Exception
