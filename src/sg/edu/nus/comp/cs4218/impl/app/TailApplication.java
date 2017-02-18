@@ -36,7 +36,6 @@ public class TailApplication implements Application{
 			ArrayList<String> output = new ArrayList<String>();
 			int counter = 0;
 			try {
-
 				br = new BufferedReader(new InputStreamReader(stdin));
 				while ((line = br.readLine()) != null) {
 					if(counter<DEFAULT_LINE_COUNT){
@@ -45,7 +44,7 @@ public class TailApplication implements Application{
 					}else{
 						output.remove(0);
 						output.add(line);
-					}
+						}
 				}
 				for(int i = 0; i < output.size(); i++){
 					stdout.write(output.get(i).getBytes());
