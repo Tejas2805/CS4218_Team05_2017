@@ -81,6 +81,7 @@ public class SortNumber {
 		int indexOldLine= firstLine.trim().indexOf(" ");
 		int indexNewLine = secondLine.trim().indexOf(" ");
 		
+		
 		if(indexOldLine == -1){
 			numFileList.set(index, firstLine);
 			numFileList.set(index+1, secondLine);
