@@ -17,7 +17,7 @@ import sg.edu.nus.comp.cs4218.app.Grep;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.GrepException;
-import sg.edu.nus.comp.cs4218.impl.app.File.FileHandler;
+import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 
 public class GrepApplication implements Grep {
 	
@@ -44,27 +44,7 @@ public class GrepApplication implements Grep {
 
 			switch(numOfFiles){
 			case 0:
-				if(stdin == null){
-					throw new GrepException("InputStream not provided");
-				}
-				String stdinString = "";
-				try {
-					int intCharacter;
-					char character;
-					while ((intCharacter = stdin.read()) != -1) {
-						character = (char)intCharacter;
-						stdinString += character;
-					}
-					
-				} catch (Exception exIO) {
-					exIO.printStackTrace();
-				}
-				if(stdinString.compareTo("") == 0){
-					output = "";
-				}else{
-					newArg += stdinString;
-					output = grepFromStdin(newArg);
-				}
+				output = grepZeroFiles(stdin, newArg);
 				
 				break;
 			case 1:
@@ -82,6 +62,40 @@ public class GrepApplication implements Grep {
 			e.printStackTrace();
 		}
 			
+	}
+
+
+
+	/**
+	 * @param stdin
+	 * @param newArg
+	 * @return
+	 * @throws GrepException
+	 */
+	private String grepZeroFiles(InputStream stdin, String newArg) throws GrepException {
+		String output;
+		if(stdin == null){
+			throw new GrepException("InputStream not provided");
+		}
+		String stdinString = "";
+		try {
+			int intCharacter;
+			char character;
+			while ((intCharacter = stdin.read()) != -1) {
+				character = (char)intCharacter;
+				stdinString += character;
+			}
+			
+		} catch (Exception exIO) {
+			exIO.printStackTrace();
+		}
+		if(stdinString.compareTo("") == 0){
+			output = "";
+		}else{
+			newArg += stdinString;
+			output = grepFromStdin(newArg);
+		}
+		return output;
 	}
 
 	

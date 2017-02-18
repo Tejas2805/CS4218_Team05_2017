@@ -216,13 +216,19 @@ public class CalApplication implements Cal{
 				for(int col = 0; col < 7; col++)
 				{
 					
-					if(dates[row][col] == 0)
+					if(dates[row][col] == 0){
 						s += "   ";
+					}
+						
 					else{
-						if(dates[row][col]> 9)
+						if(dates[row][col]> 9){
 							s += String.valueOf(dates[row][col]) + " ";
-						else
+						}
+							
+						else{
 							s += String.valueOf(dates[row][col]) + "  ";
+						}
+							
 					}
 						
 					
@@ -394,10 +400,14 @@ public class CalApplication implements Cal{
 				if(dates[row][col] == 0)
 					s += "   ";
 				else{
-					if(dates[row][col]> 9)
+					if(dates[row][col]> 9){
 						s += String.valueOf(dates[row][col]) + " ";
-					else
+					}
+						
+					else{
 						s += String.valueOf(dates[row][col]) + "  ";
+					}
+						
 				}
 					
 				
