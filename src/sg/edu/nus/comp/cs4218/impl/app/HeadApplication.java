@@ -40,10 +40,12 @@ public class HeadApplication implements Application {
 		
 		// TODO Auto-generated method stub
 		
-	}
-		if(args.length==1){
+	}else if(args.length==1){
 			try {
 				Path path = Paths.get(args[0]);
+				if(Files.notExists(path)){
+					throw new HeadException("File Not Exists");
+				}
 				BufferedReader br = Files.newBufferedReader(path);
 				String line;
 				for (int i = 0; i < DEFAULT_LINE_COUNT; i++) {
@@ -57,8 +59,7 @@ public class HeadApplication implements Application {
 			} catch (IOException ioe) {
 				throw new HeadException(ioe.getMessage());
 		}
-		}
-		if(args.length==2){
+		}else if(args.length==2){
 			try {
 				int lineCount = Integer.parseInt(args[1]);
 			for (int i = 0; i < lineCount ; i++) {
@@ -71,15 +72,17 @@ public class HeadApplication implements Application {
 			}} catch (IOException io) {
 					throw new HeadException(io.getMessage());
 				}
-			}
-			
-		if(args.length==3){
+			}else if(args.length==3){
 			try{
 				int lineCount = Integer.parseInt(args[1]);
 				if(lineCount<=0){
 					throw new HeadException("Invalid Line Count");
 				}
+				
 				Path path = Paths.get(args[2]);
+				if(Files.notExists(path)){
+					throw new HeadException("File Not Exists");
+				}
 				BufferedReader br = Files.newBufferedReader(path);
 				String line;
 				for (int i = 0; i < lineCount; i++) {
