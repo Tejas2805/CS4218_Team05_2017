@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.cs4218.impl.app.File;
+package sg.edu.nus.comp.cs4218.impl.app.file;
 
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
