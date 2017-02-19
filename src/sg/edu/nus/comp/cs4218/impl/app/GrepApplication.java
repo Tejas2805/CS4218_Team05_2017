@@ -67,10 +67,13 @@ public class GrepApplication implements Grep {
 
 
 	/**
-	 * @param stdin
+	 * This methods attempts to grep when no file(s) is/are specified
+	 * It attempts to read from stdin to perform pattern match
+	 * @param stdin 
+	 * 			Standard Input
 	 * @param newArg
-	 * @return
-	 * @throws GrepException
+	 * @return String 
+	 * @throws GrepException when stdin is null
 	 */
 	private String grepZeroFiles(InputStream stdin, String newArg) throws GrepException {
 		String output;
@@ -99,7 +102,14 @@ public class GrepApplication implements Grep {
 	}
 
 	
-	
+
+	/**
+	 * This methods throws an exception when no inputstream is found
+	 * Else, it would perform cat with the inputstream
+	 * @param stdin InputStream
+	 * @param stdout OutputStream
+	 * @return none
+	 */
 	@Override
 	public String grepFromStdin(String args) {
 		if(grepInvalidPatternInFile(args) != null){
