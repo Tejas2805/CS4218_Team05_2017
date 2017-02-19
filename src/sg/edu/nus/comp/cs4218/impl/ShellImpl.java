@@ -1,6 +1,10 @@
 package sg.edu.nus.comp.cs4218.impl;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +45,8 @@ public class ShellImpl implements Shell {
 			+ "as output redirection file.";
 	public static final String EXP_STDOUT = "Error writing to stdout.";
 	public static final String EXP_NOT_SUPPORTED = " not supported yet";
+	
+	private static ArrayList<String> allFiles = new ArrayList<String>();
 
 	/**
 	 * Searches for and processes the commands enclosed by back quotes for
@@ -143,9 +149,45 @@ public class ShellImpl implements Shell {
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
-		absApp.run(argsArray, inputStream, outputStream);
+		allFiles.clear();
+		for(int i=0;i<argsArray.length;i++){
+			String output="";
+			if(argsArray[i].contains("*")){
+				//allFiles.clear();
+				String inputRegex = "^" + argsArray[i].replaceAll("\\*", ".*")+"$";
+				//System.out.println(inputRegex);
+				Pattern p = Pattern.compile(inputRegex);
+				Path currentDir = Paths.get(Environment.currentDirectory);
+				//Path filePath = currentDir.resolve(argsArray[i]);
+				final File folder = new File(currentDir.toString());
+				System.out.println(currentDir.toString());
+				listFilesForFolder(folder,p);
+			}else{
+				allFiles.add(argsArray[i]);
+			}
+		}
+		String[] finalArgsArray = new String[allFiles.size()];
+		for(int i=0;i<allFiles.size();i++){
+			finalArgsArray[i]=allFiles.get(i);
+			//System.out.println(finalArgsArray[i]);
+		}
+		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
-
+	
+	public static void listFilesForFolder(final File folder, Pattern p) {
+	    for (final File fileEntry : folder.listFiles()) {
+	        if (fileEntry.isDirectory()) {
+	            //listFilesForFolder(fileEntry,p);
+	        } else {
+	        	Matcher m = p.matcher(fileEntry.getName());
+	        	//System.out.println(fileEntry.getName());
+	        	while (m.find()) {
+	        		//System.out.println(fileEntry.getName());
+	        		allFiles.add(fileEntry.getName());
+	        	}
+	        }
+	    }
+	}
 	/**
 	 * Static method to creates an inputStream based on the file name or file
 	 * path.

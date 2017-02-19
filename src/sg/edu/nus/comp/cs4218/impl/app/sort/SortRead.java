@@ -71,6 +71,6 @@ public class SortRead {
 				throw (SortException)new SortException("Buffer error").initCause(ex);
 			}
 		}
-		return fileContent.trim();
+		return fileContent;//.trim();
 	}
 }
