@@ -112,7 +112,7 @@ public class SortApplication implements Sort{
 	
 		String specialCharData = getSpecialCharData(data);
 		String sortSpecialChar = sortOrder.sortData(specialCharData);
-
+		
 		return sortSpecialChar;
 	}
 
@@ -250,7 +250,7 @@ public class SortApplication implements Sort{
 			}
 			
 		}
-		return specialCharData.trim();
+		return specialCharData;//.trim();
 	}
 
 	/**
@@ -270,7 +270,7 @@ public class SortApplication implements Sort{
 				numberData += line + System.lineSeparator();
 			}
 		}
-		return numberData.trim();
+		return numberData;//.trim();
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class SortApplication implements Sort{
 				capitalData += line + System.lineSeparator();
 			}
 		}
-		return capitalData.trim();
+		return capitalData;//.trim();
 	}
 
 	/**
@@ -310,7 +310,7 @@ public class SortApplication implements Sort{
 				simpleData += line + System.lineSeparator();
 			}
 		}
-		return simpleData.trim();
+		return simpleData;//.trim();
 	}
 	
 	/**
@@ -327,7 +327,7 @@ public class SortApplication implements Sort{
 			}
 		}
 
-		return newResults.trim();
+		return newResults;//.trim();
 	}
 
 	/**

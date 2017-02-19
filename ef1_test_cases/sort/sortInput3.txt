@@ -1,0 +1,17 @@
+following
+f0llowing
+f@llowing
+ space in front
+	tab in front
+	tab1 in front
+
+
+
+123
+
+words
+
+
+  n space in front
+
+2aa

@@ -1,0 +1,2 @@
+sed /s/copy/read/ input1.txt
+sed 's/se ar/s/' input2

@@ -126,7 +126,7 @@ public class SortOrder {
 		for(String line : list){
 			results += line + System.lineSeparator();
 		}
-		return results.trim();
+		return results;//.trim();
 	}
 	
 	
