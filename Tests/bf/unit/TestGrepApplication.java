@@ -120,6 +120,23 @@ static GrepApplication grepApplication;
 	}
 	
 	@Test
+	public void testRunWithNonExistantFile(){
+		
+		String[] argsOnlyPattern = {"pattern", "aaa.txt"};
+		InputStream inputStream = System.in;
+		OutputStream outputStream = new ByteArrayOutputStream();
+		String expected = "\n";
+		String actual;
+		try {
+			grepApplication.run(argsOnlyPattern, inputStream, outputStream);
+			actual = outputStream.toString();
+			assertEquals(expected, actual);
+		} catch (AbstractApplicationException e) {
+			fail();
+		}
+		
+	}
+	@Test
 	public void testRunWithOnlyMultipleFiles(){
 		
 		String[] argsOnlyPattern = {"pattern", "grepTestSource1.txt", "grepTestSource2.txt"};
