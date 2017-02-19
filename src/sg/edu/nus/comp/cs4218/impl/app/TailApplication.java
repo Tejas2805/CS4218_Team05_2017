@@ -54,8 +54,9 @@ public class TailApplication implements Application{
 	 * @param args contains array of data that consists of number of lines and file path"
 	 * @param stdout is the OutputStream
 	 * This method read the file with path provided and print the number of lines as given in args
+	 * @throws TailException 
 	 */	
-	private void readWithLinesAndDirectory(String[] args, OutputStream stdout) {
+	private void readWithLinesAndDirectory(String[] args, OutputStream stdout) throws TailException {
 		try{
 			ArrayList<String> output = new ArrayList<String>();
 			int counter = 0;
@@ -83,11 +84,9 @@ public class TailApplication implements Application{
 				stdout.write(NEWLINE.getBytes());
 			}
 		}catch (IOException io) {
-			io.printStackTrace();
-			//throw new TailException(io.getMessage());
+			throw (TailException) new TailException(io.getMessage()).initCause(io);
 		}catch (Exception e){
-			e.printStackTrace();
-			//throw new TailException(e.getMessage());
+			throw (TailException) new TailException(e.getMessage()).initCause(e);
 }
 	}
 	/**
@@ -118,11 +117,9 @@ public class TailApplication implements Application{
 				stdout.write(NEWLINE.getBytes());
 			}
 		}catch (IOException io) {
-			io.printStackTrace();
-			//throw new TailException(io.getMessage());
+			throw (TailException) new TailException(io.getMessage()).initCause(io);
 		}catch (Exception e){
-			e.printStackTrace();
-			//throw new TailException(e.getMessage());
+			throw (TailException) new TailException(e.getMessage()).initCause(e);
 }
 	}
 	/**
@@ -155,11 +152,10 @@ public class TailApplication implements Application{
 				stdout.write(NEWLINE.getBytes());
 			}
 		}catch (IOException io) {
-			io.printStackTrace();
+			throw (TailException) new TailException(io.getMessage()).initCause(io);
 			//throw new TailException("");
 		}catch (Exception e){
-			e.printStackTrace();
-			//throw new TailException(e.getMessage());
+			throw (TailException) new TailException(e.getMessage()).initCause(e);
 }
 	}
 	/**

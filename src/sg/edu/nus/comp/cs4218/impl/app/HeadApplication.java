@@ -42,15 +42,14 @@ public class HeadApplication implements Application {
 			try {
 				readFromPath(args, stdout);
 			} catch (IOException ioe) {
-				ioe.printStackTrace();
-				//throw new HeadException(ioe.getMessage());
+				throw (HeadException) new HeadException(ioe.getMessage()).initCause(ioe);
+			
 			}
 		}else if(args.length==2){
 			if(args[0].equals("-n")){
 				try {
 					readWithLines(args, stdin, stdout);} catch (IOException io) {
-						io.printStackTrace();
-						//throw new HeadException(io.getMessage());
+						throw (HeadException) new HeadException(io.getMessage()).initCause(io);
 					}
 			}else{
 				throw new HeadException("Invalid Command Format" + NEWLINE +"Usage: head [-n lines] [file]");
@@ -60,8 +59,7 @@ public class HeadApplication implements Application {
 				try{
 					readWithLinesAndDirectory(args, stdout);
 				}catch (IOException ioe) {
-					ioe.printStackTrace();
-					//throw new HeadException(ioe.getMessage());
+					throw (HeadException) new HeadException(ioe.getMessage()).initCause(ioe);
 				}
 			}else{
 				throw new HeadException("Invalid Command Format" + NEWLINE +"Usage: head [-n lines] [file]");
@@ -144,8 +142,9 @@ public class HeadApplication implements Application {
 	 * @param stdin is the InputStream
 	 * @param stdout is the OutputStream
 	 * This method reads the file from stdin and print the output accordingly
+	 * @throws HeadException 
 	 */
-	private void readFromStdin(InputStream stdin, OutputStream stdout) {
+	private void readFromStdin(InputStream stdin, OutputStream stdout) throws HeadException {
 		for (int i = 0; i < DEFAULT_LINES; i++) {
 			try {
 				int intCount;
@@ -154,8 +153,7 @@ public class HeadApplication implements Application {
 				}
 
 			} catch (IOException io) {
-				io.printStackTrace();
-				//throw new HeadException(io.getMessage());
+				throw (HeadException) new HeadException(io.getMessage()).initCause(io);
 			}
 		}
 	}
