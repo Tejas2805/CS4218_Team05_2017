@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.comp.cs4218.exception.SortException;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortOrder;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortRead;
 
@@ -24,7 +25,7 @@ public class TestSortOrder {
 	}
 	
 	@Test
-	public void testSortData() {
+	public void testSortData() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		String actualData = sortRead.readFromFile(actualFile);
 		String actualResults = sortOrder.sortData(actualData);
@@ -36,7 +37,7 @@ public class TestSortOrder {
 	}
 	
 	@Test
-	public void testSortByAscii() {
+	public void testSortByAscii() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		String actualData = sortRead.readFromFile(actualFile);
 		String[] actualResults = (sortOrder.sortData(actualData)).split(System.lineSeparator());

@@ -33,15 +33,18 @@ public class SortApplication implements Sort{
 		}else if(args.length == 1){
 			fileName = args[0];
 			sortCheck.checkValidFile(fileName);
-			results = sortAll(sortCondition + System.lineSeparator() + fileName);
+			String data = sortRead.readFromFile(fileName);
+			String toSort = "" + System.lineSeparator() + data;
+			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 
 		}else if(args.length == 2){
 			sortCondition = args[0];
 			fileName = args[1];
 			sortCheck.checkValidCondition(sortCondition);
 			sortCheck.checkValidFile(fileName);
-			
-			results = sortAll(sortCondition + System.lineSeparator() + fileName);
+			String data = sortRead.readFromFile(fileName);
+			String toSort = "" + System.lineSeparator() + data;
+			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 		}else{
 			throw new SortException("More than two arguements");
 		}
@@ -52,12 +55,7 @@ public class SortApplication implements Sort{
 	public String sortStringsSimple(String toSort) {
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
-		String fileName= args[1];
-		String data = fileName;
-		if(sortCheck.isFile(fileName)){
-			data = sortRead.readFromFile(fileName);
-		}
-		
+		String data = args[1];
 		String simpleData = getSimpleData(data);
 		String sortSimple = sortOrder.sortData(simpleData);
 
@@ -68,11 +66,7 @@ public class SortApplication implements Sort{
 	public String sortStringsCapital(String toSort) {
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
-		String fileName= args[1];
-		String data = fileName;
-		if(sortCheck.isFile(fileName)){
-			data = sortRead.readFromFile(fileName);
-		}
+		String data = args[1];
 		String capitalData = getCapitalData(data);
 		String sortCapital = sortOrder.sortData(capitalData);
 
@@ -85,12 +79,8 @@ public class SortApplication implements Sort{
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
 		String sortCondtion = args[0];
-		String fileName = args[1];
-		String data = fileName;
-		if(sortCheck.isFile(fileName)){
-			data = sortRead.readFromFile(fileName);
+		String data = args[1];
 		
-		}
 		String numberData = getNumberData(data);
 		String sortNumber = "";
 
@@ -107,12 +97,8 @@ public class SortApplication implements Sort{
 	public String sortSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
-		String fileName= args[1];
-		String data = fileName;
-		if(sortCheck.isFile(fileName)){
-			data = sortRead.readFromFile(fileName);
-			
-		}
+		String data = args[1];
+	
 		String specialCharData = getSpecialCharData(data);
 		String sortSpecialChar = sortOrder.sortData(specialCharData);
 

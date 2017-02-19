@@ -96,18 +96,14 @@ public class SortCheck {
 			while ((line = bufReader.readLine()) != null) {
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-			//throw new SortException("error reading file");
-			//e.printStackTrace();
+			throw (SortException) new SortException("error reading file").initCause(e);
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
 			} catch (IOException ex) {
-				ex.printStackTrace();
-				//throw new SortException("error closing buffer reader");
-				//ex.printStackTrace();
+				throw (SortException) new SortException("error closing buffer reader").initCause(ex);
 			}
 		}
 	}
