@@ -33,19 +33,14 @@ public class GrepApplication implements Grep {
 		String newArg = "";
 		String output;
 		
-		for(String arg : args){ newArg += arg + "\n";}
-		
 		if (args == null || args.length == 0) {
-			
 			output = ""; 
-			
 		}else {
+			for(String arg : args){ newArg += arg + "\n";}
 			int numOfFiles = args.length - 1;
-
 			switch(numOfFiles){
 			case 0:
 				output = grepZeroFiles(stdin, newArg);
-				
 				break;
 			case 1:
 				output = grepFromOneFile(newArg);
@@ -153,7 +148,7 @@ public class GrepApplication implements Grep {
 		return performGrep(strPattern, validFilePaths.get(0));
 	}
 
-	String performGrep(String strPattern, String line){
+	private String performGrep(String strPattern, String line){
 		Pattern pattern;
 		pattern = Pattern.compile(strPattern);
 		String output="";

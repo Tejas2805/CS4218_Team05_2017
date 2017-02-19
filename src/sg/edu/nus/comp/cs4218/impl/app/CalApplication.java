@@ -9,7 +9,6 @@ import java.util.Locale;
 import sg.edu.nus.comp.cs4218.app.Cal;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CalException;
-import sg.edu.nus.comp.cs4218.exception.CatException;
 
 public class CalApplication implements Cal{
 
