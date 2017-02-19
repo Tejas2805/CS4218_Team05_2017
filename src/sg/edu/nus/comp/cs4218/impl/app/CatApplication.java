@@ -12,6 +12,7 @@ import java.util.List;
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.Environment;
 import sg.edu.nus.comp.cs4218.exception.CatException;
+import sg.edu.nus.comp.cs4218.exception.CdException;
 import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 
 /**
@@ -63,11 +64,12 @@ public class CatApplication implements Application {
 	}
 
 	/**
-	 * @param args
-	 * @param stdout
-	 * @throws CatException
+	 * This methods checks for valid filepath
+	 * and concatenates the output and displays them
+	 * @param args Array of paths to files
+	 * @return none
 	 */
-	private void catWithArguments(String[] args, OutputStream stdout) throws CatException {
+	private void catWithArguments(String[] args, OutputStream stdout) {
 
 		
 			Path filePath;
@@ -113,11 +115,22 @@ public class CatApplication implements Application {
 	}
 
 	/**
-	 * @throws CatException
+	 * This methods throws an exception when no outputstream is included
+	 * and concatenates the output and displays them
+	 * @return none
 	 */
 	private void catWithNoOutputStream() throws CatException {
 		throw new CatException("OutputStream not provided");
 	}
+
+
+	/**
+	 * This methods throws an exception when no inputstream is found
+	 * Else, it would perform cat with the inputstream
+	 * @param stdin InputStream
+	 * @param stdout OutputStream
+	 * @return none
+	 */
 
 	private void catWithNoArguments(InputStream stdin, OutputStream stdout) throws CatException {
 		if (stdin == null) {
