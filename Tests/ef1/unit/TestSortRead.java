@@ -36,7 +36,7 @@ public class TestSortRead {
 	
 	@After
 	public void tearDown(){
-		
+		sortRead = null;
 	}
 
 }
