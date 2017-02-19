@@ -6,10 +6,13 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.Environment;
 import sg.edu.nus.comp.cs4218.exception.CatException;
+import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 
 /**
  * The cat command concatenates the content of given files and prints on the
@@ -25,6 +28,8 @@ import sg.edu.nus.comp.cs4218.exception.CatException;
  */
 public class CatApplication implements Application {
 
+	FileHandler fileHandler = new FileHandler();
+	
 	/**
 	 * Runs the cat application with the specified arguments.
 	 * 
@@ -63,28 +68,33 @@ public class CatApplication implements Application {
 	 * @throws CatException
 	 */
 	private void catWithArguments(String[] args, OutputStream stdout) throws CatException {
-		int numOfFiles = args.length;
 
-		if (numOfFiles > 0) {
+		
 			Path filePath;
-			Path[] filePathArray = new Path[numOfFiles];
+			List<Path> filePathArray = new ArrayList<>();
 			Path currentDir = Paths.get(Environment.currentDirectory);
 			boolean isFileReadable = false;
 
-			for (int i = 0; i < numOfFiles; i++) {
+			for (int i = 0; i < args.length; i++) {
 				filePath = currentDir.resolve(args[i]);
-				isFileReadable = checkIfFileIsReadable(filePath);
+				try {
+					isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				if (isFileReadable) {
-					filePathArray[i] = filePath;
+					filePathArray.add(filePath);
+					
 				}
 			}
 
+			
 			// file could be read. perform cat command
-			if (filePathArray.length != 0) {
-				for (int j = 0; j < filePathArray.length; j++) {
+			if (filePathArray.size() > 0) {
+				for (int j = 0; j < filePathArray.size(); j++) {
 					try {
 						byte[] byteFileArray = Files
-								.readAllBytes(filePathArray[j]);
+								.readAllBytes(filePathArray.get(j));
 						stdout.write(byteFileArray);
 						stdout.write("\n".getBytes());
 					} catch (IOException e) {
@@ -92,8 +102,14 @@ public class CatApplication implements Application {
 					}
 				}
 				
+			}else{
+				try {
+					stdout.write("\n".getBytes());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
+		
 	}
 
 	/**
@@ -118,25 +134,4 @@ public class CatApplication implements Application {
 		}
 	}
 
-	/**
-	 * Checks if a file is readable.
-	 * 
-	 * @param filePath
-	 *            The path to the file
-	 * @return True if the file is readable.
-	 * @throws CatException
-	 *             If the file is not readable
-	 */
-	
-	boolean checkIfFileIsReadable(Path filePath) throws CatException {
-		
-		if (Files.isDirectory(filePath)) {
-			throw new CatException("This is a directory");
-		}
-		if (Files.exists(filePath) && Files.isReadable(filePath)) {
-			return true;
-		} else {
-			throw new CatException("Could not read file");
-		}
-	}
 }
