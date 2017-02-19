@@ -20,10 +20,12 @@ import sg.edu.nus.comp.cs4218.exception.TailException;
 public class TailApplication implements Application{
 
 	private static final String NULL_ALL = "args, stdin, stdout are null";
-	
+
 	private static final int LINE_COUNT = 10;
-	
+
 	private static final String NEWLINE = System.getProperty("line.separator");
+	private static final String INVALID_FORMAT = "Invalid Command Format" + NEWLINE + "Usage: tail [-n lines] [file]";
+
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		if(checkNullInput(args,stdin,stdout)){
@@ -31,25 +33,72 @@ public class TailApplication implements Application{
 		}// TODO Auto-generated method stub
 		if(args.length==0){
 			readWithNoArgument(stdin, stdout); 
-		
-	}else if(args.length==1){
-			readWithDirectory(args, stdout);
+
+		}else if(args.length==1){
+			if(args[0].equals("-n") | args[0].startsWith("-")) {
+				throw new TailException(INVALID_FORMAT);
+			}else{
+				readWithDirectory(args, stdout);
+			}
 		}else if(args.length==2){
 			if(args[0].equals("-n")){
-			readWithLineNumber(args, stdin, stdout);
+				readWithLineNumber(args, stdin, stdout);
 			}else{
-				throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
+				throw new TailException(INVALID_FORMAT);
 			}
-		}else if(args.length==3){
-			if(args[0].equals("-n")){
-			readWithLinesAndDirectory(args, stdout);
+		}else if(args.length>=3){
+			int lineNumber = -1;
+			ArrayList<String> listOfArgs = new ArrayList<String>();
+			lineNumber = checkDuplicateLineNumbers(args, lineNumber, listOfArgs);
+			if (lineNumber == -1) {
+				String[] checkedArgs = new String[1];
+				for (int i = 0; i < listOfArgs.size(); i++) {
+					checkedArgs[0] = listOfArgs.get(i);
+					try {
+						readWithDirectory(checkedArgs, stdout);
+					}catch (TailException ioe) {
+						throw (TailException) new TailException(ioe.getMessage()).initCause(ioe);
+					}
+				}
 			}else{
-				throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
+				String[] args1;
+				args1 = new String[3];
+				args1[0] = "-n";
+				args1[1] = "" + lineNumber;
+				for (int i = 0; i < listOfArgs.size(); i++) {
+					args1[2] = listOfArgs.get(i);
+				}
+				if(args1[0].equals("-n")){
+					readWithLinesAndDirectory(args1, stdout);
+				}else{
+					throw new TailException(INVALID_FORMAT);
+				}
 			}
-		}else{
-			throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
 		}
 	}
+
+
+	private int checkDuplicateLineNumbers(String[] args1, int lineNumber, ArrayList<String> listOfArgs)
+			throws TailException {
+		int lineCount = lineNumber;
+		for (int i = 0; i < args1.length; i++) {
+			try {
+				if (args1[i].equals("-n")) {
+					lineCount = Integer.parseInt(args1[i + 1]);
+					i++;
+				} else if (args1[i].startsWith("-")) {
+					throw new TailException(INVALID_FORMAT);
+				} else {
+					listOfArgs.add(args1[i]);
+				}
+			} catch (Exception e) {
+				throw (TailException) new TailException(INVALID_FORMAT).initCause(e);
+			}
+		}
+		return lineCount;
+	}
+
+
 	/**
 	 * @param args contains array of data that consists of number of lines and file path"
 	 * @param stdout is the OutputStream
@@ -87,7 +136,7 @@ public class TailApplication implements Application{
 			throw (TailException) new TailException(io.getMessage()).initCause(io);
 		}catch (Exception e){
 			throw (TailException) new TailException(e.getMessage()).initCause(e);
-}
+		}
 	}
 	/**
 	 * @param args contains array of data that consists of number of lines"
@@ -120,7 +169,7 @@ public class TailApplication implements Application{
 			throw (TailException) new TailException(io.getMessage()).initCause(io);
 		}catch (Exception e){
 			throw (TailException) new TailException(e.getMessage()).initCause(e);
-}
+		}
 	}
 	/**
 	 * @param args contains array of data that consists of file path"
@@ -156,7 +205,7 @@ public class TailApplication implements Application{
 			//throw new TailException("");
 		}catch (Exception e){
 			throw (TailException) new TailException(e.getMessage()).initCause(e);
-}
+		}
 	}
 	/**
 	 * @param stdin is the InputStream
@@ -178,7 +227,7 @@ public class TailApplication implements Application{
 				}else{
 					output.remove(0);
 					output.add(line);
-					}
+				}
 			}
 			for(int i = 0; i < output.size(); i++){
 				stdout.write(output.get(i).getBytes());
