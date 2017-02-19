@@ -28,15 +28,13 @@ public class SortRead {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
-			//throw new SortException("Error reading input stream");
+			throw (SortException) new SortException("error reading input stream").initCause(e); 
 		} finally {
 			if (bufReader != null) {
 				try {
 					bufReader.close();
 				} catch (IOException e) {
-					e.printStackTrace();
-					//throw new SortException("Error reading input stream");
+					throw (SortException) new SortException("error closing buffe read input stream").initCause(e); 
 				}
 			}
 		}
@@ -48,12 +46,14 @@ public class SortRead {
 	 * This method extract the data from a file and convert it to string
 	 * @param fileName name of file
 	 * @return String file data to String
+	 * @throws SortException 
 	 */
-	public String readFromFile(String fileName){
+	public String readFromFile(String fileName) throws SortException{
 		BufferedReader bufReader = null;
 		String fileContent = "";
+		
 		try {
-
+			
 			bufReader = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = bufReader.readLine()) != null) {
@@ -61,17 +61,14 @@ public class SortRead {
 				fileContent += line + System.lineSeparator();
 			}
 		} catch (IOException e) {
-			//throw new SortException("error reading file");
-			e.printStackTrace();
+			throw (SortException)new SortException("Invalid File").initCause(e);
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
-
 			} catch (IOException ex) {
-				//throw new SortException("error closing buffer reader");
-				ex.printStackTrace();
+				throw (SortException)new SortException("Buffer error").initCause(ex);
 			}
 		}
 		return fileContent.trim();
