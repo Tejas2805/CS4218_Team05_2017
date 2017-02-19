@@ -35,45 +35,67 @@ public class TailApplication implements Application{
 	}else if(args.length==1){
 			readWithDirectory(args, stdout);
 		}else if(args.length==2){
+			if(args[0].equals("-n")){
 			readWithLineNumber(args, stdin, stdout);
+			}else{
+				throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
+			}
 		}else if(args.length==3){
-			try{
-				ArrayList<String> output = new ArrayList<String>();
-				int counter = 0;
-				int lineCount = Integer.parseInt(args[1]);
-				if(lineCount<=0){
-					throw new TailException("Invalid Line Count");
-				}
-				Path path = Paths.get(args[2]);
-				if(Files.notExists(path)){
-					throw new TailException("File Not Exists");
-				}
-				BufferedReader buffRead = Files.newBufferedReader(path);
-				String line;
-				while((line = buffRead.readLine())!=null){
-					if(counter<lineCount){
-						output.add(line);
-						counter++;
-					}else{
-						output.remove(0);
-						output.add(line);
-					}
-				}
-				for (int i = 0; i < counter; i++) {
-					stdout.write(output.get(i).getBytes());
-					stdout.write(NEWLINE.getBytes());
-				}
-			}catch (IOException io) {
-				io.printStackTrace();
-				//throw new TailException(io.getMessage());
-			}catch (Exception e){
-				e.printStackTrace();
-				//throw new TailException(e.getMessage());
-		}
+			if(args[0].equals("-n")){
+			readWithLinesAndDirectory(args, stdout);
+			}else{
+				throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
+			}
 		}else{
 			throw new TailException("Invalid Command Format" + NEWLINE +"Usage: tail [-n lines] [file]");
 		}
 	}
+	/**
+	 * @param args contains array of data that consists of number of lines and file path"
+	 * @param stdout is the OutputStream
+	 * This method read the file with path provided and print the number of lines as given in args
+	 */	
+	private void readWithLinesAndDirectory(String[] args, OutputStream stdout) {
+		try{
+			ArrayList<String> output = new ArrayList<String>();
+			int counter = 0;
+			int lineCount = Integer.parseInt(args[1]);
+			if(lineCount<=0){
+				throw new TailException("Invalid Line Count");
+			}
+			Path path = Paths.get(args[2]);
+			if(Files.notExists(path)){
+				throw new TailException("File Not Exists");
+			}
+			BufferedReader buffRead = Files.newBufferedReader(path);
+			String line;
+			while((line = buffRead.readLine())!=null){
+				if(counter<lineCount){
+					output.add(line);
+					counter++;
+				}else{
+					output.remove(0);
+					output.add(line);
+				}
+			}
+			for (int i = 0; i < counter; i++) {
+				stdout.write(output.get(i).getBytes());
+				stdout.write(NEWLINE.getBytes());
+			}
+		}catch (IOException io) {
+			io.printStackTrace();
+			//throw new TailException(io.getMessage());
+		}catch (Exception e){
+			e.printStackTrace();
+			//throw new TailException(e.getMessage());
+}
+	}
+	/**
+	 * @param args contains array of data that consists of number of lines"
+	 * @param stdin is the InputStream
+	 * @param stdout is the OutputStream
+	 * This method read from stdin and print number of lines as provided in args
+	 */
 	private void readWithLineNumber(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
 		try{
 			ArrayList<String> output = new ArrayList<String>();
@@ -103,6 +125,11 @@ public class TailApplication implements Application{
 			//throw new TailException(e.getMessage());
 }
 	}
+	/**
+	 * @param args contains array of data that consists of file path"
+	 * @param stdout is the OutputStream
+	 * This method read the file from path provided in args and print accordingly
+	 */
 	private void readWithDirectory(String[] args, OutputStream stdout) throws TailException {
 		try{
 			ArrayList<String> output = new ArrayList<String>();
@@ -135,6 +162,11 @@ public class TailApplication implements Application{
 			//throw new TailException(e.getMessage());
 }
 	}
+	/**
+	 * @param stdin is the InputStream
+	 * @param stdout is the OutputStream
+	 * This method read from stdin and print the output accordingly
+	 */
 	private void readWithNoArgument(InputStream stdin, OutputStream stdout) {
 		BufferedReader buffRead = null;
 
@@ -161,6 +193,13 @@ public class TailApplication implements Application{
 			new TailException(io.getMessage());
 		}
 	}
+
+	/**
+	 * @param args contains array of data that consists of number of lines and file path"
+	 * @param stdin is the InputStream
+	 * @param stdout is the OutputStream
+	 * This method checks whether args, stdin and stdout are all null
+	 */
 	private boolean checkNullInput(String[] args, InputStream stdin, OutputStream stdout) {
 		// TODO Auto-generated method stub
 		return (args==null) && (stdin==null) && (stdout==null);
