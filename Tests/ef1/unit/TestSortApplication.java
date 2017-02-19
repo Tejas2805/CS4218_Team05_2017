@@ -60,15 +60,16 @@ public class TestSortApplication {
 	}
 
 	@Test
-	public void testMorethanTwoArgs() throws SortException {
+	public void testInvalidArgs() throws SortException {
 		String file1 = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		String file2 = "tests" + File.separator + "sortFiles" + File.separator + "sortAll.txt";
 		String[] args = { "", file1, file2 };
 
 		thrown.expect(SortException.class);
-		thrown.expectMessage("More than two arguements");
+		thrown.expectMessage("Sort: error reading file");
 		sortApp.run(args, null, null);
 	}
+	
 
 	@Test
 	public void testSortStringsSimple() throws SortException {

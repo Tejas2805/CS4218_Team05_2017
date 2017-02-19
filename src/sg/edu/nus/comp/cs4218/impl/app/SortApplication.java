@@ -23,6 +23,7 @@ public class SortApplication implements Sort{
 		String sortCondition = "";
 		String results = "";
 		
+		
 		if(args.length == 0){
 			String readStdin = sortRead.readInputStream(stdin);
 			if(readStdin.length() == 0){
@@ -37,16 +38,26 @@ public class SortApplication implements Sort{
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 
-		}else if(args.length == 2){
-			sortCondition = args[0];
-			fileName = args[1];
-			sortCheck.checkValidCondition(sortCondition);
-			sortCheck.checkValidFile(fileName);
-			String data = sortRead.readFromFile(fileName);
+		}else if(args.length >= 2){
+			int index = 0;
+			if("-n".equals(args[0])){
+				sortCondition = args[0];
+				index = 1;
+			}else{
+				sortCheck.checkValidFile(args[0]);
+			}
+			String data = "";
+			for(int i=index; i<args.length; i++){
+				fileName = args[i];
+				sortCheck.checkValidFile(fileName);
+				data += sortRead.readFromFile(fileName);
+			}
+			
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 		}else{
-			throw new SortException("More than two arguements");
+			
+			throw new SortException("Invalid Argument");
 		}
 		printResults(results);
 	}
