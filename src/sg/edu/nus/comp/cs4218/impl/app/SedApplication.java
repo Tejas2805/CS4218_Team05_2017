@@ -4,12 +4,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import sg.edu.nus.comp.cs4218.app.Sed;
-import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
+import sg.edu.nus.comp.cs4218.exception.SedException;
 
 public class SedApplication implements Sed{
 
 	@Override
-	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
+	public void run(String[] args, InputStream stdin, OutputStream stdout) throws SedException {
 		// TODO Auto-generated method stub
 		
 	}
