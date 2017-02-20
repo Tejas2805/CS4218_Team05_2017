@@ -17,7 +17,7 @@ public class PwdApplication implements Application{
 		
 		if (args.length == 0) {
 			//Return the current working directory followed by a newline
-			currDir = Environment.currentDirectory + System.lineSeparator() + System.lineSeparator();
+			currDir = Environment.currentDirectory + System.lineSeparator();
 		    try {
 		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
