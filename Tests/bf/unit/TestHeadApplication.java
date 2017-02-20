@@ -72,7 +72,6 @@ public class TestHeadApplication {
 			
 	}
 	}
-	
 	@Test
 	public void testNoArgument(){
 		Application absApp = new HeadApplication();

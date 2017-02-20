@@ -28,7 +28,6 @@ public class TestTailApplication {
 		}catch (Exception e){
 			String a=e.getMessage();
 			assertEquals(a,"Tail: args, stdin, stdout are null");
-			
 	}
 	}
 	@Test

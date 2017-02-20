@@ -123,7 +123,6 @@ public class HeadApplication implements Application {
 		}
 		return lineCount;
 	}
-
 	
 	/**
 	 * @param args
