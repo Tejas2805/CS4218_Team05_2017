@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
 
 public class TestTailApplication {
@@ -27,7 +26,7 @@ public class TestTailApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Tail: args, stdin, stdout are null");
+			assertEquals("Tail: args, stdin, stdout are null",a);
 	}
 	}
 	@Test
@@ -41,7 +40,7 @@ public class TestTailApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Tail: stdin is null");
+			assertEquals("Tail: stdin is null",a);
 			
 	}
 		//outputStream not empty args does contain path
@@ -50,7 +49,7 @@ public class TestTailApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Tail: stdin is null");
+			assertEquals("Tail: stdin is null",a);
 		}
 	}
 	@Test
@@ -65,7 +64,7 @@ public class TestTailApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Tail: stdout is null");
+			assertEquals("Tail: stdout is null",a);
 			
 	}
 	}
@@ -84,7 +83,7 @@ public class TestTailApplication {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			assertEquals(stdout.toString(),"test"+ls+"string"+ls);
+			assertEquals("test"+ls+"string"+ls,stdout.toString());
 	}
 	
 	@Test
@@ -104,7 +103,7 @@ public class TestTailApplication {
 		}
 		
 		String testStr = "31423" + ls + "1" + ls + "15ew"+ ls + "afg" + ls + "gaqwtq345" + ls +"tqtqt" + ls + "c592859v" +ls +"gasgsad" +ls;
-		assertEquals(stdout.toString(), testStr);
+		assertEquals(testStr,stdout.toString());
 	}
 	@Test
 	public void testTwoArgument(){
@@ -123,7 +122,7 @@ public class TestTailApplication {
 			e.printStackTrace();
 		}
 
-		assertEquals(stdout.toString(), testStr);
+		assertEquals(testStr,stdout.toString());
 	}
 	@Test
 	public void testThreeArgument(){
@@ -143,6 +142,6 @@ public class TestTailApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals(stdout.toString(), testStr);
+		assertEquals(testStr,stdout.toString());
 	}
 }

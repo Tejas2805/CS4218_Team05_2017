@@ -36,7 +36,7 @@ public class TailApplication implements Application{
 
 
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
-		if(args.length==0){
+		if(args.length==0 || args==null){
 			if(stdin==null){
 				throw new TailException("stdin is null");
 			}
