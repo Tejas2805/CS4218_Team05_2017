@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.exception.HeadException;
 import sg.edu.nus.comp.cs4218.exception.TailException;
 
 
@@ -31,7 +30,7 @@ public class TailApplication implements Application{
 			throw new TailException(NULL_ALL);
 		}else if(stdout==null){
 			throw new TailException("stdout is null");
-		}// TODO Auto-generated method stub
+			}
 		checkArgumentLengthAndRun(args, stdin, stdout);
 	}
 

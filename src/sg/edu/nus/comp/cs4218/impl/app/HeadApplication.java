@@ -44,7 +44,7 @@ public class HeadApplication implements Application {
 	 *            the output accordingly
 	 */
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws HeadException {
-		if (args.length == 0) {
+		if (args == null || args.length == 0) {
 			if(stdin==null){
 				throw new HeadException("stdin is null");
 			}

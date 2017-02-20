@@ -29,7 +29,7 @@ public class TestHeadApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Head: args, stdin, stdout are null");
+			assertEquals("Head: args, stdin, stdout are null",a);
 			
 	}
 	}
@@ -37,14 +37,14 @@ public class TestHeadApplication {
 	public void testNullInputStream() {
 		//outputStream not empty args contain path
 		Application absApp = new HeadApplication();
-		String[] args = new String[] {"123.txt"};
+		String[] args = null;
 		InputStream stdin= null;
 		OutputStream stdout = new ByteArrayOutputStream();
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Head: stdin is null");
+			assertEquals("Head: stdin is null",a);
 			
 	}
 		//outputStream not empty args does contain path
@@ -53,7 +53,7 @@ public class TestHeadApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Head: stdin is null");
+			assertEquals("Head: stdin is null",a);
 		}
 	}
 	@Test
@@ -68,7 +68,7 @@ public class TestHeadApplication {
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
 			String a=e.getMessage();
-			assertEquals(a,"Head: stdout is null");
+			assertEquals("Head: stdout is null",a);
 			
 	}
 	}
@@ -87,7 +87,7 @@ public class TestHeadApplication {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			assertEquals(stdout.toString(),"test"+ls+"string");
+			assertEquals("test"+ls+"string",stdout.toString());
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ public class TestHeadApplication {
 		}
 		
 		String testStr = "31423" + ls + "1" + ls + "15ew"+ ls + "afg" + ls + "gaqwtq345" + ls +"tqtqt" + ls + "c592859v" +ls +"gasgsad" +ls;
-		assertEquals(stdout.toString(), testStr);
+		assertEquals( testStr,stdout.toString());
 	}
 	@Test
 	public void testTwoArgument(){
@@ -126,7 +126,7 @@ public class TestHeadApplication {
 			e.printStackTrace();
 		}
 
-		assertEquals(stdout.toString(), testStr);
+		assertEquals(testStr,stdout.toString());
 	}
 	@Test
 	public void testThreeArgument(){
@@ -146,7 +146,7 @@ public class TestHeadApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals(stdout.toString(), testStr);
+		assertEquals( testStr,stdout.toString());
 	}
 
 	
