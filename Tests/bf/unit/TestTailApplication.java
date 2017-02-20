@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
+
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
 
 public class TestTailApplication {
@@ -33,7 +33,7 @@ public class TestTailApplication {
 	}
 
 	@Test
-	public void testcheckArgumentLengthAndRun(){
+	public void testNoArgument(){
 		Application absApp = new TailApplication();
 		String[] args = {};
 		String ls = System.lineSeparator();
@@ -48,8 +48,16 @@ public class TestTailApplication {
 				e.printStackTrace();
 			}
 			assertEquals(stdout.toString(),"test"+ls+"string"+ls);
-		//Args with File Path
-		args = new String[] {"123.txt"};
+	}
+	
+	@Test
+	public void testOneArgument(){
+		Application absApp = new TailApplication();
+		String ls = System.lineSeparator();
+		String testString = "test"+ls+"string";
+		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
+		OutputStream stdout = new ByteArrayOutputStream();
+		String[] args = new String[] {"123.txt"};
 		stdout = new ByteArrayOutputStream();
 		try {
 			absApp.run(args, stdin, stdout);
@@ -60,21 +68,35 @@ public class TestTailApplication {
 		
 		String testStr = "31423" + ls + "1" + ls + "15ew"+ ls + "afg" + ls + "gaqwtq345" + ls +"tqtqt" + ls + "c592859v" +ls +"gasgsad" +ls;
 		assertEquals(stdout.toString(), testStr);
-		
-		//Argument with Number of Lines
-		stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
-		stdout = new ByteArrayOutputStream();
-		args = new String[] {"-n","2"};
+	}
+	@Test
+	public void testTwoArgument(){
+		Application absApp = new TailApplication();
+		String ls = System.lineSeparator();
+		String testStr = "31423" + ls + "1" + ls;
+		InputStream stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
+		OutputStream stdout = new ByteArrayOutputStream();
+
+
+		String[]args = new String[] {"-n","2"};
 		try {
 			absApp.run(args, stdin, stdout);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		testStr = "c592859v" +ls +"gasgsad" +ls;
+
 		assertEquals(stdout.toString(), testStr);
-		
-		//Argument with Number of Lines and Path
+	}
+	@Test
+	public void testThreeArgument(){
+		Application absApp = new TailApplication();
+		String ls = System.lineSeparator();
+		String testString = "test"+ls+"string";
+		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
+		OutputStream stdout = new ByteArrayOutputStream();
+		String[] args = new String[] {"123.txt"};
+		String testStr = "c592859v" + ls + "gasgsad" + ls;
 		stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
 		stdout = new ByteArrayOutputStream();
 		args = new String[] {"-n","2","123.txt"};

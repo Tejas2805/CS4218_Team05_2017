@@ -50,6 +50,8 @@ public class TailApplication implements Application{
 						throw (TailException) new TailException(ioe.getMessage()).initCause(ioe);
 					}
 				}
+			}else if(listOfArgs.isEmpty()){
+				readWithLineNumber(args, stdin, stdout);
 			}else{
 				String[] args1;
 				args1 = new String[3];

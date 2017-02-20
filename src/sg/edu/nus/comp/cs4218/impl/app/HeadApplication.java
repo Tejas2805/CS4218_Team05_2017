@@ -44,7 +44,7 @@ public class HeadApplication implements Application {
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws HeadException {
 		if (args.length == 0) {
 			readFromStdin(stdin, stdout);
-		} else {
+		}else{
 
 			int lineNumber = -1;
 			ArrayList<String> listOfArgs = new ArrayList<String>();
@@ -52,8 +52,18 @@ public class HeadApplication implements Application {
 			if (lineNumber == -1) {
 				String[] checkedArgs = new String[1];
 				readEveryFilePath(checkedArgs, stdout, listOfArgs);
-			} else {
-				readEveryFilePathWithLineNumbers(stdout, lineNumber, listOfArgs);
+			}else if(listOfArgs.isEmpty()){
+				if (args[0].equals("-n")) {
+					try {
+						readWithLines(args, stdin, stdout);
+					} catch (IOException io) {
+						throw (HeadException) new HeadException(io.getMessage()).initCause(io);
+					}
+				} else {
+					throw new HeadException(INVALID_FORMAT);
+				}
+			}
+				else {readEveryFilePathWithLineNumbers(stdout, lineNumber, listOfArgs);
 			}
 		}
 	}
