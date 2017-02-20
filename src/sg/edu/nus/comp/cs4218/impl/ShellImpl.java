@@ -150,17 +150,40 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		String filePathString="";
 		for(int i=0;i<argsArray.length;i++){
 			String output="";
+			String path="";
+			String inputFile="";
+			
 			if(argsArray[i].contains("*")){
 				//allFiles.clear();
-				String inputRegex = "^" + argsArray[i].replaceAll("\\*", ".*")+"$";
-				//System.out.println(inputRegex);
-				Pattern p = Pattern.compile(inputRegex);
+				String[] inputTemp = argsArray[i].split("/");
+				for(int j=0;j<inputTemp.length;j++){
+					if(inputTemp[j].contains("*")){
+						for(int k=0;k<inputTemp.length-j;k++){
+							if(k==inputTemp.length-j-1){
+								inputFile=inputFile+inputTemp[j+k];
+							}else{
+								inputFile=inputFile+inputTemp[j+k]+"/";
+							}
+						}
+						break;
+					}else{
+						path = path+inputTemp[j]+"/";
+					}
+				}
 				Path currentDir = Paths.get(Environment.currentDirectory);
-				//Path filePath = currentDir.resolve(argsArray[i]);
-				final File folder = new File(currentDir.toString());
-				System.out.println(currentDir.toString());
+				Path filePath = currentDir.resolve(path);
+				filePathString=filePath.toString();
+				String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
+				String fir= inputRegex.replace("\\", "\\\\");
+				//fir =fir.replace("/", "\\\\");
+;			
+				Pattern p = Pattern.compile(fir);
+				//System.out.println(fir);
+				final File folder = new File(filePath.toString());
+				//System.out.println(currentDir.toString());
 				listFilesForFolder(folder,p);
 			}else{
 				allFiles.add(argsArray[i]);
@@ -169,7 +192,7 @@ public class ShellImpl implements Shell {
 		String[] finalArgsArray = new String[allFiles.size()];
 		for(int i=0;i<allFiles.size();i++){
 			finalArgsArray[i]=allFiles.get(i);
-			//System.out.println(finalArgsArray[i]);
+			//System.out.println("fi: "+finalArgsArray[i]);
 		}
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
@@ -179,11 +202,20 @@ public class ShellImpl implements Shell {
 	        if (fileEntry.isDirectory()) {
 	            //listFilesForFolder(fileEntry,p);
 	        } else {
-	        	Matcher m = p.matcher(fileEntry.getName());
-	        	//System.out.println(fileEntry.getName());
+	        	//Matcher m = p.matcher(fileEntry.getName());
+	        	Matcher m = p.matcher(fileEntry.getPath());
+	        	//System.out.println("fe:  "+fileEntry.getPath());
 	        	while (m.find()) {
-	        		//System.out.println(fileEntry.getName());
-	        		allFiles.add(fileEntry.getName());
+	        		//System.out.println("m: "+fileEntry.getName());
+	        		//System.out.println("p: "+fileEntry.getPath());
+	        		//System.out.println("ap: "+fileEntry.getAbsolutePath());
+	        		//try {
+						//System.out.println("cp: "+fileEntry.getCanonicalPath());
+					//} catch (IOException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+					//}
+	        		allFiles.add(fileEntry.getPath());
 	        	}
 	        }
 	    }
