@@ -27,6 +27,8 @@ public class HeadApplication implements Application {
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		if (checkNullInput(args, stdin, stdout)) {
 			throw new HeadException(NULL_ALL);
+		}else if(stdout==null){
+			throw new HeadException("stdout is null");
 		}
 		checkArgumentLengthAndRun(args, stdin, stdout);
 	}
@@ -43,6 +45,9 @@ public class HeadApplication implements Application {
 	 */
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws HeadException {
 		if (args.length == 0) {
+			if(stdin==null){
+				throw new HeadException("stdin is null");
+			}
 			readFromStdin(stdin, stdout);
 		}else{
 
@@ -53,6 +58,9 @@ public class HeadApplication implements Application {
 				String[] checkedArgs = new String[1];
 				readEveryFilePath(checkedArgs, stdout, listOfArgs);
 			}else if(listOfArgs.isEmpty()){
+				if(stdin==null){
+					throw new HeadException("stdin is null");
+				}
 				if (args[0].equals("-n")) {
 					try {
 						readWithLines(args, stdin, stdout);
