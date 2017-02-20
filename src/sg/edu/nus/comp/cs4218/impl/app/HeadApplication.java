@@ -124,6 +124,7 @@ public class HeadApplication implements Application {
 		return lineCount;
 	}
 
+	
 	/**
 	 * @param args
 	 *            contains array of data that consists of number of lines and
