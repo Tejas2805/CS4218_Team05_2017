@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
+import sg.edu.nus.comp.cs4218.exception.HeadException;
 import sg.edu.nus.comp.cs4218.exception.TailException;
 
 
@@ -28,6 +29,8 @@ public class TailApplication implements Application{
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
 		if(checkNullInput(args,stdin,stdout)){
 			throw new TailException(NULL_ALL);
+		}else if(stdout==null){
+			throw new TailException("stdout is null");
 		}// TODO Auto-generated method stub
 		checkArgumentLengthAndRun(args, stdin, stdout);
 	}
@@ -35,12 +38,18 @@ public class TailApplication implements Application{
 
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
 		if(args.length==0){
+			if(stdin==null){
+				throw new TailException("stdin is null");
+			}
 			readWithNoArgument(stdin, stdout);
 			}else{
 			int lineNumber = -1;
 			ArrayList<String> listOfArgs = new ArrayList<String>();
 			lineNumber = checkDuplicateLineNumbers(args, lineNumber, listOfArgs);
 			if (lineNumber == -1) {
+				if(stdin==null){
+					throw new TailException("stdin is null");
+				}
 				String[] checkedArgs = new String[1];
 				for (int i = 0; i < listOfArgs.size(); i++) {
 					checkedArgs[0] = listOfArgs.get(i);

@@ -20,7 +20,7 @@ import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 public class TestHeadApplication {
 
 	@Test
-	public void testNullInput() {
+	public void testAllNullArgument() {
 		Application absApp = new HeadApplication();
 		String[] args = null;
 		InputStream stdin= null;
@@ -30,6 +30,45 @@ public class TestHeadApplication {
 		}catch (Exception e){
 			String a=e.getMessage();
 			assertEquals(a,"Head: args, stdin, stdout are null");
+			
+	}
+	}
+	@Test
+	public void testNullInputStream() {
+		//outputStream not empty args contain path
+		Application absApp = new HeadApplication();
+		String[] args = new String[] {"123.txt"};
+		InputStream stdin= null;
+		OutputStream stdout = new ByteArrayOutputStream();
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Head: stdin is null");
+			
+	}
+		//outputStream not empty args does contain path
+		args = new String[] {"-n","3"};
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Head: stdin is null");
+		}
+	}
+	@Test
+	public void testNullOutputStream() {
+		String ls = System.lineSeparator();
+		Application absApp = new HeadApplication();
+		String[] args = new String[] {"123.txt"};
+		String testString = "test"+ls+"string";
+		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
+		OutputStream stdout = null;
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Head: stdout is null");
 			
 	}
 	}

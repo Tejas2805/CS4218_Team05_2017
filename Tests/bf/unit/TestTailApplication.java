@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-
+import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
 
 public class TestTailApplication {
@@ -31,7 +31,45 @@ public class TestTailApplication {
 			
 	}
 	}
-
+	@Test
+	public void testNullInputStream() {
+		//outputStream not empty args contain path
+		Application absApp = new TailApplication();
+		String[] args = new String[] {"123.txt"};
+		InputStream stdin= null;
+		OutputStream stdout = new ByteArrayOutputStream();
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Tail: stdin is null");
+			
+	}
+		//outputStream not empty args does contain path
+		args = new String[] {"-n","3"};
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Tail: stdin is null");
+		}
+	}
+	@Test
+	public void testNullOutputStream() {
+		String ls = System.lineSeparator();
+		Application absApp = new TailApplication();
+		String[] args = new String[] {"123.txt"};
+		String testString = "test"+ls+"string";
+		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
+		OutputStream stdout = null;
+		try{
+			absApp.run(args, stdin, stdout);
+		}catch (Exception e){
+			String a=e.getMessage();
+			assertEquals(a,"Tail: stdout is null");
+			
+	}
+	}
 	@Test
 	public void testNoArgument(){
 		Application absApp = new TailApplication();
