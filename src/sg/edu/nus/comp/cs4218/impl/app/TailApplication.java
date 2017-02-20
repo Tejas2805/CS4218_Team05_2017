@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 
 import sg.edu.nus.comp.cs4218.Application;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.exception.HeadException;
 import sg.edu.nus.comp.cs4218.exception.TailException;
 
 
@@ -31,22 +29,14 @@ public class TailApplication implements Application{
 		if(checkNullInput(args,stdin,stdout)){
 			throw new TailException(NULL_ALL);
 		}// TODO Auto-generated method stub
-		if(args.length==0){
-			readWithNoArgument(stdin, stdout); 
+		checkArgumentLengthAndRun(args, stdin, stdout);
+	}
 
-		}else if(args.length==1){
-			if(args[0].equals("-n") | args[0].startsWith("-")) {
-				throw new TailException(INVALID_FORMAT);
+
+	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
+		if(args.length==0){
+			readWithNoArgument(stdin, stdout);
 			}else{
-				readWithDirectory(args, stdout);
-			}
-		}else if(args.length==2){
-			if(args[0].equals("-n")){
-				readWithLineNumber(args, stdin, stdout);
-			}else{
-				throw new TailException(INVALID_FORMAT);
-			}
-		}else if(args.length>=3){
 			int lineNumber = -1;
 			ArrayList<String> listOfArgs = new ArrayList<String>();
 			lineNumber = checkDuplicateLineNumbers(args, lineNumber, listOfArgs);
@@ -67,11 +57,11 @@ public class TailApplication implements Application{
 				args1[1] = "" + lineNumber;
 				for (int i = 0; i < listOfArgs.size(); i++) {
 					args1[2] = listOfArgs.get(i);
-				}
-				if(args1[0].equals("-n")){
-					readWithLinesAndDirectory(args1, stdout);
-				}else{
-					throw new TailException(INVALID_FORMAT);
+					if(args1[0].equals("-n")){
+						readWithLinesAndDirectory(args1, stdout);
+					}else{
+						throw new TailException(INVALID_FORMAT);
+					}
 				}
 			}
 		}
