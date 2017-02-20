@@ -14,15 +14,14 @@ import sg.edu.nus.comp.cs4218.exception.CdException;
 
 
 public class CdApplication implements Application{
-	
-	private String osType;
+
 	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) 
 			throws CdException {
 		
 		String osName = System.getProperty("os.name");
-		osType = getOsType(osName);
+		String osType = getOsType(osName);
 		
 		if(args.length == 0){
 			String root = System.getProperty("user.home"); 
@@ -138,11 +137,12 @@ public class CdApplication implements Application{
 	 * @return return the corrected slash for windows os
 	 */
 	private String correctSlashForWin(String dir){
+		
+		String newDir = dir;
 		if(dir.matches(".*[/].*")){
-			String newDir =  dir.replaceAll("/", Matcher.quoteReplacement(File.separator));
-			return newDir;
+			newDir =  dir.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		}
-		return dir;
+		return newDir;
 	}
 	
 	/**

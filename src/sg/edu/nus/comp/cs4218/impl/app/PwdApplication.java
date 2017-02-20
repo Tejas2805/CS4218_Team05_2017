@@ -21,7 +21,7 @@ public class PwdApplication implements Application{
 		    try {
 		    	stdout.write(currDir.getBytes());
             } catch (IOException e) {
-               e.printStackTrace();    
+            	throw (PwdException) new PwdException("Error writing to stdout").initCause(e);
             }
 		} else {
 			throw new PwdException("Invalid Arguments");
