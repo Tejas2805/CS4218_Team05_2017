@@ -24,7 +24,7 @@ public class SortRead {
 
 			bufReader = new BufferedReader(new InputStreamReader(inputStream));
 			while ((line = bufReader.readLine()) != null) {
-				strBuilder.append(line);
+				strBuilder.append(line + System.lineSeparator());
 			}
 
 		} catch (IOException e) {
