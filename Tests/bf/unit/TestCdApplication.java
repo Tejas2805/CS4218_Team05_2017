@@ -62,7 +62,7 @@ public class TestCdApplication {
 	}
 	
 	@Test
-	public void testPreviousDirectory() throws CdException{
+	public void testParentDirectory() throws CdException{
 		String[] args = {".."};
 		String currDir = Environment.currentDirectory;
 		String prevDir = currDir;
