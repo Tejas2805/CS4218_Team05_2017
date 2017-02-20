@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs4218.impl.app;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -59,7 +60,13 @@ public class SortApplication implements Sort{
 			
 			throw new SortException("Invalid Argument");
 		}
-		printResults(results);
+		
+		try {
+			stdout.write(results.getBytes());
+		} catch (IOException e) {	
+			throw (SortException) new SortException("Error writing to stdout").initCause(e);
+		}
+		//printResults(results);
 	}
 
 	@Override
@@ -250,7 +257,7 @@ public class SortApplication implements Sort{
 			}
 			
 		}
-		return specialCharData;//.trim();
+		return specialCharData;
 	}
 
 	/**
@@ -270,7 +277,7 @@ public class SortApplication implements Sort{
 				numberData += line + System.lineSeparator();
 			}
 		}
-		return numberData;//.trim();
+		return numberData;
 	}
 
 	/**
@@ -290,7 +297,7 @@ public class SortApplication implements Sort{
 				capitalData += line + System.lineSeparator();
 			}
 		}
-		return capitalData;//.trim();
+		return capitalData;
 	}
 
 	/**
@@ -310,7 +317,7 @@ public class SortApplication implements Sort{
 				simpleData += line + System.lineSeparator();
 			}
 		}
-		return simpleData;//.trim();
+		return simpleData;
 	}
 	
 	/**
@@ -327,20 +334,9 @@ public class SortApplication implements Sort{
 			}
 		}
 
-		return newResults;//.trim();
+		return newResults;
 	}
 
-	/**
-	 * This method print the final results in the command line
-	 * @param results the results to be printed
-	 */
-	private void printResults(String results){
-		String newLine = System.lineSeparator();
-		String[] resultsList = results.split(newLine);
-
-		for(String strResults : resultsList){
-			System.out.println(strResults);
-		}
-	}
+	
 
 }
