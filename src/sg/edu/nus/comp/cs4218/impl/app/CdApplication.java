@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import sg.edu.nus.comp.cs4218.Application;
@@ -31,6 +32,10 @@ public class CdApplication implements Application{
 			String dir = args[0];
 			String fileSepar = File.separator;
 			
+			if("win".equals(osType)){
+				dir = correctSlashForWin(dir);
+			}
+			
 			if(fileSepar.equals(dir)){
 				rootDirectory();
 			}else if("~".equals(dir)){
@@ -38,7 +43,7 @@ public class CdApplication implements Application{
 			}else if(".".equals(dir)){
 				//remain in current directory, so do nothing
 			}else if("..".equals(dir)){
-				previousDirectory();
+				parentDirectory();
 			}else{
 				specificDirectory(dir);
 				
@@ -71,7 +76,7 @@ public class CdApplication implements Application{
 	private void rootDirectory(){
 		String dir;
 		do{
-			previousDirectory();
+			parentDirectory();
 			dir = Environment.currentDirectory;
 		}
 		while(dir.contains(File.separator));		
@@ -89,12 +94,12 @@ public class CdApplication implements Application{
 	}
 	
 	/**
-	 * This methods returns to the previous directory
+	 * This methods returns to the parent directory
 	 * @param dir The input directory
 	 * @exception CdException On directory error.
 	 * @return none
 	 */
-	private void previousDirectory(){
+	private void parentDirectory(){
 		String currDir = Environment.currentDirectory;//.replace("\\", "/");
 		
 		int lastSlashIndex = currDir.lastIndexOf(File.separator);
@@ -112,11 +117,6 @@ public class CdApplication implements Application{
 	 */
 	private void specificDirectory(String dir) throws CdException{
 		checkAbsolutePath(dir);
-		
-		if("win".equals(osType)){
-			checkValidSyntax(dir);
-		}
-		
 		processDirectory(dir);
 	}
 	
@@ -135,14 +135,14 @@ public class CdApplication implements Application{
 	/**
 	 * This methods check if the syntax of the directory is correct
 	 * @param dir The input directory
-	 * @exception CdException On directory error.
-	 * @return none
+	 * @return return the corrected slash for windows os
 	 */
-	private void checkValidSyntax(String dir) throws CdException{
-		if(dir.matches(".*[\\/?<>:*|\"].*"))
-	    {
-			throw new CdException("The directory '" + dir + "' contains invalid syntax \\/?<>:*|\".");
-	    }
+	private String correctSlashForWin(String dir){
+		if(dir.matches(".*[/].*")){
+			String newDir =  dir.replaceAll("/", Matcher.quoteReplacement(File.separator));
+			return newDir;
+		}
+		return dir;
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public class CdApplication implements Application{
 			for (int i =0 ;i<dirParts.length; i++){	
 				if(!dirParts[i].equals("")){
 					if(dirParts[i].equals("..")){
-						previousDirectory();
+						parentDirectory();
 					}
 					else{
 						changeDirectory(dirParts[i]);
