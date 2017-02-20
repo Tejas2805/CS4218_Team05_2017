@@ -197,15 +197,15 @@ public class ShellImpl implements Shell {
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
 	
-	public static void listFilesForFolder(final File folder, Pattern p) {
+	public static void listFilesForFolder(final File folder, Pattern pattern) {
 	    for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
 	            //listFilesForFolder(fileEntry,p);
 	        } else {
 	        	//Matcher m = p.matcher(fileEntry.getName());
-	        	Matcher m = p.matcher(fileEntry.getPath());
+	        	Matcher matcher = pattern.matcher(fileEntry.getPath());
 	        	//System.out.println("fe:  "+fileEntry.getPath());
-	        	while (m.find()) {
+	        	while (matcher.find()) {
 	        		//System.out.println("m: "+fileEntry.getName());
 	        		//System.out.println("p: "+fileEntry.getPath());
 	        		//System.out.println("ap: "+fileEntry.getAbsolutePath());
