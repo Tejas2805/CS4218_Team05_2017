@@ -4,18 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
 
-import sg.edu.nus.comp.cs4218.Environment;
 import sg.edu.nus.comp.cs4218.app.Grep;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.GrepException;
 import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 
@@ -151,7 +146,6 @@ public class GrepApplication implements Grep {
 	private String performGrep(String strPattern, String line){
 		Pattern pattern;
 		pattern = Pattern.compile(strPattern);
-		String output="";
 		Matcher matcher =  pattern.matcher(line);
 		if(matcher.find() &&matcher.group().length() >0)
 		{	
@@ -231,9 +225,7 @@ public class GrepApplication implements Grep {
 					
 		 try
 		 {
-			 // Check if pattern
-			 Pattern pattern = null;
-			 pattern = Pattern.compile(eachArg[0]);
+			 Pattern.compile(eachArg[0]);
 		 }catch(PatternSyntaxException e){
 			 return "Invalid Pattern";
 		 }
@@ -254,12 +246,9 @@ public class GrepApplication implements Grep {
 		 }
 			 
 		 
-		 // Chheck if pattern is ok
-		 Pattern pattern;
-		 
 		 try
 		 {
-			 pattern = Pattern.compile(eachArg[0]);
+			 Pattern.compile(eachArg[0]);
 		 }catch(PatternSyntaxException e){
 			 return "Invalid Pattern";
 		 }

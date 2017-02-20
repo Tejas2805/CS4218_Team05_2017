@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs4218.impl.app;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -23,6 +24,7 @@ public class SortApplication implements Sort{
 		String sortCondition = "";
 		String results = "";
 		
+		
 		if(args.length == 0){
 			String readStdin = sortRead.readInputStream(stdin);
 			if(readStdin.length() == 0){
@@ -37,18 +39,34 @@ public class SortApplication implements Sort{
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 
-		}else if(args.length == 2){
-			sortCondition = args[0];
-			fileName = args[1];
-			sortCheck.checkValidCondition(sortCondition);
-			sortCheck.checkValidFile(fileName);
-			String data = sortRead.readFromFile(fileName);
+		}else if(args.length >= 2){
+			int index = 0;
+			if("-n".equals(args[0])){
+				sortCondition = args[0];
+				index = 1;
+			}else{
+				sortCheck.checkValidFile(args[0]);
+			}
+			String data = "";
+			for(int i=index; i<args.length; i++){
+				fileName = args[i];
+				sortCheck.checkValidFile(fileName);
+				data += sortRead.readFromFile(fileName);
+			}
+			
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 		}else{
-			throw new SortException("More than two arguements");
+			
+			throw new SortException("Invalid Argument");
 		}
-		printResults(results);
+		
+		try {
+			stdout.write(results.getBytes());
+		} catch (IOException e) {	
+			throw (SortException) new SortException("Error writing to stdout").initCause(e);
+		}
+		//printResults(results);
 	}
 
 	@Override
@@ -101,7 +119,7 @@ public class SortApplication implements Sort{
 	
 		String specialCharData = getSpecialCharData(data);
 		String sortSpecialChar = sortOrder.sortData(specialCharData);
-
+		
 		return sortSpecialChar;
 	}
 
@@ -239,7 +257,7 @@ public class SortApplication implements Sort{
 			}
 			
 		}
-		return specialCharData.trim();
+		return specialCharData;
 	}
 
 	/**
@@ -259,7 +277,7 @@ public class SortApplication implements Sort{
 				numberData += line + System.lineSeparator();
 			}
 		}
-		return numberData.trim();
+		return numberData;
 	}
 
 	/**
@@ -279,7 +297,7 @@ public class SortApplication implements Sort{
 				capitalData += line + System.lineSeparator();
 			}
 		}
-		return capitalData.trim();
+		return capitalData;
 	}
 
 	/**
@@ -299,7 +317,7 @@ public class SortApplication implements Sort{
 				simpleData += line + System.lineSeparator();
 			}
 		}
-		return simpleData.trim();
+		return simpleData;
 	}
 	
 	/**
@@ -316,20 +334,9 @@ public class SortApplication implements Sort{
 			}
 		}
 
-		return newResults.trim();
+		return newResults;
 	}
 
-	/**
-	 * This method print the final results in the command line
-	 * @param results the results to be printed
-	 */
-	private void printResults(String results){
-		String newLine = System.lineSeparator();
-		String[] resultsList = results.split(newLine);
-
-		for(String strResults : resultsList){
-			System.out.println(strResults);
-		}
-	}
+	
 
 }
