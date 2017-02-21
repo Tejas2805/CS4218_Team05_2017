@@ -149,7 +149,7 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
-		preprocessGlobbing(argsArray);
+		preprocessArg(argsArray);
 		String[] finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
@@ -162,12 +162,12 @@ public class ShellImpl implements Shell {
 		return finalArgsArray;
 	}
 
-	private static void preprocessGlobbing(String... argsArray) {
-		int numberOfLevel=0;
+	private static void preprocessArg(String... argsArray) {
+		
 		for(int i=0;i<argsArray.length;i++){
 			String path="";
 			String inputFile="";
-			
+			int numberOfLevel=0;
 			if(argsArray[i].contains("*")){
 				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i, path, inputFile);
 			}else{
@@ -218,6 +218,9 @@ public class ShellImpl implements Shell {
 		}
 		final File folder = new File(filePath.toString());
 		listFilesForFolder(folder,pattern,numberOfLevel);
+		if(allFiles.isEmpty()){
+			allFiles.add("");
+		}
 		return numberOfLevel;
 	}
 	
@@ -389,7 +392,6 @@ public class ShellImpl implements Shell {
 					break;
 				}
 				if (("").equals(readLine)) {
-					System.out.println("test1");
 					continue;
 				}
 				//System.out.println(readLine);

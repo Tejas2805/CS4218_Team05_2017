@@ -24,7 +24,8 @@ public class TestCatApplication {
 	public static void setUpBeforeClass() throws Exception {
 		catApplication = new CatApplication();
 	}
-
+	
+	
 	@Test
 	public void catWithNonExistantFile(){
 		String[] args = {"asdsad.txt"};

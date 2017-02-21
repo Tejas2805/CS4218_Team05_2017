@@ -61,7 +61,8 @@ public class CalApplication implements Cal{
 				try{
 					Integer.parseInt(args[0]);
 				}catch(NumberFormatException e){
-					e.printStackTrace();
+					throw (CalException) new CalException("Invalid argument").initCause(e);
+					
 				}
 				output = printCalForYear(strArgs);
 				
@@ -75,7 +76,7 @@ public class CalApplication implements Cal{
 				try{
 					Integer.parseInt(args[1]);
 				}catch(NumberFormatException ee){
-						ee.printStackTrace();
+					throw (CalException) new CalException("Invalid argument").initCause(ee);
 				}
 
 				output = printCalForYearMondayFirst(strArgs);
@@ -85,7 +86,7 @@ public class CalApplication implements Cal{
 					Integer.parseInt(args[0]);
 					Integer.parseInt(args[1]);
 					}catch(NumberFormatException ee){
-						ee.printStackTrace();
+						throw (CalException) new CalException("Invalid argument").initCause(ee);
 					}
 
 					output = printCalForMonthYear(strArgs);
@@ -97,7 +98,7 @@ public class CalApplication implements Cal{
 					Integer.parseInt(args[1]);
 					Integer.parseInt(args[2]);
 					}catch(NumberFormatException ee){
-						ee.printStackTrace();
+						throw (CalException) new CalException("Invalid argument").initCause(ee);
 				}
 				output = printCalForMonthYearMondayFirst(strArgs);
 			}
