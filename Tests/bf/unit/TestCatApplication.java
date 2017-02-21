@@ -49,7 +49,7 @@ public class TestCatApplication {
 	
 	@Test
 	public void catWithOneValidFile(){
-		String[] args = {"catTestSource1.txt"};
+		String[] args = {"ef1_test_cases\\cat\\catTestSource1.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\n";
@@ -67,7 +67,7 @@ public class TestCatApplication {
 
 	@Test
 	public void catWithMultipleValidFiles(){
-		String[] args = {"catTestSource1.txt","catTestSource2.txt"};
+		String[] args = {"ef1_test_cases\\cat\\catTestSource1.txt","ef1_test_cases\\cat\\catTestSource2.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\nhello world\n";
