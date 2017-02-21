@@ -1,0 +1,3 @@
+74 457 wc1.txt
+6 60 wc2.txt
+80 517 total

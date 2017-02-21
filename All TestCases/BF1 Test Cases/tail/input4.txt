@@ -1,0 +1,1 @@
+tail tail1.txt –n 2
