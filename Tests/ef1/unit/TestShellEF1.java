@@ -100,4 +100,23 @@ public class TestShellEF1 {
 		actual = output.toString();
 		assertEquals(expected, actual);		
 	}
+	
+	@Test
+	public void catGlobMultipleFilesDirectories(){
+		String input = "cat ef1_test_c*s\\g*b\\glob*Sou*e1.txt ef1_test_c*s\\g*b\\glob*e2.txt";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "hello world\nhello world 2\n", actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
 }
