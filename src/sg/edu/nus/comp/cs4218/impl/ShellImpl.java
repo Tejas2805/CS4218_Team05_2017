@@ -149,9 +149,6 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
-		for(int i=0;i<argsArray.length;i++){
-			System.out.println(argsArray[i]);
-		}
 		preprocessArg(argsArray);
 		String[] finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
@@ -395,7 +392,6 @@ public class ShellImpl implements Shell {
 					break;
 				}
 				if (("").equals(readLine)) {
-					System.out.println("test1");
 					continue;
 				}
 				//System.out.println(readLine);
