@@ -18,6 +18,14 @@ public class SortApplication implements Sort{
 	SortOrder sortOrder = new SortOrder();
 	SortNumber sortNum = new SortNumber();
 	
+	/**
+	 * This method execute the sort function and write the data to output stream
+	 * FILE is read and converted to string 
+	 * InputStream are also converted to string before being process
+	 * @param args contains an array of arguments such as FILE or -n
+	 * @param stdin input stream of data
+	 * @param stdout data is written to the output stream 
+	 */
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws SortException {
 		String fileName = "";
@@ -65,9 +73,13 @@ public class SortApplication implements Sort{
 		} catch (IOException e) {	
 			throw (SortException) new SortException("Error writing to stdout").initCause(e);
 		}
-		//printResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with simple letter sorted in ascending order.
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortStringsSimple(String toSort) {
 		// TODO Auto-generated method stub
@@ -78,7 +90,12 @@ public class SortApplication implements Sort{
 
 		return sortSimple;
 	}
-
+	
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with capital letter sorted in ascending order.
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortStringsCapital(String toSort) {
 		// TODO Auto-generated method stub
@@ -91,6 +108,11 @@ public class SortApplication implements Sort{
 
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with numbers sorted in ascending order.
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortNumbers(String toSort) {
 		// TODO Auto-generated method stub
@@ -110,6 +132,11 @@ public class SortApplication implements Sort{
 		return sortNumber;
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char sorted in ascending order.
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -122,6 +149,11 @@ public class SortApplication implements Sort{
 		return sortSpecialChar;
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with capital letter and simple letters sorted in order of capital letter, number 
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleCapital(String toSort) {
 		// TODO Auto-generated method stub
@@ -132,6 +164,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with number and simple letters sorted in order of number, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleNumbers(String toSort) {
 		// TODO Auto-generated method stub
@@ -142,6 +179,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special chat and simple letters sorted in order of special char, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -152,6 +194,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with number and capital letters sorted in order of number, capital letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortCapitalNumbers(String toSort) {
 		// TODO Auto-generated method stub
@@ -162,6 +209,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char and capital letters sorted in order of special char, capital letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortCapitalSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -172,6 +224,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char and number sorted in order of special char, number
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortNumbersSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -182,6 +239,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with number, capital letter, simple letter sorted in order of number, capital letter, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleCapitalNumber(String toSort) {
 		// TODO Auto-generated method stub
@@ -193,6 +255,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char, capital letter, simple letter sorted in order of special char, capital letter, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleCapitalSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -204,6 +271,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char, number, simple letter sorted in order of special char, number, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortSimpleNumbersSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -215,6 +287,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char, number, capital letter sorted in order of special char, number, capital letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortCapitalNumbersSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
@@ -226,6 +303,11 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 
+	/*
+	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * @return String a string of lines starting with special char, number, capital letter, simple letter sorted in order of special char, number, capital letter, simple letter
+	 * Each line is separated by a line separator
+	 */
 	@Override
 	public String sortAll(String toSort) {
 		// TODO Auto-generated method stub

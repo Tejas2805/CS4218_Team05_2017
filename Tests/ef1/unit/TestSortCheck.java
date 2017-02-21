@@ -26,46 +26,70 @@ public class TestSortCheck {
 		sortCheck = new SortCheck();
 	}
 	
+	/*
+	 * Test that isSpecialChar returns true for a valid special char
+	 */
 	@Test
 	public void testIsSpecialChar() {
 		char c = '#';
 		assertTrue(sortCheck.isSpecialChar(c));
 	}
 	
+	/*
+	 * Test that isSpecialChar returns false for a valid special char
+	 */
 	@Test
 	public void testNotSpecialChar() {
 		char c = 'a';
 		assertFalse(sortCheck.isSpecialChar(c));
 	}
 	
+	/*
+	 * Test that isFile returns true for a valid file
+	 */
 	@Test
 	public void testIsFile() {
 		String fileName = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		assertTrue(sortCheck.isFile(fileName));
 	}
 	
+	/*
+	 * Test that isFile returns false for a invalid file
+	 */
 	@Test
 	public void testNotFile() {
 		String fileName = "random.txt";
 		assertFalse(sortCheck.isFile(fileName));
 	}
 	
+	/*
+	 * Test that isSortByNumCondition returns true for a valid num condition
+	 */
 	@Test
 	public void testIsSortByNumCondition() {
 		assertTrue(sortCheck.isSortByNumCondition("-n"));
 	}
 	
+	/*
+	 * Test that isSortByNumCondition returns false for an invalid num condition
+	 */
 	@Test
 	public void testNotSortByNumCondition() {
 		assertFalse(sortCheck.isSortByNumCondition("n"));
 	}
 	
+	/*
+	 * Test that isFirstWordNum returns true if the first word is a number
+	 */
 	@Test
 	public void testIsFirstWordNum(){
 		String line = "10 million";
 		assertTrue(sortCheck.isFirstWordNum(line));
 	}
 	
+	/*
+	 * Test that isFirstWordNum returns false if the first word is not a number
+	 */
 	@Test
 	public void testNotFirstWordNum(){
 		String line = "10million";
@@ -73,6 +97,9 @@ public class TestSortCheck {
 	}
 	
 	
+	/*
+	 * Throw an exception for invalid num condition statement
+	 */
 	@Test
 	public void testCheckValidCondition() throws SortException{
 		thrown.expect(SortException.class);

@@ -24,6 +24,11 @@ public class TestSortOrder {
 		sortRead = new SortRead();
 	}
 	
+	/*
+	 * Test that sortData(String) sort the line in the order of special char, numbers, capital letter & simple letters
+	 * sort.txt contains line in random order
+	 * sortAll.txt contains line sorted in the order of special char, numbers, capital letter & simple letters
+	 */
 	@Test
 	public void testSortData() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
@@ -36,6 +41,12 @@ public class TestSortOrder {
 		assertEquals(expectedResults, actualResults);
 	}
 	
+	/*
+	 * Test that sortByAscii(String) sort the line in the order of special char, numbers, capital letter & simple letters
+	 * each individual order(e.g. special chat, number) is sorted according to ascending ascii value
+	 * sort.txt contains line in random order
+	 * sortAll.txt contains line sorted in the order of special char, numbers, capital letter & simple letters
+	 */
 	@Test
 	public void testSortByAscii() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
