@@ -167,7 +167,10 @@ public class TailApplication implements Application{
 			int counter = 0;
 			int lineCount = Integer.parseInt(args[1]);
 			if(lineCount<=0){
-				throw new TailException("Invalid Line Count");
+				throw new Exception("Invalid Line Count");
+			}
+			if(stdin==null){
+				throw new Exception("stdin is null");
 			}
 			BufferedReader buffReader = new BufferedReader(new InputStreamReader(stdin));
 			String line = null;

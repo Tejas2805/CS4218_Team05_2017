@@ -25,8 +25,8 @@ public class TestTailApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Tail: args, stdin, stdout are null",a);
+			String actual=e.getMessage();
+			assertEquals("Tail: args, stdin, stdout are null",actual);
 	}
 	}
 	@Test
@@ -39,8 +39,8 @@ public class TestTailApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Tail: stdin is null",a);
+			String actual=e.getMessage();
+			assertEquals("Tail: stdin is null",actual);
 			
 	}
 		//outputStream not empty args does contain path
@@ -48,8 +48,8 @@ public class TestTailApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Tail: stdin is null",a);
+			String actual=e.getMessage();
+			assertEquals("Tail: stdin is null",actual);
 		}
 	}
 	@Test
@@ -63,8 +63,8 @@ public class TestTailApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Tail: stdout is null",a);
+			String actual=e.getMessage();
+			assertEquals("Tail: stdout is null",actual);
 			
 	}
 	}

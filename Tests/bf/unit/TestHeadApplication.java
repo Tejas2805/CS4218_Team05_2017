@@ -28,8 +28,8 @@ public class TestHeadApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Head: args, stdin, stdout are null",a);
+			String actual=e.getMessage();
+			assertEquals("Head: args, stdin, stdout are null",actual);
 			
 	}
 	}
@@ -43,8 +43,8 @@ public class TestHeadApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Head: stdin is null",a);
+			String actual=e.getMessage();
+			assertEquals("Head: stdin is null",actual);
 			
 	}
 		//outputStream not empty args does contain path
@@ -52,8 +52,8 @@ public class TestHeadApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Head: stdin is null",a);
+			String actual=e.getMessage();
+			assertEquals("Head: stdin is null",actual);
 		}
 	}
 	@Test
@@ -67,8 +67,8 @@ public class TestHeadApplication {
 		try{
 			absApp.run(args, stdin, stdout);
 		}catch (Exception e){
-			String a=e.getMessage();
-			assertEquals("Head: stdout is null",a);
+			String actual=e.getMessage();
+			assertEquals("Head: stdout is null",actual);
 			
 	}
 	}
