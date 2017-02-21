@@ -49,7 +49,7 @@ public class TestShellBF {
 	public void echoSingleQuotes(){
 		output = new ByteArrayOutputStream();
 		
-		String expected = "lala";
+		String expected = "lala\n";
 		try {
 			shellImpl.parseAndEvaluate("echo lala", output);
 		} catch (AbstractApplicationException e) {
