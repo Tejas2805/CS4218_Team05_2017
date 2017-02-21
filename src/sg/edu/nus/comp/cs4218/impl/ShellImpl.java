@@ -151,6 +151,7 @@ public class ShellImpl implements Shell {
 		}
 		allFiles.clear();
 		String filePathString="";
+		int numberOfLevel=0;
 		for(int i=0;i<argsArray.length;i++){
 			String output="";
 			String path="";
@@ -178,13 +179,20 @@ public class ShellImpl implements Shell {
 				filePathString=filePath.toString();
 				String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
 				String fir= inputRegex.replace("\\", "\\\\");
-				//fir =fir.replace("/", "\\\\");
-;			
+				fir =fir.replace("/", "\\\\");
+				
 				Pattern p = Pattern.compile(fir);
 				//System.out.println(fir);
+				for(int k=0;k<fir.split("\\\\").length;k++){
+					if(!fir.split("\\\\")[k].isEmpty()){
+						numberOfLevel= numberOfLevel+1;
+					}
+					//System.out.println(k+": "+fir.split("\\\\")[k]);
+				}
+				//System.out.println(numberOfLevel);
 				final File folder = new File(filePath.toString());
 				//System.out.println(currentDir.toString());
-				listFilesForFolder(folder,p);
+				listFilesForFolder(folder,p,numberOfLevel);
 			}else{
 				allFiles.add(argsArray[i]);
 			}
@@ -197,10 +205,10 @@ public class ShellImpl implements Shell {
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
 	
-	public static void listFilesForFolder(final File folder, Pattern pattern) {
+	public static void listFilesForFolder(final File folder, Pattern pattern, int numOfLevel) {
 	    for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
-	            //listFilesForFolder(fileEntry,p);
+	            listFilesForFolder(fileEntry,pattern,numOfLevel);
 	        } else {
 	        	//Matcher m = p.matcher(fileEntry.getName());
 	        	Matcher matcher = pattern.matcher(fileEntry.getPath());
@@ -215,7 +223,10 @@ public class ShellImpl implements Shell {
 						// TODO Auto-generated catch block
 						//e.printStackTrace();
 					//}
-	        		allFiles.add(fileEntry.getPath());
+	        		//System.out.println("num: "+fileEntry.getPath().split("\\\\").length);
+	        		if(numOfLevel==fileEntry.getPath().split("\\\\").length){
+	        			allFiles.add(fileEntry.getPath());
+	        		}
 	        	}
 	        }
 	    }
@@ -239,7 +250,7 @@ public class ShellImpl implements Shell {
 		try {
 			fInputStream = new FileInputStream(inputFile);
 		} catch (FileNotFoundException e) {
-			throw new ShellException(e.getMessage());
+			throw (ShellException) new ShellException(e.getMessage()).initCause(e);
 		}
 		return fInputStream;
 	}
