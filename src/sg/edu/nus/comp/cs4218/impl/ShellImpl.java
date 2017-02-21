@@ -78,6 +78,8 @@ public class ShellImpl implements Shell {
 
 		for (int i = 0; i < argsArray.length; i++) {
 			char[] chToken = argsArray[i].toCharArray();
+			if(chToken.length  < 2)
+				continue;
 			if(chToken[0] == '\'' && chToken[chToken.length-1] == '\'')
 				continue;
 			
