@@ -162,8 +162,7 @@ public class ShellImpl implements Shell {
 		return finalArgsArray;
 	}
 
-	private static void preprocessGlobbing(String[] argsArray) {
-		String filePathString="";
+	private static void preprocessGlobbing(String... argsArray) {
 		int numberOfLevel=0;
 		for(int i=0;i<argsArray.length;i++){
 			String path="";
@@ -177,44 +176,48 @@ public class ShellImpl implements Shell {
 		}
 	}
 
-	private static int processAsterisk(String[] argsArray, int numberOfLevel, int i, String path, String inputFile) {
-		String filePathString;
-		String[] inputTemp = argsArray[i].split("/");
+	private static int processAsterisk(String[] argsArray, int numberOfLevel, int num, String path, String inputFile) {
+		String pathUsed=path;
+		String[] inputTemp = argsArray[num].split("/");
+		String input = inputFile;
 		for(int j=0;j<inputTemp.length;j++){
 			if(inputTemp[j].contains("*")){
 				for(int k=0;k<inputTemp.length-j;k++){
 					if(k==inputTemp.length-j-1){
-						inputFile=inputFile+inputTemp[j+k];
+						input=input+inputTemp[j+k];
 					}else{
-						inputFile=inputFile+inputTemp[j+k]+"/";
+						input=input+inputTemp[j+k]+"/";
 					}
 				}
 				break;
 			}else{
-				path = path+inputTemp[j]+"/";
+				pathUsed = pathUsed+inputTemp[j]+"/";
 			}
 		}
-		numberOfLevel = matchFile(numberOfLevel, path, inputFile);
-		return numberOfLevel;
+		int output;
+		output = matchFile(numberOfLevel, pathUsed, input);
+		return output;
 	}
 
-	private static int matchFile(int numberOfLevel, String path, String inputFile) {
+	private static int matchFile(int number, String path, String inputFile) {
 		String filePathString;
+		int numberOfLevel=number;
 		Path currentDir = Paths.get(Environment.currentDirectory);
 		Path filePath = currentDir.resolve(path);
 		filePathString=filePath.toString();
 		String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
-		String fir= inputRegex.replace("\\", "\\\\");
-		fir =fir.replace("/", "\\\\");
+		String doubleBackSlash="\\\\";
+		String finalInputRegex= inputRegex.replace("\\", doubleBackSlash);
+		finalInputRegex =finalInputRegex.replace("/", doubleBackSlash);
 		
-		Pattern p = Pattern.compile(fir);
-		for(int k=0;k<fir.split("\\\\").length;k++){
-			if(!fir.split("\\\\")[k].isEmpty()){
+		Pattern pattern = Pattern.compile(finalInputRegex);
+		for(int k=0;k<finalInputRegex.split(doubleBackSlash).length;k++){
+			if(!finalInputRegex.split(doubleBackSlash)[k].isEmpty()){
 				numberOfLevel= numberOfLevel+1;
 			}
 		}
 		final File folder = new File(filePath.toString());
-		listFilesForFolder(folder,p,numberOfLevel);
+		listFilesForFolder(folder,pattern,numberOfLevel);
 		return numberOfLevel;
 	}
 	
@@ -275,7 +278,7 @@ public class ShellImpl implements Shell {
 		try {
 			fOutputStream = new FileOutputStream(outputFile);
 		} catch (FileNotFoundException e) {
-			throw new ShellException(e.getMessage());
+			throw (ShellException) new ShellException(e.getMessage()).initCause(e);
 		}
 		return fOutputStream;
 	}
@@ -295,7 +298,7 @@ public class ShellImpl implements Shell {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				throw new ShellException(e.getMessage());
+				throw (ShellException) new ShellException(e.getMessage()).initCause(e);
 			}
 		}
 	}
@@ -316,7 +319,7 @@ public class ShellImpl implements Shell {
 			try {
 				outputStream.close();
 			} catch (IOException e) {
-				throw new ShellException(e.getMessage());
+				throw (ShellException) new ShellException(e.getMessage()).initCause(e);
 			}
 		}
 	}
@@ -340,7 +343,7 @@ public class ShellImpl implements Shell {
 		try {
 			stdout.write(((ByteArrayOutputStream) outputStream).toByteArray());
 		} catch (IOException e) {
-			throw new ShellException(EXP_STDOUT);
+			throw (ShellException) new ShellException(EXP_STDOUT).initCause(e);
 		}
 	}
 
