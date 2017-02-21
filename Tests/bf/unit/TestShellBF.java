@@ -31,10 +31,11 @@ public class TestShellBF {
 	@Test
 	public void echoNoQuotes(){
 		output = new ByteArrayOutputStream();
-		String actual=output.toString();
-		String expected = "";
+		String input = "echo lala";
+		String expected = "lala\n";
+		String actual;
 		try {
-			shellImpl.parseAndEvaluate("echo", output);
+			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,16 +43,18 @@ public class TestShellBF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		actual=output.toString();
         assertEquals(expected, actual);
 	}
 	
 	@Test
 	public void echoSingleQuotes(){
+		String input = "echo 'lala'";
 		output = new ByteArrayOutputStream();
-		
 		String expected = "lala\n";
+		String actual;
 		try {
-			shellImpl.parseAndEvaluate("echo lala", output);
+			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,8 +62,116 @@ public class TestShellBF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String actual=output.toString();
+		actual=output.toString();
         assertEquals(expected, actual);
 	}
-
+	
+	@Test
+	public void echoDoubleQuotes(){
+		String input = "echo \"lala\"";
+		output = new ByteArrayOutputStream();
+		String expected = "lala\n";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		actual=output.toString();
+        assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void echoBackQuotes(){
+		output = new ByteArrayOutputStream();
+		String input = "echo `lala`";
+		String expected = "shell: lala: Invalid app.";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			actual=e.getMessage();
+			assertEquals(expected,actual);
+		}
+	}
+	
+	@Test
+	public void echoDoubleWithBackQuotes(){
+		String input = "echo \"This is space:`echo \" \"`.\"";
+		output = new ByteArrayOutputStream();
+		String expected = "This is space: .\n";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+		}
+		actual=output.toString();
+        assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void echoSingleWithBackQuotes(){
+		String input = "echo 'This is space:`echo \" \"`.'";
+		output = new ByteArrayOutputStream();
+		String expected = "This is space: .\n";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+		}
+		actual=output.toString();
+        assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void echoSemicolon(){
+		String input = "echo lala; echo lolo";
+		output = new ByteArrayOutputStream();
+		String expected = "lala\nlolo\n";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+		}
+		actual=output.toString();
+        assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void echoSemicolonWithQuotes(){
+		String input = "echo 'lala'; echo \"lolo `echo lele`\"";
+		output = new ByteArrayOutputStream();
+		String expected = "lala\nlolo lele\n";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+		}
+		actual=output.toString();
+        assertEquals(expected, actual);
+	}
 }
