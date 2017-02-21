@@ -29,7 +29,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("calTestOutput1.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput1.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -38,21 +38,7 @@ public class TestCalApplication {
 		}
 		String actual = calApplication.printCalForMonthYear("2\n2017\n");
 		
-		char[] arr1 = expected.toCharArray();
-		char[] arr2 = actual.toCharArray();
 		
-		for(int i =0; i < arr1.length; i++)
-		{
-			char a = arr1[i];
-			char b = arr2[i];
-			int aa = a;
-			int bb = b;
-			if(a == b)
-				System.out.println("" + a + " is " + b);
-			else
-				System.out.println("" + a + " not " + b);
-		}
-		assertEquals(expected.length(), actual.length());
 		assertEquals(expected, actual);
 	}
 
@@ -61,7 +47,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("calTestOutput2.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput2.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -69,23 +55,7 @@ public class TestCalApplication {
 			fail();
 		}
 		String actual = calApplication.printCalForMonthYearMondayFirst("-m\n2\n2017\n");
-		
-		char[] arr1 = expected.toCharArray();
-		char[] arr2 = actual.toCharArray();
-		
-		for(int i =0; i < arr1.length; i++)
-		{
-			char a = arr1[i];
-			char b = arr2[i];
-			int aa = a;
-			int bb = b;
-			if(a == b)
-				System.out.println("" + a + " is " + b);
-			else
-				System.out.println("" + a + " not " + b);
-			//assertEquals(arr1[i], arr2[i]);
-		}
-		assertEquals(expected.length(), actual.length());
+	
 		assertEquals(expected, actual);
 	}
 	
@@ -95,7 +65,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("calTestOutput3.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput3.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -104,22 +74,6 @@ public class TestCalApplication {
 		}
 		String actual = calApplication.printCalForYear("2017\n");
 		
-		char[] arr1 = expected.toCharArray();
-		char[] arr2 = actual.toCharArray();
-		
-		for(int i =0; i < arr1.length; i++)
-		{
-			char a = arr1[i];
-			char b = arr2[i];
-			int aa = a;
-			int bb = b;
-			if(a == b)
-				System.out.println("" + a + " is " + b);
-			else
-				System.out.println("" + a + " not " + b);
-			//assertEquals(arr1[i], arr2[i]);
-		}
-		assertEquals(expected.length(), actual.length());
 		assertEquals(expected, actual);
 	}
 	
@@ -128,7 +82,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("calTestOutput4.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput4.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -137,21 +91,7 @@ public class TestCalApplication {
 		}
 		String actual = calApplication.printCalForYearMondayFirst("-m\n2017\n");
 		
-		char[] arr1 = expected.toCharArray();
-		char[] arr2 = actual.toCharArray();
 		
-		for(int i =0; i < arr1.length; i++)
-		{
-			char a = arr1[i];
-			char b = arr2[i];
-			int aa = a;
-			int bb = b;
-			if(a == b)
-				System.out.println("" + a + " is " + b);
-			else
-				System.out.println("" + a + " not " + b);
-			//assertEquals(arr1[i], arr2[i]);
-		}
 		assertEquals(expected.length(), actual.length());
 		assertEquals(expected, actual);
 	}
