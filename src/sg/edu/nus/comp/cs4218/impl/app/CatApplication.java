@@ -106,7 +106,7 @@ public class CatApplication implements Application {
 				
 			}else{
 				try {
-					stdout.write("\n".getBytes());
+					stdout.write("".getBytes());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
