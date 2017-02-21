@@ -77,6 +77,10 @@ public class ShellImpl implements Shell {
 		Pattern patternBQp = Pattern.compile(patternBQ);
 
 		for (int i = 0; i < argsArray.length; i++) {
+			char[] chToken = argsArray[i].toCharArray();
+			if(chToken[0] == '\'' && chToken[chToken.length-1] == '\'')
+				continue;
+			
 			Matcher matcherBQ = patternBQp.matcher(argsArray[i]);
 			if (matcherBQ.find()) {// found backquoted
 				String bqStr = matcherBQ.group(1);
