@@ -4,7 +4,6 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,59 +149,73 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		preprocessGlobbing(argsArray);
+		String[] finalArgsArray = readAllFile();
+		absApp.run(finalArgsArray, inputStream, outputStream);
+	}
+
+	private static String[] readAllFile() {
+		String[] finalArgsArray = new String[allFiles.size()];
+		for(int i=0;i<allFiles.size();i++){
+			finalArgsArray[i]=allFiles.get(i);
+		}
+		return finalArgsArray;
+	}
+
+	private static void preprocessGlobbing(String[] argsArray) {
 		String filePathString="";
 		int numberOfLevel=0;
 		for(int i=0;i<argsArray.length;i++){
-			String output="";
 			String path="";
 			String inputFile="";
 			
 			if(argsArray[i].contains("*")){
-				//allFiles.clear();
-				String[] inputTemp = argsArray[i].split("/");
-				for(int j=0;j<inputTemp.length;j++){
-					if(inputTemp[j].contains("*")){
-						for(int k=0;k<inputTemp.length-j;k++){
-							if(k==inputTemp.length-j-1){
-								inputFile=inputFile+inputTemp[j+k];
-							}else{
-								inputFile=inputFile+inputTemp[j+k]+"/";
-							}
-						}
-						break;
-					}else{
-						path = path+inputTemp[j]+"/";
-					}
-				}
-				Path currentDir = Paths.get(Environment.currentDirectory);
-				Path filePath = currentDir.resolve(path);
-				filePathString=filePath.toString();
-				String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
-				String fir= inputRegex.replace("\\", "\\\\");
-				fir =fir.replace("/", "\\\\");
-				
-				Pattern p = Pattern.compile(fir);
-				//System.out.println(fir);
-				for(int k=0;k<fir.split("\\\\").length;k++){
-					if(!fir.split("\\\\")[k].isEmpty()){
-						numberOfLevel= numberOfLevel+1;
-					}
-					//System.out.println(k+": "+fir.split("\\\\")[k]);
-				}
-				//System.out.println(numberOfLevel);
-				final File folder = new File(filePath.toString());
-				//System.out.println(currentDir.toString());
-				listFilesForFolder(folder,p,numberOfLevel);
+				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i, path, inputFile);
 			}else{
 				allFiles.add(argsArray[i]);
 			}
 		}
-		String[] finalArgsArray = new String[allFiles.size()];
-		for(int i=0;i<allFiles.size();i++){
-			finalArgsArray[i]=allFiles.get(i);
-			//System.out.println("fi: "+finalArgsArray[i]);
+	}
+
+	private static int processAsterisk(String[] argsArray, int numberOfLevel, int i, String path, String inputFile) {
+		String filePathString;
+		String[] inputTemp = argsArray[i].split("/");
+		for(int j=0;j<inputTemp.length;j++){
+			if(inputTemp[j].contains("*")){
+				for(int k=0;k<inputTemp.length-j;k++){
+					if(k==inputTemp.length-j-1){
+						inputFile=inputFile+inputTemp[j+k];
+					}else{
+						inputFile=inputFile+inputTemp[j+k]+"/";
+					}
+				}
+				break;
+			}else{
+				path = path+inputTemp[j]+"/";
+			}
 		}
-		absApp.run(finalArgsArray, inputStream, outputStream);
+		numberOfLevel = matchFile(numberOfLevel, path, inputFile);
+		return numberOfLevel;
+	}
+
+	private static int matchFile(int numberOfLevel, String path, String inputFile) {
+		String filePathString;
+		Path currentDir = Paths.get(Environment.currentDirectory);
+		Path filePath = currentDir.resolve(path);
+		filePathString=filePath.toString();
+		String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
+		String fir= inputRegex.replace("\\", "\\\\");
+		fir =fir.replace("/", "\\\\");
+		
+		Pattern p = Pattern.compile(fir);
+		for(int k=0;k<fir.split("\\\\").length;k++){
+			if(!fir.split("\\\\")[k].isEmpty()){
+				numberOfLevel= numberOfLevel+1;
+			}
+		}
+		final File folder = new File(filePath.toString());
+		listFilesForFolder(folder,p,numberOfLevel);
+		return numberOfLevel;
 	}
 	
 	public static void listFilesForFolder(final File folder, Pattern pattern, int numOfLevel) {
@@ -210,20 +223,8 @@ public class ShellImpl implements Shell {
 	        if (fileEntry.isDirectory()) {
 	            listFilesForFolder(fileEntry,pattern,numOfLevel);
 	        } else {
-	        	//Matcher m = p.matcher(fileEntry.getName());
 	        	Matcher matcher = pattern.matcher(fileEntry.getPath());
-	        	//System.out.println("fe:  "+fileEntry.getPath());
 	        	while (matcher.find()) {
-	        		//System.out.println("m: "+fileEntry.getName());
-	        		//System.out.println("p: "+fileEntry.getPath());
-	        		//System.out.println("ap: "+fileEntry.getAbsolutePath());
-	        		//try {
-						//System.out.println("cp: "+fileEntry.getCanonicalPath());
-					//} catch (IOException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
-					//}
-	        		//System.out.println("num: "+fileEntry.getPath().split("\\\\").length);
 	        		if(numOfLevel==fileEntry.getPath().split("\\\\").length){
 	        			allFiles.add(fileEntry.getPath());
 	        		}
@@ -402,8 +403,6 @@ public class ShellImpl implements Shell {
 		// TODO Auto-generated method stub
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
-			//System.out.println(cmds[0]);
-			//System.out.println(cmds[1]);
 			CallCommand call = new CallCommand(cmds[i]);
 			call.parse();
 			call.evaluate(null, stdout);
