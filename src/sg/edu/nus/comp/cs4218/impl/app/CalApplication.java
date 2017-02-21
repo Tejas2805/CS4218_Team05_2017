@@ -131,7 +131,7 @@ public class CalApplication implements Cal{
 		String year = String.valueOf(today.getYear());
 		
 		output[0] = FOUR_SPACES + month + ONE_SPACE+  year + FOUR_SPACES;
-		output[1] = "Su Mo Tu We Th Fr Sa";
+		output[1] = "Su Mo Tu We Th Fr Sa ";
 		
 		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
 		
@@ -205,7 +205,7 @@ public class CalApplication implements Cal{
 		String year = String.valueOf(today.getYear());
 		
 		output[0] = "    "+month + " " + year + "    ";
-		output[1] = "Mo Tu We Th Fr Sa Su";
+		output[1] = "Mo Tu We Th Fr Sa Su ";
 		
 		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
 		
@@ -284,7 +284,7 @@ public class CalApplication implements Cal{
 		String year = String.valueOf(today.getYear());
 		
 		output[0] = "    "+month + " " + year + "    ";
-		output[1] = "Su Mo Tu We Th Fr Sa";
+		output[1] = "Su Mo Tu We Th Fr Sa ";
 		
 		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
 		
@@ -402,7 +402,7 @@ public class CalApplication implements Cal{
 		String year = String.valueOf(today.getYear());
 		
 		output[0] = "    "+month + " " + year + "    ";
-		output[1] = "Mo Tu We Th Fr Sa Su";
+		output[1] = "Mo Tu We Th Fr Sa Su ";
 		
 		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
 		
@@ -469,7 +469,7 @@ public class CalApplication implements Cal{
 		
 		String[] calendar = new String[12];
 		for(int i = 0; i < calendar.length; i++){
-			calendar[i] = printCalForMonthYearMondayFirst("-m\n" + i+1+"\n" + iyear + "\n");
+			calendar[i] = printCalForMonthYearMondayFirst("-m\n" + (i+1)+"\n" + iyear + "\n");
 		}
 		
 		String[] output = new String[7*4];

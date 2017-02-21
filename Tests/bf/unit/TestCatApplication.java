@@ -31,7 +31,7 @@ public class TestCatApplication {
 		String[] args = {"asdsad.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "\n", actual;
+		String expected = "", actual;
 		
 		try {
 			catApplication.run(args, stdin, output);
