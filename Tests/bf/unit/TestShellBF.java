@@ -148,6 +148,24 @@ public class TestShellBF {
 	}
 	
 	@Test
+	public void echoSemicolonWithException(){
+		String input = "eo lala; echo lele";
+		output = new ByteArrayOutputStream();
+		String expected = "shell: eo: Invalid app.";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			actual=e.getMessage();
+			assertEquals(expected,actual);
+		}
+	}
+	
+	@Test
 	public void echoSemicolonWithQuotes(){
 		String input = "echo 'lala'; echo \"lolo `echo lele`\"";
 		output = new ByteArrayOutputStream();

@@ -133,6 +133,7 @@ public class ShellImpl implements Shell {
 			InputStream inputStream, OutputStream outputStream)
 			throws AbstractApplicationException, ShellException {
 		Application absApp = null;
+		//calling application
 		if (("cat").equals(app)) {// cat [FILE]...
 			absApp = new CatApplication();
 		} else if (("echo").equals(app)) {// echo [args]...
@@ -155,6 +156,7 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		//globbing
 		preprocessArg(argsArray);
 		String[] finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
@@ -451,6 +453,7 @@ public class ShellImpl implements Shell {
 	public void parseAndEvaluate(String cmdline, OutputStream stdout)
 			throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
+		//semicolon operator
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
 			CallCommand call = new CallCommand(cmds[i]);
