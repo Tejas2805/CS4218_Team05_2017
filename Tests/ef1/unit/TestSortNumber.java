@@ -23,7 +23,11 @@ public class TestSortNumber {
 		sortRead = new SortRead();
 	}
 	
-	
+	/*
+	 * Test if the numbers are sorted in numerical order
+	 * sortNumbersUnordered.txt contains the numbers arranged in random order
+	 * sortNumbersOrdered.txt contains numbers sorted in numerical order
+	 */
 	@Test
 	public void testSortNumData() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersUnordered.txt";

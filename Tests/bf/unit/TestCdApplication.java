@@ -27,6 +27,10 @@ public class TestCdApplication {
 		cdApp = new CdApplication();
 	}
 	
+	/*
+	 * Test "cd" return the user to the home directory
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testEmptyArgs() throws CdException{
 		String[] args = {};
@@ -34,7 +38,11 @@ public class TestCdApplication {
 		cdApp.run(args, null, null);
 		assertEquals(dir, Environment.currentDirectory);
 	}
-	
+	/*
+	 * Test "cd /" (for mac or linux) return the user to the root directory
+	 * Test "cd \" (for windows) returns the user to the root directory
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testRootDirectory() throws CdException{
 		String[] args = {File.separator};
@@ -45,6 +53,10 @@ public class TestCdApplication {
 		assertEquals(rootDir, Environment.currentDirectory);
 	}
 	
+	/*
+	 * Test "cd ~" return the user to the home directory
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testHomeDirectory() throws CdException{
 		String[] args = {"~"};
@@ -53,6 +65,10 @@ public class TestCdApplication {
 		assertEquals(dir, Environment.currentDirectory);
 	}
 	
+	/*
+	 * Test "cd ." remain in the current working directory
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testCurrentDirectory() throws CdException{
 		String[] args = {"."};
@@ -61,6 +77,10 @@ public class TestCdApplication {
 		assertEquals(dir, Environment.currentDirectory);
 	}
 	
+	/*
+	 * Test "cd .." returns to the parent directory
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testParentDirectory() throws CdException{
 		String[] args = {".."};
@@ -76,6 +96,9 @@ public class TestCdApplication {
 		assertEquals(prevDir, Environment.currentDirectory);
 	}
 	
+	/*
+	 * Test "cd a" where "a" is a invalid directory. An error will be thrown when the directory is invalid or does not exist
+	 */
 	@Test
 	public void testCdToInvalidDirectory() throws CdException{
 		String[] args = {"a"};
@@ -85,6 +108,16 @@ public class TestCdApplication {
 		cdApp.run(args, null, null);
 	}
 	
+	/*
+	 * Test "cd [valid directory]"
+	 * This test simulate changing to a valid directory
+	 * Let the userDir = C:\Users\Tom
+	 * prevDir = C:\Users
+	 * Set the "Environment.currentDirectory = prevDir (C:\Users)
+	 * args = {Tom}
+	 * When cdApp.run(args, null, null) is called, it will simulate "cd Tom"
+	 * assertEquals is used to compared the expected directory and the actual current directory
+	 */
 	@Test
 	public void testCdToValidDirectory() throws CdException{
 		

@@ -28,12 +28,20 @@ public class TestPwdApplication {
 		stdout = new ByteArrayOutputStream();
     }
 	
+	/*
+	 * Test that "pwd" should print out the current directory with a newline
+	 * "pwd" will not take in an argument
+	 */
 	@Test
     public void testPwdWithNoArg() throws PwdException{
 		pwdApp.run(new String[] {}, null, stdout);
 		assertEquals(Environment.currentDirectory + System.lineSeparator(), stdout.toString());
     }
 	
+	/*
+	 * Test that "pwd args" should throw an error message
+	 * "pwd" will not take in an argument
+	 */
 	@Test
     public void testPwdWithArg() throws PwdException{
 		thrown.expect(PwdException.class);
