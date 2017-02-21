@@ -25,7 +25,7 @@ public class FileHandler {
 	public boolean checkIfFileIsReadable(Path filePath) throws Exception {
 		
 		if (Files.isDirectory(filePath)) {
-			throw new GrepException("This is a directory");
+			throw new Exception("This is a directory");
 		}
 		if (Files.exists(filePath) && Files.isReadable(filePath)) {
 			return true;

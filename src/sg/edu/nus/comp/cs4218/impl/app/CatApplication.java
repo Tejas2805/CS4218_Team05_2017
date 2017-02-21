@@ -67,8 +67,9 @@ public class CatApplication implements Application {
 	 * and concatenates the output and displays them
 	 * @param args Array of paths to files
 	 * @return none
+	 * @throws CatException 
 	 */
-	private void catWithArguments(String[] args, OutputStream stdout) {
+	private void catWithArguments(String[] args, OutputStream stdout) throws CatException {
 
 		
 			Path filePath;
@@ -81,7 +82,7 @@ public class CatApplication implements Application {
 				try {
 					isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
 				} catch (Exception e) {
-					e.printStackTrace();
+					continue;
 				}
 				if (isFileReadable) {
 					filePathArray.add(filePath);
