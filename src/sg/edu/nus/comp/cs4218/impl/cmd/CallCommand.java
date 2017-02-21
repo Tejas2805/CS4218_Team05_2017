@@ -132,6 +132,18 @@ public class CallCommand implements Command {
 
 		String[] cmdTokensArray = cmdVector
 				.toArray(new String[cmdVector.size()]);
+		for(int i = 0; i < cmdTokensArray.length; i++){
+			String token = cmdTokensArray[i];
+			if(token.length() < 2)
+				continue;
+			char[] chToken = token.toCharArray();
+			if((chToken[0] == '\"' && chToken[chToken.length-1] == '\"') || (chToken[0] == '\'' && chToken[chToken.length-1] == '\'')){
+				char[] newToken = new char[chToken.length - 2];
+				System.arraycopy(chToken, 1, newToken, 0, newToken.length);
+				cmdTokensArray[i] = new String(newToken);
+			}
+	}
+		
 		this.app = cmdTokensArray[0];
 		int nTokens = cmdTokensArray.length;
 
