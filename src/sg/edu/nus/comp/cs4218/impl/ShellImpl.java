@@ -149,6 +149,9 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		for(int i=0;i<argsArray.length;i++){
+			System.out.println(argsArray[i]);
+		}
 		preprocessArg(argsArray);
 		String[] finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
@@ -163,11 +166,11 @@ public class ShellImpl implements Shell {
 	}
 
 	private static void preprocessArg(String... argsArray) {
-		int numberOfLevel=0;
+		
 		for(int i=0;i<argsArray.length;i++){
 			String path="";
 			String inputFile="";
-			
+			int numberOfLevel=0;
 			if(argsArray[i].contains("*")){
 				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i, path, inputFile);
 			}else{
