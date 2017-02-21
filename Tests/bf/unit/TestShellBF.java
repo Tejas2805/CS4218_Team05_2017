@@ -125,7 +125,7 @@ public class TestShellBF {
 	public void echoSingleWithBackQuotes(){
 		String input = "echo 'This is space:`echo \" \"`.'";
 		output = new ByteArrayOutputStream();
-		String expected = "This is space: .\n";
+		String expected = "This is space:`echo \" \"`.\n";
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
