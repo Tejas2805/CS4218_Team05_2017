@@ -1,1 +1,0 @@
-In addition, this version of sed supports several escape characters (some of which are multi-character) to insert non-printable characters in scripts (\a, \c, \d, \o, \r, \t, \v, \x). These can cause similar problems with scripts written for other seds.

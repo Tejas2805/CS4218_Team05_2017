@@ -28,10 +28,10 @@ public class TestSortOrder {
 	public void testSortData() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		String actualData = sortRead.readFromFile(actualFile);
-		String actualResults = sortOrder.sortData(actualData);
+		String actualResults = sortOrder.sortData(actualData).trim();
 		
 		String expectedFile = "tests" + File.separator + "sortFiles" + File.separator + "sortAll.txt";
-		String expectedResults = sortRead.readFromFile(expectedFile);
+		String expectedResults = sortRead.readFromFile(expectedFile).trim();
 		
 		assertEquals(expectedResults, actualResults);
 	}
@@ -40,7 +40,7 @@ public class TestSortOrder {
 	public void testSortByAscii() throws SortException {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
 		String actualData = sortRead.readFromFile(actualFile);
-		String[] actualResults = (sortOrder.sortData(actualData)).split(System.lineSeparator());
+		String[] actualResults = (sortOrder.sortData(actualData).trim()).split(System.lineSeparator());
 		ArrayList<String> actualArray = new ArrayList<String>();
 		
 		for(String actual : actualResults){
@@ -48,7 +48,7 @@ public class TestSortOrder {
 		}
 		
 		String expectedFile = "tests" + File.separator + "sortFiles" + File.separator + "sortAll.txt";
-		String[] expectedResults = (sortRead.readFromFile(expectedFile)).split(System.lineSeparator());
+		String[] expectedResults = (sortRead.readFromFile(expectedFile).trim()).split(System.lineSeparator());
 		
 		ArrayList<String> expectedArray = new ArrayList<String>();
 		

@@ -28,13 +28,15 @@ public class SortRead {
 			}
 
 		} catch (IOException e) {
-			throw (SortException) new SortException("error reading input stream").initCause(e); 
+			e.printStackTrace();
+			//throw (SortException) new SortException("error reading input stream").initCause(e); 
 		} finally {
 			if (bufReader != null) {
 				try {
 					bufReader.close();
 				} catch (IOException e) {
-					throw (SortException) new SortException("error closing buffe read input stream").initCause(e); 
+					e.printStackTrace();
+					//throw (SortException) new SortException("error closing buffe read input stream").initCause(e); 
 				}
 			}
 		}
@@ -61,14 +63,16 @@ public class SortRead {
 				fileContent += line + System.lineSeparator();
 			}
 		} catch (IOException e) {
-			throw (SortException)new SortException("Invalid File").initCause(e);
+			e.printStackTrace();
+			//throw (SortException)new SortException("Invalid File").initCause(e);
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
 			} catch (IOException ex) {
-				throw (SortException)new SortException("Buffer error").initCause(ex);
+				ex.printStackTrace();
+				//throw (SortException)new SortException("Buffer error").initCause(ex);
 			}
 		}
 		return fileContent;//.trim();

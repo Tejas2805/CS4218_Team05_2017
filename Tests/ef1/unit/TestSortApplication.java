@@ -50,26 +50,6 @@ public class TestSortApplication {
 		sortApp.run(args, stdin, stdout);
 	}
 
-	@Test
-	public void testInValidFileName() throws SortException {
-		String[] args = { "" };
-		stdout = new ByteArrayOutputStream();
-		thrown.expect(SortException.class);
-		thrown.expectMessage("error reading file");
-		sortApp.run(args, null, null);
-	}
-
-	@Test
-	public void testInvalidArgs() throws SortException {
-		String file1 = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
-		String file2 = "tests" + File.separator + "sortFiles" + File.separator + "sortAll.txt";
-		String[] args = { "", file1, file2 };
-
-		thrown.expect(SortException.class);
-		thrown.expectMessage("Sort: error reading file");
-		sortApp.run(args, null, null);
-	}
-	
 
 	@Test
 	public void testSortStringsSimple() throws SortException {
@@ -106,7 +86,7 @@ public class TestSortApplication {
 		String actualResults = sortApp.sortNumbers("-n" + toSort);
 
 		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbers-n.txt";
-		String expectedResults = sortRead.readFromFile(resultsFile);
+		String expectedResults = sortRead.readFromFile(resultsFile).trim();
 
 		assertEquals(expectedResults, actualResults);
 	}

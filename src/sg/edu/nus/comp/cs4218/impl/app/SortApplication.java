@@ -26,11 +26,10 @@ public class SortApplication implements Sort{
 		
 		
 		if(args.length == 0){
-			String readStdin = sortRead.readInputStream(stdin);
-			if(readStdin.length() == 0){
-				throw new SortException("Input stream empty");
+			if(stdin == null){
+				throw new SortException("Input stream null");
 			}
-			//System.out.println(readStdin);
+			String readStdin = sortRead.readInputStream(stdin);
 			results = sortAll(sortCondition + System.lineSeparator() + readStdin);
 		}else if(args.length == 1){
 			fileName = args[0];

@@ -80,14 +80,6 @@ public class TestSortCheck {
 		sortCheck.checkValidCondition("n");
 	}
 	
-
-	@Test
-	public void testCheckValidFile() throws SortException{
-		thrown.expect(SortException.class);
-		thrown.expectMessage("Sort: error reading file");
-		sortCheck.checkValidFile("");
-	
-	}
 	
 	@After
 	public void tearDown(){

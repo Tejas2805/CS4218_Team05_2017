@@ -31,7 +31,7 @@ public class TestSortNumber {
 		String actualResults = sortNumber.sortNumData(actualData);
 		
 		String expectedFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersOrdered.txt";
-		String expectedResults = sortRead.readFromFile(expectedFile);
+		String expectedResults = sortRead.readFromFile(expectedFile).trim();
 		
 		assertEquals(expectedResults, actualResults);
 	}
