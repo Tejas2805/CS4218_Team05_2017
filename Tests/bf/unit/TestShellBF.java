@@ -62,9 +62,5 @@ public class TestShellBF {
 		String actual=output.toString();
         assertEquals(expected, actual);
 	}
-	@After
-	public void tearDown(){
-		shellImpl = null;
-	}
 
 }
