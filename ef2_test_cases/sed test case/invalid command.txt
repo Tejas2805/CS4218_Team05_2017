@@ -1,0 +1,6 @@
+sed s/a/"/"/ sed.txt
+sed s/the/here sed.txt
+sed s/my/g sed.txt
+sed s/the/'#"/ sed.txt
+sed s/the/hello world/ sed.txt
+sed s//replace/ sed.txt
