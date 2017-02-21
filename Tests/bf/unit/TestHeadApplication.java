@@ -19,6 +19,9 @@ import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 
 public class TestHeadApplication {
 
+	private final static String NEWLINE = System.lineSeparator();
+	private final static String FILEPATH = "123.txt";
+	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
 	@Test
 	public void testAllNullArgument() {
 		Application absApp = new HeadApplication();
@@ -58,10 +61,9 @@ public class TestHeadApplication {
 	}
 	@Test
 	public void testNullOutputStream() {
-		String ls = System.lineSeparator();
 		Application absApp = new HeadApplication();
-		String[] args = new String[] {"123.txt"};
-		String testString = "test"+ls+"string";
+		String[] args = new String[] {FILEPATH};
+		String testString = TESTMESSAGE;
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = null;
 		try{
@@ -76,8 +78,7 @@ public class TestHeadApplication {
 	public void testNoArgument(){
 		Application absApp = new HeadApplication();
 		String[] args = {};
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
+		String testString = TESTMESSAGE;
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
 		//No args with InputStream and OutputStream
@@ -87,17 +88,16 @@ public class TestHeadApplication {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			assertEquals("test"+ls+"string",stdout.toString());
+			assertEquals(TESTMESSAGE,stdout.toString());
 	}
 	
 	@Test
 	public void testOneArgument(){
 		Application absApp = new HeadApplication();
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
+		String testString = TESTMESSAGE;
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
-		String[] args = new String[] {"123.txt"};
+		String[] args = new String[] {FILEPATH};
 		stdout = new ByteArrayOutputStream();
 		try {
 			absApp.run(args, stdin, stdout);
@@ -106,14 +106,13 @@ public class TestHeadApplication {
 			e.printStackTrace();
 		}
 		
-		String testStr = "31423" + ls + "1" + ls + "15ew"+ ls + "afg" + ls + "gaqwtq345" + ls +"tqtqt" + ls + "c592859v" +ls +"gasgsad" +ls;
+		String testStr = "31423" + NEWLINE + "1" + NEWLINE + "15ew"+ NEWLINE + "afg" + NEWLINE + "gaqwtq345" + NEWLINE +"tqtqt" + NEWLINE + "c592859v" +NEWLINE +"gasgsad" +NEWLINE;
 		assertEquals( testStr,stdout.toString());
 	}
 	@Test
 	public void testTwoArgument(){
 		Application absApp = new HeadApplication();
-		String ls = System.lineSeparator();
-		String testStr = "31423" + ls + "1" + ls;
+		String testStr = "31423" + NEWLINE + "1" + NEWLINE;
 		InputStream stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
 
@@ -131,15 +130,14 @@ public class TestHeadApplication {
 	@Test
 	public void testThreeArgument(){
 		Application absApp = new HeadApplication();
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
+		String testString = TESTMESSAGE;
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
-		String[] args = new String[] {"123.txt"};
-		String testStr = "31423" + ls + "1" + ls;
+		String[] args = new String[] {FILEPATH};
+		String testStr = "31423" + NEWLINE + "1" + NEWLINE;
 		stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
 		stdout = new ByteArrayOutputStream();
-		args = new String[] {"-n","2","123.txt"};
+		args = new String[] {"-n","2",FILEPATH};
 		try {
 			absApp.run(args, stdin, stdout);
 		} catch (AbstractApplicationException e) {

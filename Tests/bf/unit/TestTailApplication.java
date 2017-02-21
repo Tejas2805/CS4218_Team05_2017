@@ -15,7 +15,10 @@ import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
 
 public class TestTailApplication {
-
+	private final String NEWLINE = System.lineSeparator(); 
+	private String testStr = "";
+	private final String testString ="test"+NEWLINE+"string";;
+	private final static String FILEPATH = "123.txt";
 	@Test
 	public void testNullInput() {
 		Application absApp = new TailApplication();
@@ -33,7 +36,7 @@ public class TestTailApplication {
 	public void testNullInputStream() {
 		//outputStream not empty args contain path
 		Application absApp = new TailApplication();
-		String[] args = new String[] {"123.txt"};
+		String[] args = new String[] {FILEPATH};
 		InputStream stdin= null;
 		OutputStream stdout = new ByteArrayOutputStream();
 		try{
@@ -54,10 +57,8 @@ public class TestTailApplication {
 	}
 	@Test
 	public void testNullOutputStream() {
-		String ls = System.lineSeparator();
 		Application absApp = new TailApplication();
-		String[] args = new String[] {"123.txt"};
-		String testString = "test"+ls+"string";
+		String[] args = new String[] {FILEPATH};
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = null;
 		try{
@@ -72,8 +73,6 @@ public class TestTailApplication {
 	public void testNoArgument(){
 		Application absApp = new TailApplication();
 		String[] args = {};
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
 		//No args with InputStream and OutputStream
@@ -83,17 +82,15 @@ public class TestTailApplication {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			assertEquals("test"+ls+"string"+ls,stdout.toString());
+			assertEquals("test"+NEWLINE+"string"+NEWLINE,stdout.toString());
 	}
 	
 	@Test
 	public void testOneArgument(){
 		Application absApp = new TailApplication();
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
-		String[] args = new String[] {"123.txt"};
+		String[] args = new String[] {FILEPATH};
 		stdout = new ByteArrayOutputStream();
 		try {
 			absApp.run(args, stdin, stdout);
@@ -102,14 +99,13 @@ public class TestTailApplication {
 			e.printStackTrace();
 		}
 		
-		String testStr = "31423" + ls + "1" + ls + "15ew"+ ls + "afg" + ls + "gaqwtq345" + ls +"tqtqt" + ls + "c592859v" +ls +"gasgsad" +ls;
+		testStr = "31423" + NEWLINE + "1" + NEWLINE + "15ew"+ NEWLINE + "afg" + NEWLINE + "gaqwtq345" + NEWLINE +"tqtqt" + NEWLINE + "c592859v" +NEWLINE +"gasgsad" +NEWLINE;
 		assertEquals(testStr,stdout.toString());
 	}
 	@Test
 	public void testTwoArgument(){
 		Application absApp = new TailApplication();
-		String ls = System.lineSeparator();
-		String testStr = "31423" + ls + "1" + ls;
+		testStr = "31423" + NEWLINE + "1" + NEWLINE;
 		InputStream stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
 
@@ -127,15 +123,13 @@ public class TestTailApplication {
 	@Test
 	public void testThreeArgument(){
 		Application absApp = new TailApplication();
-		String ls = System.lineSeparator();
-		String testString = "test"+ls+"string";
 		InputStream stdin = new ByteArrayInputStream(testString.getBytes(StandardCharsets.UTF_8));
 		OutputStream stdout = new ByteArrayOutputStream();
-		String[] args = new String[] {"123.txt"};
-		String testStr = "c592859v" + ls + "gasgsad" + ls;
+		String[] args = new String[] {FILEPATH};
+		testStr = "c592859v" + NEWLINE + "gasgsad" + NEWLINE;
 		stdin = new ByteArrayInputStream(testStr.getBytes(StandardCharsets.UTF_8));
 		stdout = new ByteArrayOutputStream();
-		args = new String[] {"-n","2","123.txt"};
+		args = new String[] {"-n","2",FILEPATH};
 		try {
 			absApp.run(args, stdin, stdout);
 		} catch (AbstractApplicationException e) {
