@@ -34,7 +34,16 @@ public class TailApplication implements Application{
 		checkArgumentLengthAndRun(args, stdin, stdout);
 	}
 
-
+	/**
+	 * @param args
+	 *            contains array of data that consists of number of lines and
+	 *            file path"
+	 * @param stdin
+	 *            is the InputStream
+	 * @param stdout
+	 *            is the OutputStream 
+	 *This method check the arguments and print the output accordingly
+	 */
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws TailException {
 		if(args.length==0 || args==null){
 			if(stdin==null){
@@ -42,9 +51,8 @@ public class TailApplication implements Application{
 			}
 			readWithNoArgument(stdin, stdout);
 			}else{
-			int lineNumber = -1;
 			ArrayList<String> listOfArgs = new ArrayList<String>();
-			lineNumber = checkDuplicateLineNumbers(args, lineNumber, listOfArgs);
+			int lineNumber = checkDuplicateLineNumbers(args, listOfArgs);
 			if (lineNumber == -1) {
 				if(stdin==null){
 					throw new TailException("stdin is null");
@@ -77,10 +85,19 @@ public class TailApplication implements Application{
 		}
 	}
 
-
-	private int checkDuplicateLineNumbers(String[] args1, int lineNumber, ArrayList<String> listOfArgs)
+	/**
+	 * @param args1
+	 *            contains array of data that consists of number of lines and
+	 *            file path"
+	 * @param listOfArgs
+	 *            is the ArrayList that stores all the path after checking 
+	 * This method read the String in args1 to check the validity of command, 
+	 * remove duplicate "-n" command and store the parth in ArrayList
+	 * 
+	 */
+	private int checkDuplicateLineNumbers(String[] args1,  ArrayList<String> listOfArgs)
 			throws TailException {
-		int lineCount = lineNumber;
+		int lineCount = -1;
 		for (int i = 0; i < args1.length; i++) {
 			try {
 				if (args1[i].equals("-n")) {

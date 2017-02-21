@@ -39,8 +39,8 @@ public class HeadApplication implements Application {
 	 * @param stdin
 	 *            is the InputStream
 	 * @param stdout
-	 *            is the OutputStream This method check the arguments and print
-	 *            the output accordingly
+	 *            is the OutputStream 
+	 *This method check the arguments and print the output accordingly
 	 */
 	private void checkArgumentLengthAndRun(String[] args, InputStream stdin, OutputStream stdout) throws HeadException {
 		if (args == null || args.length == 0) {
@@ -52,7 +52,7 @@ public class HeadApplication implements Application {
 
 			int lineNumber = -1;
 			ArrayList<String> listOfArgs = new ArrayList<String>();
-			lineNumber = checkDuplicateLineNumbers(args, lineNumber, listOfArgs);
+			lineNumber = checkDuplicateLineNumbers(args,  listOfArgs);
 			if (lineNumber == -1) {
 				String[] checkedArgs = new String[1];
 				readEveryFilePath(checkedArgs, stdout, listOfArgs);
@@ -70,11 +70,21 @@ public class HeadApplication implements Application {
 					throw new HeadException(INVALID_FORMAT);
 				}
 			}
-				else {readEveryFilePathWithLineNumbers(stdout, lineNumber, listOfArgs);
+			else {readEveryFilePathWithLineNumbers(stdout, lineNumber, listOfArgs);
 			}
 		}
 	}
-
+	/**
+	 * @param args
+	 *            contains array of data that consists of number of lines and
+	 *            file path"
+	 * @param stdin
+	 *            is the InputStream
+	 * @param stdout
+	 *            is the OutputStream 
+	 * This method read every file path and print the requested line numbers of the files
+	 * 
+	 */
 	private void readEveryFilePathWithLineNumbers(OutputStream stdout, int lineNumber, ArrayList<String> listOfArgs)
 			throws HeadException {
 		String[] args;
@@ -90,7 +100,17 @@ public class HeadApplication implements Application {
 			}
 		}
 	}
-
+	/**
+	 * @param args
+	 *            contains array of data that consists of number of lines and
+	 *            file path"
+	 * @param stdout
+	 *            is the OutputStream 
+	 * @param listOfArgs
+	 * 			  is the Arraylist that stores the files path           
+	 * This method read every file path and print first 10 lines of each file
+	 * 
+	 */
 	private void readEveryFilePath(String[] args, OutputStream stdout, ArrayList<String> listOfArgs)
 			throws HeadException {
 		for (int i = 0; i < listOfArgs.size(); i++) {
@@ -102,10 +122,19 @@ public class HeadApplication implements Application {
 			}
 		}
 	}
-
-	private int checkDuplicateLineNumbers(String[] args1, int lineNumber, ArrayList<String> listOfArgs)
+	/**
+	 * @param args1
+	 *            contains array of data that consists of number of lines and
+	 *            file path"
+	 * @param listOfArgs
+	 *            is the ArrayList that stores all the path after checking 
+	 * This method read the String in args1 to check the validity of command, 
+	 * remove duplicate "-n" command and store the parth in ArrayList
+	 * 
+	 */
+	private int checkDuplicateLineNumbers(String[] args1,  ArrayList<String> listOfArgs)
 			throws HeadException {
-		int lineCount = lineNumber;
+		int lineCount = -1;
 		for (int i = 0; i < args1.length; i++) {
 			try {
 				if (args1[i].equals("-n")) {
@@ -122,7 +151,7 @@ public class HeadApplication implements Application {
 		}
 		return lineCount;
 	}
-	
+
 	/**
 	 * @param args
 	 *            contains array of data that consists of number of lines and
@@ -239,8 +268,8 @@ public class HeadApplication implements Application {
 	 * @param stdin
 	 *            is the InputStream
 	 * @param stdout
-	 *            is the OutputStream This method checks whether args, stdin and
-	 *            stdout are all null
+	 *            is the OutputStream 
+	 * This method checks whether args, stdin and stdout are all null
 	 */
 	private boolean checkNullInput(String[] args, InputStream stdin, OutputStream stdout) {
 		// TODO Auto-generated method stub
