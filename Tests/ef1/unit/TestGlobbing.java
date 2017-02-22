@@ -46,7 +46,7 @@ public class TestGlobbing {
 
 	@Test
 	public void catGlobOneFile(){
-		String input = "cat ef1_test_cases\\glob\\glob*Source1.txt";
+		String input = "cat Tests\\globFiles\\glob*Source1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\n", actual;
 		
@@ -65,7 +65,7 @@ public class TestGlobbing {
 	
 	@Test
 	public void catGlobDirectories(){
-		String input = "cat ef1_test_c*s\\g*b\\globTestSource1.txt";
+		String input = "cat Tests\\g*b*\\globTestSource1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\n", actual;
 		
@@ -84,7 +84,7 @@ public class TestGlobbing {
 	
 	@Test
 	public void catGlobFilesDirectories(){
-		String input = "cat ef1_test_c*s\\g*b\\glob*Sou*e1.txt";
+		String input = "cat Tests\\g*b*\\glob*Sou*e1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\n", actual;
 		
@@ -103,7 +103,7 @@ public class TestGlobbing {
 	
 	@Test
 	public void catGlobMultipleFilesDirectories(){
-		String input = "cat ef1_test_c*s\\g*b\\glob*Sou*e1.txt ef1_test_c*s\\g*b\\glob*e2.txt";
+		String input = "cat Tes*s\\g*b*\\glob*Sou*e1.txt Tes*s\\g*b*\\glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world\nhello world 2\n", actual;
 		
