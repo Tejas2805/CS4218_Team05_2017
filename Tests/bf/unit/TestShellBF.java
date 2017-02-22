@@ -28,10 +28,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -47,10 +47,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -66,10 +66,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -85,7 +85,7 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
 			actual=e.getMessage();
@@ -103,9 +103,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -121,9 +122,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -139,9 +141,10 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
@@ -157,7 +160,7 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
 			actual=e.getMessage();
@@ -175,11 +178,156 @@ public class TestShellBF {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
+			fail();
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void catAppCalled(){
+		String input = "cat test.txt";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "cat";
+		String[] expectedArg = {"test.txt"};
+		String actualAppCalled;
+		String[] actualArg=new String[1];
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actualAppCalled=shellImpl.getAppCalled();
+		for(int i=0;i<actualArg.length;i++){
+			actualArg[i]=shellImpl.getArgument()[i];
+		}
+        assertEquals(expectedAppCalled, actualAppCalled);
+        assertEquals(expectedArg[0], actualArg[0]);
+	}
+	
+	@Test
+	public void cdAppCalled(){
+		String input = "cd ..";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "cd";
+		String[] expectedArg = {".."};
+		String actualAppCalled;
+		String[] actualArg=new String[1];
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actualAppCalled=shellImpl.getAppCalled();
+		for(int i=0;i<actualArg.length;i++){
+			actualArg[i]=shellImpl.getArgument()[i];
+		}
+        assertEquals(expectedAppCalled, actualAppCalled);
+        assertEquals(expectedArg[0], actualArg[0]);
+	}
+	
+	@Test
+	public void pwdAppCalled(){
+		String input = "pwd";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "pwd";
+		String actualAppCalled;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actualAppCalled=shellImpl.getAppCalled();
+        assertEquals(expectedAppCalled, actualAppCalled);
+	}
+	
+	@Test
+	public void echoAppCalled(){
+		String input = "echo lala";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "echo";
+		String[] expectedArg = {"lala"};
+		String actualAppCalled;
+		String[] actualArg=new String[1];
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actualAppCalled=shellImpl.getAppCalled();
+		for(int i=0;i<actualArg.length;i++){
+			actualArg[i]=shellImpl.getArgument()[i];
+		}
+        assertEquals(expectedAppCalled, actualAppCalled);
+        assertEquals(expectedArg[0], actualArg[0]);
+	}
+	
+	@Test
+	public void headAppCalled(){
+		String input = "head -n 15 test.txt";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "head";
+		String[] expectedArg = {"-n","15","test.txt"};
+		String actualAppCalled;
+		String[] actualArg=new String[3];
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			actualAppCalled=shellImpl.getAppCalled();
+			for(int i=0;i<actualArg.length;i++){
+				actualArg[i]=shellImpl.getArgument()[i];
+			}
+			assertEquals(expectedAppCalled, actualAppCalled);
+	        assertEquals(expectedArg[0], actualArg[0]);
+	        assertEquals(expectedArg[1], actualArg[1]);
+	        assertEquals(expectedArg[2], actualArg[2]);
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+	}
+	
+	@Test
+	public void tailAppCalled(){
+		String input = "tail -n 15 test.txt";
+		output = new ByteArrayOutputStream();
+		String expectedAppCalled = "tail";
+		String[] expectedArg = {"-n","15","test.txt"};
+		String actualAppCalled;
+		String[] actualArg=new String[3];
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			actualAppCalled=shellImpl.getAppCalled();
+			for(int i=0;i<actualArg.length;i++){
+				actualArg[i]=shellImpl.getArgument()[i];
+			}
+			assertEquals(expectedAppCalled, actualAppCalled);
+	        assertEquals(expectedArg[0], actualArg[0]);
+	        assertEquals(expectedArg[1], actualArg[1]);
+	        assertEquals(expectedArg[2], actualArg[2]);
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
 	}
 }

@@ -46,6 +46,10 @@ public class ShellImpl implements Shell {
 	public static final String EXP_NOT_SUPPORTED = " not supported yet";
 	
 	private static ArrayList<String> allFiles = new ArrayList<String>();
+	
+	private static String appCalled;
+	
+	private static String[] finalArgsArray;
 
 	/**
 	 * Searches for and processes the commands enclosed by back quotes for
@@ -156,9 +160,10 @@ public class ShellImpl implements Shell {
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		appCalled = app;
 		//globbing
 		preprocessArg(argsArray);
-		String[] finalArgsArray = readAllFile();
+		finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
 	
@@ -284,6 +289,14 @@ public class ShellImpl implements Shell {
 	        	}
 	        }
 	    }
+	}
+	
+	public String getAppCalled(){
+		return appCalled;
+	}
+	
+	public String[] getArgument(){
+		return finalArgsArray;
 	}
 	/**
 	 * Static method to creates an inputStream based on the file name or file

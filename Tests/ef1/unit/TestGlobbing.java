@@ -15,7 +15,7 @@ import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
-public class TestShellEF1 {
+public class TestGlobbing {
 
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
@@ -35,10 +35,10 @@ public class TestShellEF1 {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
@@ -54,10 +54,10 @@ public class TestShellEF1 {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
@@ -73,10 +73,10 @@ public class TestShellEF1 {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
@@ -92,10 +92,10 @@ public class TestShellEF1 {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
@@ -111,10 +111,10 @@ public class TestShellEF1 {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
