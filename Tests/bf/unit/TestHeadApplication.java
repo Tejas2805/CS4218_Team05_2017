@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,7 +22,7 @@ public class TestHeadApplication {
 
 	
 	private final static String NEWLINE = System.lineSeparator();
-	private final static String FILEPATH = "Reports\\All TestCases\\BF1 Test Cases\\head\\123.txt";
+	private final static String FILEPATH = "Tests" + File.separator + "headFiles" + File.separator + "123.txt";
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
 	
 	@Test
