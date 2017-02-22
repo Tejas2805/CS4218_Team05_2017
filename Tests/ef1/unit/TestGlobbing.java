@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.omg.CORBA.Environment;
 
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CatException;
@@ -23,6 +24,7 @@ public class TestGlobbing {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		shellImpl = new ShellImpl();
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 	}
 	
 	@Test
