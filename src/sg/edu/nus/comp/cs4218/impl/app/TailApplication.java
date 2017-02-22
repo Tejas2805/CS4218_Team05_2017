@@ -258,7 +258,6 @@ public class TailApplication implements Application{
 			new TailException(io.getMessage());
 		}
 	}
-
 	/**
 	 * @param args contains array of data that consists of number of lines and file path"
 	 * @param stdin is the InputStream
