@@ -1,0 +1,1 @@
+cat pipe1.txt | grep "HILEf"

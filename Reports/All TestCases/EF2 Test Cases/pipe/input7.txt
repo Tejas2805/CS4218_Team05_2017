@@ -1,0 +1,1 @@
+head pipe2.txt -n 2 | wc -m

@@ -1,0 +1,1 @@
+head pipe1.txt -n 3 | grep "Select"
