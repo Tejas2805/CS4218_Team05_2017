@@ -41,10 +41,8 @@ public class TestRedirection {
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
-			e.printStackTrace();
 			fail();
 		} catch (ShellException e) {
-			e.printStackTrace();
 			fail();
 		}
 		actual = output.toString();
@@ -66,7 +64,6 @@ public class TestRedirection {
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
-			e.printStackTrace();
 			fail();
 		} catch (ShellException e) {
 			fail();
@@ -101,17 +98,6 @@ public class TestRedirection {
 
 			actual = everything;
 			
-			char[] ac = actual.toCharArray();
-			char[] ex = expected.toCharArray();
-			
-			for(int i =0; i < ac.length;i++){
-				int a = ac[i];
-				int b = ex[i];
-				if(a == b)
-					System.out.println("ok");
-				else
-					System.out.println("not ok");
-			}
 			
 			assertEquals(expected, actual);
 		} finally {
@@ -179,18 +165,6 @@ public class TestRedirection {
 		    String everything = sb.toString();
 
 			actual = everything;
-			
-			char[] ac = actual.toCharArray();
-			char[] ex = expected.toCharArray();
-			
-			for(int i =0; i < ac.length;i++){
-				int a = ac[i];
-				int b = ex[i];
-				if(a == b)
-					System.out.println("ok");
-				else
-					System.out.println("not ok");
-			}
 			
 			assertEquals(expected, actual);
 		} finally {
