@@ -119,4 +119,25 @@ public class TestGlobbing {
 		actual = output.toString();
 		assertEquals(expected, actual);		
 	}
+	
+
+	@Test
+	public void catGlobMultipleFile(){
+		String input = "cat Tests\\globFiles\\glob*.txt";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "hello world\nhello world 2\n", actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
+
 }
