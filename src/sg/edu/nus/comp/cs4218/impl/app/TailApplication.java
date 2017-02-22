@@ -49,7 +49,7 @@ public class TailApplication implements Application{
 			if(stdin==null){
 				throw new TailException("stdin is null");
 			}
-			readWithNoArgument(stdin, stdout);
+			readFromStdin(stdin, stdout);
 			}else{
 			ArrayList<String> listOfArgs = new ArrayList<String>();
 			int lineNumber = checkDuplicateLineNumbers(args, listOfArgs);
@@ -61,7 +61,7 @@ public class TailApplication implements Application{
 				for (int i = 0; i < listOfArgs.size(); i++) {
 					checkedArgs[0] = listOfArgs.get(i);
 					try {
-						readWithDirectory(checkedArgs, stdout);
+						readFromPath(checkedArgs, stdout);
 					}catch (TailException ioe) {
 						throw (TailException) new TailException(ioe.getMessage()).initCause(ioe);
 					}
@@ -196,7 +196,7 @@ public class TailApplication implements Application{
 	 * @param stdout is the OutputStream
 	 * This method read the file from path provided in args and print accordingly
 	 */
-	private void readWithDirectory(String[] args, OutputStream stdout) throws TailException {
+	private void readFromPath(String[] args, OutputStream stdout) throws TailException {
 		try{
 			ArrayList<String> output = new ArrayList<String>();
 			int counter = 0;
@@ -232,7 +232,7 @@ public class TailApplication implements Application{
 	 * @param stdout is the OutputStream
 	 * This method read from stdin and print the output accordingly
 	 */
-	private void readWithNoArgument(InputStream stdin, OutputStream stdout) {
+	private void readFromStdin(InputStream stdin, OutputStream stdout) {
 		BufferedReader buffRead = null;
 
 		String line;
