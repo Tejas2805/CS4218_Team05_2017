@@ -1,3 +1,0 @@
-Select BOOLEAN such that Follows (5, 6)
-false
-5000
