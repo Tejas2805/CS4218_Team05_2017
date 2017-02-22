@@ -1,4 +1,0 @@
-22 457 wc1.txt
-5 60 wc2.txt
-5 60 wc2.txt
-32 577 total

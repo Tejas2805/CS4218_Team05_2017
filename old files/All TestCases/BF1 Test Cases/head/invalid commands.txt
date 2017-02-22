@@ -1,8 +1,0 @@
-head –head1.txt
-head –n –n
-head –n 3 –n
-head head1.txt 3
-head –n 2 head1.txt 3
-head –n head2.txt –n 5 –n 6 head2.txt
-head 6 head1.txt
-head head1.txt Head1.txt

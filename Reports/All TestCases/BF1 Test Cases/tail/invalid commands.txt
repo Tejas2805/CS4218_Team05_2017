@@ -1,8 +1,0 @@
-tail –tail1.txt
-tail –n –n
-tail –n 3 –n
-tail tail1.txt 3
-tail –n 2 tail1.txt 3
-tail –n tail2.txt –n 5 –n 6 tail2.txt
-tail 6 tail1.txt
-tail tail1.txt Tail1.txt
