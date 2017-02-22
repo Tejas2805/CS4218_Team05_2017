@@ -8,17 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
@@ -34,7 +28,7 @@ public class TestRedirection {
 	
 	@Test
 	public void catInputRedirectionFromOneFile(){
-		String input = "cat ef1_test_cases\\cat\\test.txt";
+		String input = "cat < Tests\\catFiles\\test.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "this is a file \"test.txt\"\n", actual;
 		
@@ -122,17 +116,15 @@ public class TestRedirection {
 		}
 			
 		
-		String input = "cat < ef1_test_cases\\cat\\test.txt > a.txt";
+		String input = "cat < Tests\\catFiles\\test.txt > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "this is a file \"test.txt\"\r\n", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
-			e.printStackTrace();
 			fail();
 		} catch (ShellException e) {
-			e.printStackTrace();
 			fail();
 		}
 		
