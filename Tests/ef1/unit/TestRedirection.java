@@ -135,8 +135,6 @@ public class TestRedirection {
 			e.printStackTrace();
 			fail();
 		}
-		
-
 		BufferedReader br = null;
 		StringBuilder sb = null;
 		try {
