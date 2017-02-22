@@ -21,7 +21,7 @@ public class TestHeadApplication {
 
 	
 	private final static String NEWLINE = System.lineSeparator();
-	private final static String FILEPATH = "123.txt";
+	private final static String FILEPATH = "Reports\\All TestCases\\BF1 Test Cases\\head\\123.txt";
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
 	
 	@Test

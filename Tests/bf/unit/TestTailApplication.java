@@ -18,7 +18,7 @@ public class TestTailApplication {
 	private final String NEWLINE = System.lineSeparator(); 
 	private String testStr = "";
 	private final String testString ="test"+NEWLINE+"string";;
-	private final static String FILEPATH = "123.txt";
+	private final static String FILEPATH = "Reports\\All TestCases\\BF1 Test Cases\\head\\123.txt";
 	@Test
 	public void testNullInput() {
 		Application absApp = new TailApplication();
