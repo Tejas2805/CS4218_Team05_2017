@@ -133,6 +133,7 @@ public class ShellImpl implements Shell {
 			InputStream inputStream, OutputStream outputStream)
 			throws AbstractApplicationException, ShellException {
 		Application absApp = null;
+		//calling application
 		if (("cat").equals(app)) {// cat [FILE]...
 			absApp = new CatApplication();
 		} else if (("echo").equals(app)) {// echo [args]...
@@ -141,25 +142,30 @@ public class ShellImpl implements Shell {
 			absApp = new HeadApplication();
 		} else if (("tail").equals(app)) {// tail [OPTIONS] [FILE]
 			absApp = new TailApplication();
-		} else if (("cd").equals(app)){
+		} else if (("cd").equals(app)){// cd PATH
 			absApp = new CdApplication();
-		} else if (("pwd").equals(app)){
+		} else if (("pwd").equals(app)){// pwd
 			absApp = new PwdApplication();
-		} else if (("cal").equals(app)){
+		} else if (("cal").equals(app)){// cal [-m] [[month] year]
 			absApp = new CalApplication();
-		} else if (("grep").equals(app)){
+		} else if (("grep").equals(app)){// grep PATTERN [FILE] ...
 			absApp = new GrepApplication();
-		} else if (("sort").equals(app)){
+		} else if (("sort").equals(app)){// sort [-n] [FILE]
 			absApp = new SortApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
+		//globbing
 		preprocessArg(argsArray);
 		String[] finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
-
+	
+	/**
+	 * Static method to read all the file fulfill the regex to process.
+	 */
+	
 	private static String[] readAllFile() {
 		String[] finalArgsArray = new String[allFiles.size()];
 		for(int i=0;i<allFiles.size();i++){
@@ -167,25 +173,40 @@ public class ShellImpl implements Shell {
 		}
 		return finalArgsArray;
 	}
-
+	/**
+	 * Static method to preprocess the argument in order to find the file which meet the regex.
+	 * 
+	 * @param argsArray
+	 *             String array containing the arguments to pass to the
+	 *            applications for running.
+	 */
 	private static void preprocessArg(String... argsArray) {
-		
 		for(int i=0;i<argsArray.length;i++){
-			String path="";
-			String inputFile="";
 			int numberOfLevel=0;
 			if(argsArray[i].contains("*")){
-				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i, path, inputFile);
+				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i);
 			}else{
 				allFiles.add(argsArray[i]);
 			}
 		}
 	}
 
-	private static int processAsterisk(String[] argsArray, int numberOfLevel, int num, String path, String inputFile) {
-		String pathUsed=path;
+	/**
+	 * Static method to find the file when the input contains Asterisk.
+	 * 
+	 * @param argsArray
+	 *            String array containing the arguments to pass to the
+	 *            applications for running.
+	 * @param numberOfLevel
+	 *            the level of the file location.
+	 * @param num
+	 *            the position of the argsArray.
+	 * 
+	 */
+	private static int processAsterisk(String[] argsArray, int numberOfLevel, int num) {
+		String pathUsed="";
 		String[] inputTemp = argsArray[num].split("/");
-		String input = inputFile;
+		String input = "";
 		for(int j=0;j<inputTemp.length;j++){
 			if(inputTemp[j].contains("*")){
 				for(int k=0;k<inputTemp.length-j;k++){
@@ -201,11 +222,21 @@ public class ShellImpl implements Shell {
 			}
 		}
 		int output;
-		output = matchFile(numberOfLevel, pathUsed, input);
+		output = preprocessMatchFile(numberOfLevel, pathUsed, input);
 		return output;
 	}
-
-	private static int matchFile(int number, String path, String inputFile) {
+	/**
+	 * Static method to preprocess in order to find the matched file.
+	 * 
+	 * @param number
+	 *            the level of the file location.
+	 * @param path
+	 *            the path of the file.
+	 * @param inputFile
+	 *            filename of the file which need to search.
+	 * 
+	 */
+	private static int preprocessMatchFile(int number, String path, String inputFile) {
 		String filePathString;
 		int numberOfLevel=number;
 		Path currentDir = Paths.get(Environment.currentDirectory);
@@ -229,7 +260,17 @@ public class ShellImpl implements Shell {
 		}
 		return numberOfLevel;
 	}
-	
+	/**
+	 * Static method to find the file which matched the regex.
+	 * 
+	 * @param folder
+	 *            the folder of the corresponding path.
+	 * @param pattern
+	 *            the pattern which the file need to meet.
+	 * @param numOfLevel
+	 *            the level of the file location.
+	 * 
+	 */
 	public static void listFilesForFolder(final File folder, Pattern pattern, int numOfLevel) {
 	    for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
@@ -412,6 +453,7 @@ public class ShellImpl implements Shell {
 	public void parseAndEvaluate(String cmdline, OutputStream stdout)
 			throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
+		//semicolon operator
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
 			CallCommand call = new CallCommand(cmds[i]);

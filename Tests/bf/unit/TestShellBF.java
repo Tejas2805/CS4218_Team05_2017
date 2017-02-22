@@ -1,22 +1,12 @@
 package bf.unit;
 
 import static org.junit.Assert.*;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
-import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
-import sg.edu.nus.comp.cs4218.impl.app.CatApplication;
 
 public class TestShellBF {
 
@@ -155,6 +145,24 @@ public class TestShellBF {
 		}
 		actual=output.toString();
         assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void echoSemicolonWithException(){
+		String input = "eo lala; echo lele";
+		output = new ByteArrayOutputStream();
+		String expected = "shell: eo: Invalid app.";
+		String actual;
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			actual=e.getMessage();
+			assertEquals(expected,actual);
+		}
 	}
 	
 	@Test
