@@ -19,6 +19,7 @@ import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 
 public class TestHeadApplication {
 
+	
 	private final static String NEWLINE = System.lineSeparator();
 	private final static String FILEPATH = "123.txt";
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
