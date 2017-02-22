@@ -29,7 +29,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput1.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("Tests\\calFiles\\calTestOutput1.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -47,7 +47,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput2.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("Tests\\calFiles\\calTestOutput2.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -65,7 +65,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput3.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("Tests\\calFiles\\calTestOutput3.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";
@@ -82,7 +82,7 @@ public class TestCalApplication {
 		String expected = "";
 		
 		try {
-			List<String> lines = Files.readAllLines(Paths.get("ef1_test_cases\\cal\\calTestOutput4.txt"));
+			List<String> lines = Files.readAllLines(Paths.get("Tests\\calFiles\\calTestOutput4.txt"));
 			expected = "";
 			for(String line : lines)
 				expected += line + "\n";

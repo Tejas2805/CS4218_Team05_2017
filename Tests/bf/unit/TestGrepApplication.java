@@ -104,7 +104,7 @@ static GrepApplication grepApplication;
 	@Test
 	public void testRunWithOnlyOneFile(){
 		
-		String[] argsOnlyPattern = {"pattern", "Tests\\grepFilesgrepTestSource1.txt"};
+		String[] argsOnlyPattern = {"pattern", "Tests\\grepFiles\\grepTestSource1.txt"};
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\n";
