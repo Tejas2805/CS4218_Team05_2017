@@ -22,6 +22,7 @@ public class TestHeadApplication {
 	private final static String NEWLINE = System.lineSeparator();
 	private final static String FILEPATH = "123.txt";
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
+	
 	@Test
 	public void testAllNullArgument() {
 		Application absApp = new HeadApplication();
