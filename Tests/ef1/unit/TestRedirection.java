@@ -34,7 +34,7 @@ public class TestRedirection {
 	
 	@Test
 	public void catInputRedirectionFromOneFile(){
-		String input = "cat ef1_test_cases\\cat\\test.txt";
+		String input = "cat < Tests\\catFiles\\test.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "this is a file \"test.txt\"\n", actual;
 		
@@ -122,7 +122,7 @@ public class TestRedirection {
 		}
 			
 		
-		String input = "cat < ef1_test_cases\\cat\\test.txt > a.txt";
+		String input = "cat < Tests\\catFiles\\test.txt > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "this is a file \"test.txt\"\r\n", actual;
 		
