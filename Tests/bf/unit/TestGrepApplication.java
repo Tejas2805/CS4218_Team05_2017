@@ -104,7 +104,7 @@ static GrepApplication grepApplication;
 	@Test
 	public void testRunWithOnlyOneFile(){
 		
-		String[] argsOnlyPattern = {"pattern", "grepTestSource1.txt"};
+		String[] argsOnlyPattern = {"pattern", "Tests\\grepFilesgrepTestSource1.txt"};
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\n";
@@ -139,7 +139,7 @@ static GrepApplication grepApplication;
 	@Test
 	public void testRunWithOnlyMultipleFiles(){
 		
-		String[] argsOnlyPattern = {"pattern", "grepTestSource1.txt", "grepTestSource2.txt"};
+		String[] argsOnlyPattern = {"pattern", "Tests\\grepFiles\\grepTestSource1.txt", "Tests\\grepFiles\\grepTestSource2.txt"};
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\npattern\n";
