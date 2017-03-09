@@ -11,7 +11,7 @@ public class WcApplication implements Wc {
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws WcException {
 		// TODO Auto-generated method stub
-		
+		System.out.println("wc");
 	}
 
 	@Override
