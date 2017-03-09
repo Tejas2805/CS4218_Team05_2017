@@ -14,7 +14,7 @@ public class SortRead {
 	 * @param input stream data of inputStream
 	 * @return String inputStream data to String
 	 */
-	public String readInputStream(InputStream inputStream) throws SortException {
+	public String readInputStream(InputStream inputStream){// throws SortException {
 
 		BufferedReader bufReader = null;
 		StringBuilder strBuilder = new StringBuilder();
@@ -50,7 +50,7 @@ public class SortRead {
 	 * @return String file data to String
 	 * @throws SortException 
 	 */
-	public String readFromFile(String fileName) throws SortException{
+	public String readFromFile(String fileName){// throws SortException{
 		BufferedReader bufReader = null;
 		String fileContent = "";
 		

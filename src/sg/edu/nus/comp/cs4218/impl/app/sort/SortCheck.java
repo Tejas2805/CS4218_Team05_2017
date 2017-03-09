@@ -87,26 +87,34 @@ public class SortCheck {
 	 * Determine if the file is valid. Throw exception if the file is not valid
 	 * @param fileName name of the file
 	 */
-	public void checkValidFile(String fileName) throws SortException{
+	public boolean checkValidFile(String fileName){// throws SortException{
 		BufferedReader bufReader = null;
+		boolean isValid = false;
 		try {
 
 			bufReader = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = bufReader.readLine()) != null) {
 			}
+			isValid = true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			isValid = false;
+			return isValid;
 			//throw (SortException) new SortException("error reading file").initCause(e);
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
+				isValid = true;
 			} catch (IOException ex) {
 				ex.printStackTrace();
+				isValid = false;
+			
 				//throw (SortException) new SortException("error closing buffer reader").initCause(ex);
 			}
 		}
+		return isValid;
 	}
 }
