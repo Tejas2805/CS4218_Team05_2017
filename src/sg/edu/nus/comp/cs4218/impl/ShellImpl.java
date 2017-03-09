@@ -157,7 +157,7 @@ public class ShellImpl implements Shell {
 			absApp = new GrepApplication();
 		} else if (("sort").equals(app)){// sort [-n] [FILE]
 			absApp = new SortApplication();
-		}else if(("wc").equals(app)){
+		} else if(("wc").equals(app)){
 			absApp = new WcApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
