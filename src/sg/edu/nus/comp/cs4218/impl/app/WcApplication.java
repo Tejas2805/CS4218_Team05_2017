@@ -21,7 +21,7 @@ public class WcApplication implements Wc {
 
 	SortRead wcRead = new SortRead();
 	SortCheck wcCheck = new SortCheck();
-	int numOfAdditonalBlankSpace = 0;
+	int numOfBlankSpace = 0;
 	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws WcException {
@@ -34,7 +34,7 @@ public class WcApplication implements Wc {
 			results = printCountInFileOrStdin("", readStdin) + System.lineSeparator();
 		}else if(args.length == 1){
 			fileName = args[0];
-			wcCheck.checkValidFile(fileName);
+			checkValidFile(fileName);
 			String data = readFromFileOrInputStream(fileName, null); //wcRead.readFromFile(fileName);
 			results = printCountInFileOrStdin("all", data) + " " + fileName + System.lineSeparator();
 		}else if(args.length >=2 ){
@@ -53,7 +53,7 @@ public class WcApplication implements Wc {
 			int countFile = 0;
 			for(int i=index; i<args.length; i++){
 				fileName = args[i];
-				if(wcCheck.checkValidFile(fileName)){
+				if(checkValidFile(fileName)){
 					//System.out.println("ddd: " + fileName);
 					data = readFromFileOrInputStream(fileName, null);//wcRead.readFromFile(fileName);
 					results += printCountInFileOrStdin(option, data) + " " + fileName + System.lineSeparator();
@@ -63,7 +63,7 @@ public class WcApplication implements Wc {
 				//System.out.println(totalData);
 			}
 			if(countFile > 1){
-				numOfAdditonalBlankSpace = countFile-1;
+				numOfBlankSpace = countFile-1;
 				results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
 			}
 		}
@@ -82,7 +82,7 @@ public class WcApplication implements Wc {
 		String data = args;//dataArr[1];
 		
 		byte[] bytes = data.getBytes();
-		int numByte = bytes.length - numOfAdditonalBlankSpace;
+		int numByte = bytes.length - numOfBlankSpace;
 		String strByte = String.valueOf(numByte);
 		
 		return strByte;
@@ -207,31 +207,64 @@ public class WcApplication implements Wc {
 			e.printStackTrace();
 		} finally {
 		     
-	     // releases resources associated with the streams
-	     if(inputStream!=null)
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		     // releases resources associated with the streams
+		     if(inputStream!=null){
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		     }
+		     if(inputStreamReader!=null){
+				try {
+					inputStreamReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-	     if(inputStreamReader!=null)
-			try {
-				inputStreamReader.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	     if(bufRead!=null)
-			try {
-				bufRead.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		     if(bufRead!=null){
+				try {
+					bufRead.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		     }
 	     }
-		
 		return results;
-		 
+	}
+	
+	/**
+	 * Determine if the file is valid. Throw exception if the file is not valid
+	 * @param fileName name of the file
+	 */
+	public boolean checkValidFile(String fileName){
+		BufferedReader bufReader = null;
+		boolean isValid = false;
+		try {
+
+			bufReader = new BufferedReader(new FileReader(fileName));
+			String line;
+			while ((line = bufReader.readLine()) != null) {
+			}
+			isValid = true;
+		} catch (IOException e) {
+			System.out.println("No such file/directory: " + fileName); //e.printStackTrace();
+			isValid = false;
+			return isValid;
+			//throw (WcException) new WcException("error reading file").initCause(e);
+		} finally {
+			try {
+				if (bufReader != null){
+					bufReader.close();
+				}
+				isValid = true;
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				isValid = false;
+			
+				//throw (SortException) new SortException("error closing buffer reader").initCause(ex);
+			}
+		}
+		return isValid;
 	}
 }
