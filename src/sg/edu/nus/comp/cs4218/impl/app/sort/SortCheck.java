@@ -61,9 +61,9 @@ public class SortCheck {
 	 */
 	public boolean isFirstWordNum(String line){
 		String firstWord = line.split(" ")[0];
-		
+	
 		try { 
-	        Integer.parseInt(firstWord); 
+	        Integer.valueOf(firstWord); 
 	    } catch(NumberFormatException e) { 
 	        return false; 
 	    } catch(NullPointerException e) {
@@ -98,7 +98,8 @@ public class SortCheck {
 			}
 			isValid = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("invalid file/option: " + fileName);
 			isValid = false;
 			return isValid;
 			//throw (SortException) new SortException("error reading file").initCause(e);

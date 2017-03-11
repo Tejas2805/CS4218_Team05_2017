@@ -24,7 +24,8 @@ public class SortRead {
 
 			bufReader = new BufferedReader(new InputStreamReader(inputStream));
 			while ((line = bufReader.readLine()) != null) {
-				strBuilder.append(line + System.lineSeparator());
+				line += System.lineSeparator();
+				strBuilder.append(line);
 			}
 
 		} catch (IOException e) {
@@ -63,7 +64,7 @@ public class SortRead {
 				fileContent += line + System.lineSeparator();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			//throw (SortException)new SortException("Invalid File").initCause(e);
 		} finally {
 			try {
