@@ -28,7 +28,7 @@ public class WcApplication implements Wc {
 			fileName = args[0];
 			wcCheckRead.checkValidFile(fileName);
 			String data = wcCheckRead.readFromFileOrInputStream(fileName, null); //wcRead.readFromFile(fileName);
-			results = printCountInFileOrStdin("all", data) + " " + fileName + System.lineSeparator();
+			results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
 		}else if(args.length >=2 ){
 			
 			String option = wcOption.processArgsOption(args);
