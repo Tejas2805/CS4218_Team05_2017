@@ -15,6 +15,14 @@ public class WcApplication implements Wc {
 	WcOption wcOption = new WcOption();
 	int numOfBlankSpace = 0;
 	
+	/**
+	 * This method execute the wc function and write the data to output stream
+	 * FILE is read and converted to string 
+	 * InputStream are also converted to string before being process
+	 * @param args contains an array of arguments such as FILE or a combination of -l, -w, -m
+	 * @param stdin input stream of data
+	 * @param stdout data is written to the output stream 
+	 */
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws WcException {
 		String fileName = "", results = "";
@@ -64,6 +72,10 @@ public class WcApplication implements Wc {
 		}
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String char count of a file/inputstream
+	 */
 	@Override
 	public String printCharacterCountInFile(String args) {
 		// TODO Auto-generated method stub
@@ -78,6 +90,10 @@ public class WcApplication implements Wc {
 		return strByte;
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String word count of a file/inputstream
+	 */
 	@Override
 	public String printWordCountInFile(String args) {
 		// TODO Auto-generated method stub
@@ -92,6 +108,10 @@ public class WcApplication implements Wc {
 		return strNumWord;
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String newline count of a file/inputstream
+	 */
 	@Override
 	public String printNewlineCountInFile(String args) {
 		// TODO Auto-generated method stub
@@ -112,6 +132,10 @@ public class WcApplication implements Wc {
 		return strNumLine;
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String newline, word, char count of a file/inputstream
+	 */
 	@Override
 	public String printAllCountsInFile(String args) {
 		// TODO Auto-generated method stub
@@ -123,24 +147,40 @@ public class WcApplication implements Wc {
 		return results;
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String char count of a file/inputstream
+	 */
 	@Override
 	public String printCharacterCountInStdin(String args) {
 		// TODO Auto-generated method stub
 		return printCharacterCountInFile(args);
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String word count of a file/inputstream
+	 */
 	@Override
 	public String printWordCountInStdin(String args) {
 		// TODO Auto-generated method stub
 		return printWordCountInFile(args);
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String newline count of a file/inputstream
+	 */
 	@Override
 	public String printNewlineCountInStdin(String args) {
 		// TODO Auto-generated method stub
 		return printNewlineCountInFile(args);
 	}
 
+	/*
+	 * @param args InputStream and lines from FILE that have been converted to String
+	 * @return String line, word, char count of a file/inputstream
+	 */
 	@Override
 	public String printAllCountsInStdin(String args) {
 		// TODO Auto-generated method stub
