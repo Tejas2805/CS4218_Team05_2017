@@ -3,6 +3,7 @@ package bf.unit;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.nio.channels.ScatteringByteChannel;
 import java.util.regex.Pattern;
 
 import org.junit.After;
@@ -18,6 +19,7 @@ import sg.edu.nus.comp.cs4218.impl.app.CdApplication;
 public class TestCdApplication {
 
 	CdApplication cdApp;
+	String strUserHome = "user.home";
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -34,7 +36,8 @@ public class TestCdApplication {
 	@Test
 	public void testEmptyArgs() throws CdException{
 		String[] args = {};
-		String dir = System.getProperty("user.home");
+		
+		String dir = System.getProperty(strUserHome);
 		cdApp.run(args, null, null);
 		assertEquals(dir, Environment.currentDirectory);
 	}
@@ -46,7 +49,7 @@ public class TestCdApplication {
 	@Test
 	public void testRootDirectory() throws CdException{
 		String[] args = {File.separator};
-		String userDir = System.getProperty("user.home");
+		String userDir = System.getProperty(strUserHome);
 		String[] root = userDir.split(Pattern.quote(File.separator));
 		String rootDir = root[0];
 		cdApp.run(args, null, null);
@@ -60,7 +63,7 @@ public class TestCdApplication {
 	@Test
 	public void testHomeDirectory() throws CdException{
 		String[] args = {"~"};
-		String dir = System.getProperty("user.home");
+		String dir = System.getProperty(strUserHome);
 		cdApp.run(args, null, null);
 		assertEquals(dir, Environment.currentDirectory);
 	}
@@ -121,15 +124,15 @@ public class TestCdApplication {
 	@Test
 	public void testCdToValidDirectory() throws CdException{
 		
-		String userDir = System.getProperty("user.home");
+		String userDir = System.getProperty(strUserHome);
 		String [] userDirParts = userDir.split(Pattern.quote(File.separator));
 		
-		if(userDirParts.length != 1){
+		if(userDirParts.length > 1){
 			String currDir = userDir;
 			String prevDir = currDir;
 			
 			int lastSlashIndex = currDir.lastIndexOf(File.separator);
-			if(lastSlashIndex != -1){
+			if(lastSlashIndex > -1){
 				prevDir = currDir.substring(0, lastSlashIndex);
 			}
 			Environment.currentDirectory = prevDir;

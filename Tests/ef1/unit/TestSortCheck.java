@@ -31,8 +31,8 @@ public class TestSortCheck {
 	 */
 	@Test
 	public void testIsSpecialChar() {
-		char c = '#';
-		assertTrue(sortCheck.isSpecialChar(c));
+		char cVal = '#';
+		assertTrue(sortCheck.isSpecialChar(cVal));
 	}
 	
 	/*
@@ -40,8 +40,8 @@ public class TestSortCheck {
 	 */
 	@Test
 	public void testNotSpecialChar() {
-		char c = 'a';
-		assertFalse(sortCheck.isSpecialChar(c));
+		char cVal = 'a';
+		assertFalse(sortCheck.isSpecialChar(cVal));
 	}
 	
 	/*
