@@ -61,9 +61,9 @@ public class SortCheck {
 	 */
 	public boolean isFirstWordNum(String line){
 		String firstWord = line.split(" ")[0];
-		
+	
 		try { 
-	        Integer.parseInt(firstWord); 
+	        Integer.valueOf(firstWord); 
 	    } catch(NumberFormatException e) { 
 	        return false; 
 	    } catch(NullPointerException e) {
@@ -87,26 +87,35 @@ public class SortCheck {
 	 * Determine if the file is valid. Throw exception if the file is not valid
 	 * @param fileName name of the file
 	 */
-	public void checkValidFile(String fileName) throws SortException{
+	public boolean checkValidFile(String fileName){// throws SortException{
 		BufferedReader bufReader = null;
+		boolean isValid = false;
 		try {
 
 			bufReader = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = bufReader.readLine()) != null) {
 			}
+			isValid = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("invalid file/option: " + fileName);
+			isValid = false;
+			return isValid;
 			//throw (SortException) new SortException("error reading file").initCause(e);
 		} finally {
 			try {
 				if (bufReader != null){
 					bufReader.close();
 				}
+				isValid = true;
 			} catch (IOException ex) {
 				ex.printStackTrace();
+				isValid = false;
+			
 				//throw (SortException) new SortException("error closing buffer reader").initCause(ex);
 			}
 		}
+		return isValid;
 	}
 }

@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import sg.edu.nus.comp.cs4218.app.Sort;
 import sg.edu.nus.comp.cs4218.exception.SortException;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortCheck;
+import sg.edu.nus.comp.cs4218.impl.app.sort.SortData;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortNumber;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortOrder;
 import sg.edu.nus.comp.cs4218.impl.app.sort.SortRead;
@@ -17,6 +18,7 @@ public class SortApplication implements Sort{
 	SortCheck sortCheck = new SortCheck();
 	SortOrder sortOrder = new SortOrder();
 	SortNumber sortNum = new SortNumber();
+	SortData sortData = new SortData();
 	
 	/**
 	 * This method execute the sort function and write the data to output stream
@@ -47,15 +49,14 @@ public class SortApplication implements Sort{
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 
 		}else if(args.length >= 2){
-			int index = 0;
-			if("-n".equals(args[0])){
-				sortCondition = args[0];
-				index = 1;
-			}else{
-				sortCheck.checkValidFile(args[0]);
-			}
+			
 			String data = "";
-			for(int i=index; i<args.length; i++){
+			//for(int i=index; i<args.length; i++){
+			for(int i=0; i<args.length; i++){
+				if("-n".equals(args[i])){
+					sortCondition = args[i];
+					continue;
+				}
 				fileName = args[i];
 				sortCheck.checkValidFile(fileName);
 				data += sortRead.readFromFile(fileName);
@@ -85,7 +86,7 @@ public class SortApplication implements Sort{
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
 		String data = args[1];
-		String simpleData = getSimpleData(data);
+		String simpleData = sortData.getSimpleData(data);
 		String sortSimple = sortOrder.sortData(simpleData);
 
 		return sortSimple;
@@ -101,7 +102,7 @@ public class SortApplication implements Sort{
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
 		String data = args[1];
-		String capitalData = getCapitalData(data);
+		String capitalData = sortData.getCapitalData(data);
 		String sortCapital = sortOrder.sortData(capitalData);
 
 		return sortCapital;
@@ -118,9 +119,8 @@ public class SortApplication implements Sort{
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
 		String sortCondtion = args[0];
-		String data = args[1];
 		
-		String numberData = getNumberData(data);
+		String numberData = sortData.getNumberData(toSort);
 		String sortNumber = "";
 
 		if(sortCheck.isSortByNumCondition(sortCondtion)){
@@ -128,7 +128,7 @@ public class SortApplication implements Sort{
 		}else{
 			sortNumber = sortOrder.sortData(numberData);
 		}
-
+		
 		return sortNumber;
 	}
 
@@ -141,10 +141,17 @@ public class SortApplication implements Sort{
 	public String sortSpecialChars(String toSort) {
 		// TODO Auto-generated method stub
 		String[] args = toSort.split(System.lineSeparator(), 2);
+		String sortCondtion = args[0];
 		String data = args[1];
 	
-		String specialCharData = getSpecialCharData(data);
-		String sortSpecialChar = sortOrder.sortData(specialCharData);
+		String specialCharData = sortData.getSpecialCharData(data);
+		String sortSpecialChar = "";
+		
+		if(sortCheck.isSortByNumCondition(sortCondtion)){
+			sortSpecialChar = sortNum.sortNotNumData(specialCharData);
+		}else{
+			sortSpecialChar = sortOrder.sortData(specialCharData);
+		}
 		
 		return sortSpecialChar;
 	}
@@ -320,86 +327,7 @@ public class SortApplication implements Sort{
 		return processResults(results);
 	}
 	
-	/**
-	 * @param data contains the line of data separated by "System.lineSeparator"
-	 * @return String data which starts with a special character
-	 */
-	private String getSpecialCharData(String data){
-		String [] dataAarr = data.split(System.lineSeparator());
-		String specialCharData = "";
-		
-		for(String line : dataAarr){
-			if(line.isEmpty()){
-				continue;
-			}
-			char[] charArr = line.toCharArray();
-			if(sortCheck.isSpecialChar(charArr[0])){
-				specialCharData += line + System.lineSeparator();
-			}
-			
-		}
-		return specialCharData;
-	}
-
-	/**
-	 * @param data contains the line of data separated by "System.lineSeparator"
-	 * @return String data which starts with a number
-	 */
-	private String getNumberData(String data){
-		String [] dataAarr = data.split(System.lineSeparator());
-		String numberData = "";
-
-		for(String line : dataAarr){
-			if(line.isEmpty()){
-				continue;
-			}
-			char[] charArr = line.toCharArray();
-			if(charArr[0] >= 48 && charArr[0] <= 57){
-				numberData += line + System.lineSeparator();
-			}
-		}
-		return numberData;
-	}
-
-	/**
-	 * @param data contains the line of data separated by "System.lineSeparator"
-	 * @return String data which starts with a capital Letter
-	 */
-	private String getCapitalData(String data){
-		String [] dataAarr = data.split(System.lineSeparator());
-		String capitalData = "";
-
-		for(String line : dataAarr){
-			if(line.isEmpty()){
-				continue;
-			}
-			char[] charArr = line.toCharArray();
-			if(charArr[0] >= 65 && charArr[0] <= 90){
-				capitalData += line + System.lineSeparator();
-			}
-		}
-		return capitalData;
-	}
-
-	/**
-	 * @param data contains the line of data separated by "System.lineSeparator"
-	 * @return String data which starts with a simple letter
-	 */
-	private String getSimpleData(String data){
-		String [] dataAarr = data.split(System.lineSeparator());
-		String simpleData = "";
-
-		for(String line : dataAarr){
-			if(line.isEmpty()){
-				continue;
-			}
-			char[] charArr = line.toCharArray();
-			if(charArr[0] >= 97 && charArr[0] <= 122){
-				simpleData += line + System.lineSeparator();
-			}
-		}
-		return simpleData;
-	}
+	
 	
 	/**
 	 * This method remove unnecessary System.lineSeparator from the final results

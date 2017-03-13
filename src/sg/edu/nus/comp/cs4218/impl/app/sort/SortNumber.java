@@ -14,11 +14,14 @@ public class SortNumber {
 		ArrayList<String> dataList = new ArrayList<String>();
 		ArrayList<String> numDataList = new ArrayList<String>();
 
+		
+		
 		for(String line : dataArr){
 			if(sortCheck.isFirstWordNum(line)){
 				numDataList.add(line);
 			}else{
 				dataList.add(line);
+				
 			}
 		}
 		ArrayList<String> numList = sortByNum(numDataList);
@@ -26,6 +29,24 @@ public class SortNumber {
 		ArrayList<String> asciiList = sortOrder.sortByAscii(dataList);
 		numList.addAll(asciiList);
 		return arrayListToString(numList);
+	}
+	
+	/**
+	 * @param data contains the line of data separated by "System.lineSeparator"
+	 * @return String data that does not contains a numerical value as the first word
+	 */
+	public String sortNotNumData(String data){
+		String [] dataArr = data.split(System.lineSeparator());
+		ArrayList<String> dataList = new ArrayList<String>();
+	
+		
+		for(String line : dataArr){
+			if(!sortCheck.isFirstWordNum(line)){
+				dataList.add(line);
+			}
+		}
+		
+		return arrayListToString(dataList);
 	}
 	
 	/**
@@ -48,8 +69,8 @@ public class SortNumber {
 				oldLine = numFileList.get(j);
 				newLine = numFileList.get(j+1);
 
-				int oldLineValue = Integer.parseInt(oldLine.split(" ")[0]); 
-				int newLineValue = Integer.parseInt(newLine.split(" ")[0]); 
+				int oldLineValue = Integer.valueOf(oldLine.split(" ")[0]); 
+				int newLineValue = Integer.valueOf(newLine.split(" ")[0]); 
 
 				if(oldLineValue > newLineValue){
 					flag = false;
