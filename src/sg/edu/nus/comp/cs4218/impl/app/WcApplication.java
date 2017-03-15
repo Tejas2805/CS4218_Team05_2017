@@ -29,7 +29,6 @@ public class WcApplication implements Wc {
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws WcException {
 		String fileName = "", results = "";
-	
 		if(stdout == null){
 			throw new WcException("No args or outputstream");
 		}
@@ -91,7 +90,7 @@ public class WcApplication implements Wc {
 		byte[] bytes = data.getBytes();
 		int numByte = bytes.length - numOfBlankSpace;
 		String strByte = String.valueOf(numByte);
-		
+	
 		return "   " + strByte;
 	}
 

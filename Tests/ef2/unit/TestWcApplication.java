@@ -44,7 +44,7 @@ public class TestWcApplication {
 		data = wcCheckRead.readFileStdin(filePath + WC_FILE, null);
 		stdout = new ByteArrayOutputStream();
 	}
-	
+	/*
 	@Test (expected = WcException.class)
 	public void testStdoutNull() throws WcException{
 		String [] args = {"no empty"};
@@ -312,6 +312,44 @@ public class TestWcApplication {
 		String [] args1 = {"-lllmmll", strArg, "-mmmnmmmllwl"};
 		wcApp.run(args1, null, stdout);
 		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+	}
+	*/
+	@Test
+	public void testMulitpleFile() throws WcException{
+		String strArg = filePath + WC_FILE;
+		
+		stdout = new ByteArrayOutputStream();
+		String [] args1 = {"-lwm", strArg, strArg};
+		wcApp.run(args1, null, stdout);
+		String expectedResults1 = "   11   10   65 " + strArg + System.lineSeparator() + "   11   10   65 " + strArg + System.lineSeparator()
+			+ "   22   20   130 total" + System.lineSeparator();
+		assertEquals(expectedResults1, stdout.toString());
+				
+		stdout = new ByteArrayOutputStream();
+		String [] args2 = {"-l", strArg, strArg};
+		wcApp.run(args2, null, stdout);
+		String expectedResults2 = "   11 " + strArg + System.lineSeparator() + "   11 " + strArg + System.lineSeparator()
+			+ "   22 total" + System.lineSeparator();
+		assertEquals(expectedResults2, stdout.toString());
+		
+		stdout = new ByteArrayOutputStream();
+		String [] args3 = {"-w", strArg, strArg};
+		wcApp.run(args3, null, stdout);
+		String expectedResults3 = "   10 " + strArg + System.lineSeparator() + "   10 " + strArg + System.lineSeparator()
+			+ "   20 total" + System.lineSeparator();
+		assertEquals(expectedResults3, stdout.toString());
+	}
+	
+	@Test
+	public void testMulitpleFileUnorder() throws WcException{
+		String strArg = filePath + WC_FILE;
+		
+		stdout = new ByteArrayOutputStream();
+		String [] args5 = {strArg, "-m", strArg, strArg};
+		wcApp.run(args5, null, stdout);
+		String expectedResults5 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg + System.lineSeparator()
+		+ "   65 " + strArg + System.lineSeparator() + "   195 total" + System.lineSeparator();
+		assertEquals(expectedResults5, stdout.toString());
 	}
 	
 	@Test
