@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs4218.impl.app.wc;
 
+import java.nio.charset.IllegalCharsetNameException;
 
 public class WcOption {
 	/*
@@ -9,41 +10,38 @@ public class WcOption {
 	 */
 	public String processArgsOption(String... args){
 		String option = "-lwm";
-		boolean isLine = false, isWord = false, isMchar = false;
+		boolean isLine = false, isWord = false, isMchar = false, isIllegal = false, isLegal = false;
+		boolean tempIsLine = false, tempIsWord = false, tempIsMchar = false;
 		
 		for(int i=0; i<args.length; i++){
 			if(args[i].charAt(0) == '-'){
-				
-				if(args[i].length() == 2 && args[i].charAt(1) == 'l'){ 
-					isLine = true;
-				}
-				if(args[i].length() == 2 && args[i].charAt(1) == 'w'){
-					isWord = true;
-				}
-				if(args[i].length() == 2 && args[i].charAt(1) == 'm'){
-					isMchar = true;
-				}
-				
-				
-				if((args[i].length() == 3) && ((args[i].charAt(1) == 'l' && args[i].charAt(2) == 'w') || (args[i].charAt(1) == 'w' && args[i].charAt(2) == 'l'))){
-					isLine = true;
-					isWord = true;
-				}
-				if((args[i].length() == 3) && ((args[i].charAt(1) == 'l' && args[i].charAt(2) == 'm') || (args[i].charAt(1) == 'm' && args[i].charAt(2) == 'l'))){
-					isLine = true;
-					isMchar = true;
-				}
-				if((args[i].length() == 3) && ((args[i].charAt(1) == 'w' && args[i].charAt(2) == 'm') || (args[i].charAt(1) == 'm' && args[i].charAt(2) == 'w'))){
-					isWord = true;
-					isMchar = true;
+				for(int j=1; j<args[i].length(); j++){
+					if(args[i].charAt(j) == 'l'){
+						tempIsLine = true;
+					}else if(args[i].charAt(j) == 'w'){
+						tempIsWord = true;
+					}else if(args[i].charAt(j) == 'm'){
+						tempIsMchar = true;
+					}else{
+						isIllegal = true;
+					}
 				}
 				
-				if(args[i].length() == 4 && isOptionLWM(args[i])){
-					return "-lwm";
+				if(!isIllegal){
+					isLegal = true;
+					if(tempIsLine){
+						isLine = true;
+					}
+					if(tempIsWord){
+						isWord = true;
+					}
+					if(tempIsMchar){
+						isMchar = true;
+					}
 				}
 			}
 		}
-		option = getOption(isLine, isWord, isMchar);
+		option = getOption(isLine, isWord, isMchar, isIllegal, isLegal);
 		return option;
 	}
 	
@@ -53,13 +51,18 @@ public class WcOption {
 	 * return true if it is a valid option
 	 */
 	public boolean isValidOption(String option){
-		String optionResults = processArgsOption(option);
-		if("-".equals(optionResults)){
+			
+		if(option.charAt(0) == '-'){
+			for(int j=1; j<option.length(); j++){
+				if(option.charAt(j) != 'l' && option.charAt(j) != 'w' && option.charAt(j) != 'm'){
+					return false;
+				}
+			}
+		}
+		else{
 			return false;
 		}
-		if("-lwm".equals(optionResults)){
-			return isOptionLWM(option);
-		}
+					
 		return true;
 	}
 	
@@ -70,8 +73,13 @@ public class WcOption {
 	 * @param isMchar boolean value true/false
 	 * return either -l, -w, -m, -lw, -lm, -wm, -lwm
 	 */
-	private String getOption(boolean isLine, boolean isWord, boolean isMchar){
+	private String getOption(boolean isLine, boolean isWord, boolean isMchar, boolean isIllegal, boolean isLegal){
 		String option = "-";
+		boolean isAll = isIllegal;
+		if(isLegal){
+			isAll = false;
+		}
+		
 		if(isLine){
 			option += "l";
 		}
@@ -80,6 +88,9 @@ public class WcOption {
 		}
 		if(isMchar){
 			option += "m";
+		}
+		if(isAll){
+			option = "-lwm";
 		}
 		return option;
 	}

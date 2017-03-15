@@ -14,7 +14,7 @@ public class WcCheckRead {
 	 * @param stdin the inputstream data
 	 * return the data in String format 
 	 */
-	public String readFromFileOrInputStream(String fileName, InputStream stdin){
+	public String readFileStdin(String fileName, InputStream stdin){
 		InputStream inputStream = null; 
 		InputStreamReader inputStreamReader= null;
 		BufferedReader bufRead = null;
@@ -23,7 +23,7 @@ public class WcCheckRead {
 			if(fileName.isEmpty()){
 				inputStream = stdin;
 			}else{
-				inputStream = new FileInputStream(fileName); 
+				inputStream = new FileInputStream(fileName); 	
 			}
 			inputStreamReader = new InputStreamReader(inputStream);
 			bufRead = new BufferedReader(inputStreamReader);
@@ -34,11 +34,10 @@ public class WcCheckRead {
 				char charVal = (char)value;
 				results += String.valueOf(charVal);
 			}
+		
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-		     
-		     // releases resources associated with the streams
 		     if(inputStream!=null){
 				try {
 					inputStream.close();
