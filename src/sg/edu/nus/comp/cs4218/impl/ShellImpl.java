@@ -441,8 +441,7 @@ public class ShellImpl implements Shell {
 	public static void main(String... args) {
 		ShellImpl shell = new ShellImpl();
 
-		BufferedReader bReader = new BufferedReader(new InputStreamReader(
-				System.in));
+		BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
 		String readLine = null;
 		String currentDir;
 
@@ -472,9 +471,37 @@ public class ShellImpl implements Shell {
 		//semicolon operator
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
-			CallCommand call = new CallCommand(cmds[i]);
-			call.parse();
-			call.evaluate(null, stdout);
+			//pipe operator
+			String[] cmdsPipe = cmds[i].split("(\\|(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
+			//System.out.println(cmdsPipe[0]);
+			if(cmdsPipe.length==1){
+				CallCommand call = new CallCommand(cmds[i]);
+				call.parse();
+				call.evaluate(null, stdout);
+			}else{
+				InputStream inputStream = null;
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				File workingDirectory;
+				for(int j=0;j<cmdsPipe.length;j++){
+					CallCommand call = new CallCommand(cmdsPipe[j]);
+					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+					outputStream = new ByteArrayOutputStream();
+					System.out.println(cmdsPipe[j]);
+					System.out.println("in: "+inputStream);
+					System.out.println("out: "+outputStream);
+					workingDirectory = new File(Environment.currentDirectory);
+					call.parse();
+					call.evaluate(inputStream, outputStream);
+					try {
+						Environment.currentDirectory = workingDirectory.getCanonicalPath();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//call.parse();
+					//call.evaluate(inputStream, outputStream);
+				}
+			}
 		}
 		
 	}
