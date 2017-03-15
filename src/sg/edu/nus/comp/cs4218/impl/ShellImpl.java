@@ -471,6 +471,7 @@ public class ShellImpl implements Shell {
 		//semicolon operator
 		String[] cmds = cmdline.split("(;(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 		for(int i=0;i<cmds.length;i++){
+			cmds[i] = checkAndPerformCommandSubstitution(cmds[i]);
 			//pipe operator
 			String[] cmdsPipe = cmds[i].split("(\\|(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?=(?:[^\']*\'[^\']*\')*[^\']*$))");
 			//System.out.println(cmdsPipe[0]);
@@ -599,10 +600,73 @@ public class ShellImpl implements Shell {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public String performCommandSubstitutionWithException(String args) {
 		// TODO Auto-generated method stub
-		return null;
+		String processedData="";
+		try {
+			System.out.println(args+"test");
+			
+			String[] processedArgs = processSubstitution(args );
+			//results = String.join(" ", processedArgs);
+		} catch (AbstractApplicationException e) {
+			return e.getMessage();
+		} catch (ShellException e) {
+			return e.getMessage();
+		}
+		return processedData;
+	}
+	public String[] processSubstitution(String args) throws AbstractApplicationException, ShellException{
+		String[] cmd = new String[]{args};
+		String[] resultArr = new String[cmd.length];
+		System.arraycopy(cmd, 0, resultArr, 0, cmd.length);
+		String pattern = "`([^\\n`]*)`";
+		Pattern patternSub = Pattern.compile(pattern);
+		for (int i = 0; i < cmd.length; i++) {
+			Matcher matcherPattern = patternSub.matcher(cmd[i]);
+			while (matcherPattern.find()) {
+				String subStr = matcherPattern.group(1);
+				OutputStream subOutputStream = new ByteArrayOutputStream();
+				ShellImpl shell = new ShellImpl();
+				shell.parseAndEvaluate(subStr, subOutputStream);
+
+				ByteArrayOutputStream outByte = (ByteArrayOutputStream) subOutputStream;
+				byte[] byteArray = outByte.toByteArray();
+				String bqResult = new String(byteArray).replace("\n", "").replace("\r", "");
+				String replacedStr = cmd[i].replace("`" + subStr + "`", bqResult);
+				resultArr[i] = replacedStr;
+			}
+		}
+		return resultArr;
+	}
+	public String checkAndPerformCommandSubstitution(String args){
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern regex = Pattern.compile("('[^\\n']*')|(`[^\\n`]*`)|[^\\n'`]+|[^\\n]+");
+		Matcher regexMatcher = regex.matcher(args);
+		while (regexMatcher.find()) {
+			if (regexMatcher.group(0) != null) {
+				tokens.add(regexMatcher.group(0));
+			} else if (regexMatcher.group(1) != null) {
+				tokens.add(regexMatcher.group(1));
+			} else if (regexMatcher.group(2) != null) {
+                tokens.add(regexMatcher.group(2));
+            } else {
+				tokens.add(regexMatcher.group());
+			}
+		}
+		for (int i = 0; i < tokens.size(); i++) {
+			String token = tokens.get(i);
+			if (!notSingleQuote(token) && backQuote(token)) {
+				tokens.set(i, performCommandSubstitutionWithException(token));
+			}
+		}
+		return String.join("", tokens);
+	}
+	public boolean notSingleQuote(String args){
+		return (args.startsWith("'") && args.endsWith("'"));
+	}
+	public boolean backQuote(String args){
+		return (args.startsWith("`") && args.endsWith("`"));
 	}
 }
