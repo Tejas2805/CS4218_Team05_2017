@@ -478,30 +478,40 @@ public class ShellImpl implements Shell {
 				CallCommand call = new CallCommand(cmds[i]);
 				call.parse();
 				call.evaluate(null, stdout);
+				//System.out.println("length1");
 			}else{
 				InputStream inputStream = null;
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				File workingDirectory;
+				//File workingDirectory;
 				for(int j=0;j<cmdsPipe.length;j++){
 					CallCommand call = new CallCommand(cmdsPipe[j]);
 					inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 					outputStream = new ByteArrayOutputStream();
-					System.out.println(cmdsPipe[j]);
-					System.out.println("in: "+inputStream);
-					System.out.println("out: "+outputStream);
-					workingDirectory = new File(Environment.currentDirectory);
+					//System.out.println(cmdsPipe[j]);
+					//System.out.println("in: "+inputStream);
+					//System.out.println("out: "+outputStream);
+					//workingDirectory = new File(Environment.currentDirectory);
 					call.parse();
 					call.evaluate(inputStream, outputStream);
-					try {
+					/*try {
 						Environment.currentDirectory = workingDirectory.getCanonicalPath();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 					//call.parse();
 					//call.evaluate(inputStream, outputStream);
+					try {
+						if(j==cmdsPipe.length-1){
+							stdout.write(outputStream.toString().getBytes());
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+			
 		}
 		
 	}
