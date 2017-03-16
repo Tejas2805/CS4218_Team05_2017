@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
 import sg.edu.nus.comp.cs4218.app.Wc;
 import sg.edu.nus.comp.cs4218.exception.WcException;
 import sg.edu.nus.comp.cs4218.impl.app.wc.WcCheckRead;
@@ -40,23 +39,22 @@ public class WcApplication implements Wc {
 			results = printCountInFileOrStdin("", readStdin) + System.lineSeparator();
 		}else if(args.length == 1){
 			fileName = args[0];
-			wcCheckRead.checkValidFile(fileName);
-			String data = wcCheckRead.readFileStdin(fileName, null);
-			results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
+			if(wcCheckRead.checkValidFile(fileName)){
+				String data = wcCheckRead.readFileStdin(fileName, null);
+				results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
+			}
 		}else if(args.length >=2 ){
 			
 			String option = wcOption.processArgsOption(args);
 			String data = "", totalData = "";
 			int countFile = 0;
-			
-			
+		
 			for(int i=0; i<args.length; i++){
 				fileName = args[i];
 				
 				if(wcOption.isValidOption(fileName)){
 					continue;
 				}		
-				
 				if(wcCheckRead.checkValidFile(fileName)){
 					data = wcCheckRead.readFileStdin(fileName, null);
 					results += printCountInFileOrStdin(option, data) + " " + fileName + System.lineSeparator();

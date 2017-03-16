@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import sg.edu.nus.comp.cs4218.exception.WcException;
+
 public class WcCheckRead {
 	/*
 	 * Read from either a file or inputstream and convert them to String
@@ -14,7 +16,7 @@ public class WcCheckRead {
 	 * @param stdin the inputstream data
 	 * return the data in String format 
 	 */
-	public String readFileStdin(String fileName, InputStream stdin){
+	public String readFileStdin(String fileName, InputStream stdin) throws WcException{
 		InputStream inputStream = null; 
 		InputStreamReader inputStreamReader= null;
 		BufferedReader bufRead = null;
@@ -36,7 +38,8 @@ public class WcCheckRead {
 			}
 		
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw (WcException) new WcException("invalid file").initCause(e);
+			//e.printStackTrace();
 		} finally {
 		     if(inputStream!=null){
 				try {
