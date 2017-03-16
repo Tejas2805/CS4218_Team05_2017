@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,10 +22,40 @@ public class TestSortApplication {
 
 	SortApplication sortApp;
 	SortRead sortRead;
-	ByteArrayInputStream stdin;
-	ByteArrayOutputStream stdout;
+	OutputStream stdout;
+	InputStream stdin;
 	String toSort;
+	static final String UNSORTED_FILE = "sort.txt";
+	static final String SPECIAL_FILE = "specialChar.txt";
+	static final String NUMBER_FILE = "number.txt";
+	static final String CAPITAL_FILE = "capital.txt";
+	static final String SIMPLE_FILE = "simple.txt";
+	static final String SORT_SIMPLE_FILE = "sortSimple.txt";
+	static final String	SORT_CAPITAL_FILE = "sortCapital.txt";
+	static final String SORT_NUMBER_FILE = "sortNumbers.txt";
+	static final String SORT_NUMBER_N_FILE = "sortNumbers-n.txt";
+	static final String SORT_SPECIAL_FILE = "sortSpecialChars.txt";
+	static final String SORT_SIMPLE_CAPITAL = "sortSimpleCapital.txt";	
+	static final String SORT_SIMPLE_NUMBER = "sortSimpleNumbers.txt";
+	static final String SORT_SIMPLE_NUMBER_N = "sortSimpleNumbers-n.txt";
+	static final String SORT_SIMPLE_SPECIAL = "sortSimpleSpecialChars.txt";
+	static final String SORT_CAPITAL_NUMBER = "sortCapitalNumbers.txt";
+	static final String SORT_CAPITAL_NUMBER_N ="sortCapitalNumbers-n.txt";
+	static final String SORT_CAPITAL_SPECIAL = "sortCapitalSpecialChars.txt";
+	static final String SORT_NUMBER_SPECIAL = "sortNumbersSpecialChars.txt";
+	static final String SORT_NUMBER_SPECIAL_N = "sortNumbersSpecialChars-n.txt";
+	static final String SORT_SIMPLE_CAPITAL_NUMBER = "sortSimpleCapitalNumbers.txt";
+	static final String SORT_SIMPLE_CAPITAL_NUMBER_N = "sortSimpleCapitalNumbers-n.txt";
+	static final String SORT_SIMPLE_CAPITAL_SPECIAL = "sortSimpleCapitalSpecialChars.txt";
+	static final String SORT_SIMPLE_NUMBER_SPECIAL = "sortSimpleNumbersSpecialChars.txt";
+	static final String SORT_SIMPLE_NUMBER_SPECIAL_N = "sortSimpleNumbersSpecialChars-n.txt";
+	static final String SORT_CAPITAL_NUMBER_SPECIAL = "sortCapitalNumbersSpecialChars.txt";
+	static final String SORT_CAPITAL_NUMBER_SPECIAL_N = "sortCapitalNumbersSpecialChars-n.txt";
+	static final String SORT_ALL_FILE = "sortAll.txt";
+	static final String SORT_ALL_N_FILE = "sortAll-n.txt";
+	
 
+	String FILE_PATH = "tests" + File.separator + "sortFiles" + File.separator;
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -35,11 +67,108 @@ public class TestSortApplication {
 	public void setup() throws SortException {
 		sortApp = new SortApplication();
 		sortRead = new SortRead();
-		String sortFilename = "tests" + File.separator + "sortFiles" + File.separator + "sort.txt";
+		String sortFilename = FILE_PATH + UNSORTED_FILE;
 		String data = sortRead.readFromFile(sortFilename);
 		toSort = "" + System.lineSeparator() + data;
+		stdout = new ByteArrayOutputStream();
 	}
 
+	@Test (expected = SortException.class)
+	public void testStdoutNull() throws SortException{
+		String [] args = {"no empty"};
+		stdin = new ByteArrayInputStream("test".getBytes());
+		sortApp.run(args, stdin, null);
+	}
+	
+	@Test (expected = SortException.class)
+	public void testArgsNullStdintNull() throws SortException{
+		sortApp.run(null, null, stdout);
+	}
+	
+	@Test (expected = SortException.class)
+	public void testArgsEmptyStdintNull() throws SortException{
+		String [] args = {};
+		sortApp.run(args, null, stdout);
+	}
+	
+	@Test
+	public void testOneArg() throws SortException{
+		
+		String strArgs = FILE_PATH + UNSORTED_FILE;
+		String[] args= {strArgs};
+		sortApp.run(args, null, stdout);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+
+		assertEquals(expectedResults, stdout.toString());
+	}
+	
+	@Test
+	public void testOneArgWithN() throws SortException{
+		
+		String strArgs = FILE_PATH + UNSORTED_FILE;
+		String[] args= {"-n", strArgs};
+		sortApp.run(args, null, stdout);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+
+		assertEquals(expectedResults, stdout.toString());
+	}
+	
+	@Test
+	public void testInvalidOptionValidFile() throws SortException{
+		
+		String strArgs = FILE_PATH + UNSORTED_FILE;
+		String[] args= {"-nn", strArgs};
+		sortApp.run(args, null, stdout);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+
+		assertEquals(expectedResults, stdout.toString());
+	}
+	
+	@Test
+	public void testValidAndInvalidOptionValidFile() throws SortException{
+		
+		String strArgs = FILE_PATH + UNSORTED_FILE;
+		String[] args= {"-m", strArgs, "-n"};
+		sortApp.run(args, null, stdout);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+
+		assertEquals(expectedResults, stdout.toString());
+	}
+	
+	@Test
+	public void testSortMultipleFiles() throws SortException{
+		
+		String strSimple = FILE_PATH + SIMPLE_FILE;
+		String strCapital = FILE_PATH + CAPITAL_FILE;
+		String strNumber = FILE_PATH + NUMBER_FILE;
+		String strSpecial = FILE_PATH + SPECIAL_FILE;
+		
+		String[] args1 = {strSimple, strCapital};
+		sortApp.run(args1, null, stdout);
+		String expectedResults1 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL);
+		assertEquals(expectedResults1, stdout.toString());
+		
+		stdout = new ByteArrayOutputStream();
+		String[] args2 = {strCapital, strNumber, strSpecial, strSimple};
+		sortApp.run(args2, null, stdout);
+		String expectedResults2 = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+		assertEquals(expectedResults2, stdout.toString());
+		
+		stdout = new ByteArrayOutputStream();
+		String[] args3 = {strCapital, strNumber, strSpecial, strSimple, "-n"};
+		sortApp.run(args3, null, stdout);
+		String expectedResults3 = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+		assertEquals(expectedResults3, stdout.toString());
+		
+		stdout = new ByteArrayOutputStream();
+		String[] args4 = {strSimple, strCapital, "-n", strNumber,};
+		sortApp.run(args4, null, stdout);
+		String expectedResults4 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N);
+		assertEquals(expectedResults4, stdout.toString());
+	}
+	
+	
+	
 	/*
 	 * Throw an an error message "Input stream null" if inputstream is empty
 	 */
@@ -63,7 +192,7 @@ public class TestSortApplication {
 	public void testSortStringsSimple() throws SortException {
 		String actualResults = sortApp.sortStringsSimple(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimple.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -77,7 +206,7 @@ public class TestSortApplication {
 	public void testSortStringsCapital() throws SortException {
 		String actualResults = sortApp.sortStringsCapital(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortCapital.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -91,7 +220,7 @@ public class TestSortApplication {
 	public void testSortNumbers() throws SortException {
 		String actualResults = sortApp.sortNumbers(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbers.txt";
+		String resultsFile = FILE_PATH + SORT_NUMBER_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -106,7 +235,7 @@ public class TestSortApplication {
 	public void testSortNumbersWithN() throws SortException {
 		String actualResults = sortApp.sortNumbers("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbers-n.txt";
+		String resultsFile = FILE_PATH + SORT_NUMBER_N_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile).trim();
 
 		assertEquals(expectedResults, actualResults);
@@ -120,7 +249,7 @@ public class TestSortApplication {
 	public void testSortSpecialChars() throws SortException {
 		String actualResults = sortApp.sortSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_SPECIAL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -134,7 +263,7 @@ public class TestSortApplication {
 	public void testSortSimpleCapital() throws SortException {
 		String actualResults = sortApp.sortSimpleCapital(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleCapital.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -148,7 +277,7 @@ public class TestSortApplication {
 	public void testSortSimpleNumbers() throws SortException {
 		String actualResults = sortApp.sortSimpleNumbers(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleNumbers.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -163,7 +292,7 @@ public class TestSortApplication {
 	public void testSortSimpleNumbersWithN() throws SortException {
 		String actualResults = sortApp.sortSimpleNumbers("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleNumbers-n.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -178,7 +307,7 @@ public class TestSortApplication {
 	public void testSortSimpleSpecialChars() throws SortException {
 		String actualResults = sortApp.sortSimpleSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -193,7 +322,7 @@ public class TestSortApplication {
 	public void testSortCapitalNumbers() throws SortException {
 		String actualResults = sortApp.sortCapitalNumbers(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortCapitalNumbers.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -209,7 +338,7 @@ public class TestSortApplication {
 	public void testSortCapitalNumbersWithN() throws SortException {
 		String actualResults = sortApp.sortCapitalNumbers("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortCapitalNumbers-n.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -224,7 +353,7 @@ public class TestSortApplication {
 	public void testSortCapitalSpecialChars() throws SortException {
 		String actualResults = sortApp.sortCapitalSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortCapitalSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -239,7 +368,7 @@ public class TestSortApplication {
 	public void testSortNumbersSpecialChars() throws SortException {
 		String actualResults = sortApp.sortNumbersSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -255,7 +384,7 @@ public class TestSortApplication {
 	public void testSortNumbersSpecialCharsWithN() throws SortException {
 		String actualResults = sortApp.sortNumbersSpecialChars("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersSpecialChars-n.txt";
+		String resultsFile = FILE_PATH + SORT_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -270,7 +399,7 @@ public class TestSortApplication {
 	public void testSortSimpleCapitalNumber() throws SortException {
 		String actualResults = sortApp.sortSimpleCapitalNumber(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleCapitalNumbers.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -286,7 +415,7 @@ public class TestSortApplication {
 	public void testSortSimpleCapitalNumberWithN() throws SortException {
 		String actualResults = sortApp.sortSimpleCapitalNumber("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortSimpleCapitalNumbers-n.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -301,8 +430,7 @@ public class TestSortApplication {
 	public void testSortSimpleCapitalSpecialChars() throws SortException {
 		String actualResults = sortApp.sortSimpleCapitalSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator
-				+ "sortSimpleCapitalSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -317,8 +445,7 @@ public class TestSortApplication {
 	public void testSortSimpleNumbersSpecialChars() throws SortException {
 		String actualResults = sortApp.sortSimpleNumbersSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator
-				+ "sortSimpleNumbersSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -334,8 +461,7 @@ public class TestSortApplication {
 	public void testSortSimpleNumbersSpecialCharsWithN() throws SortException {
 		String actualResults = sortApp.sortSimpleNumbersSpecialChars("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator
-				+ "sortSimpleNumbersSpecialChars-n.txt";
+		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -350,8 +476,7 @@ public class TestSortApplication {
 	public void testSortCapitalNumbersSpecialChars() throws SortException {
 		String actualResults = sortApp.sortCapitalNumbersSpecialChars(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator
-				+ "sortCapitalNumbersSpecialChars.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -367,8 +492,7 @@ public class TestSortApplication {
 	public void testSortCapitalNumbersSpecialCharsWithN() throws SortException {
 		String actualResults = sortApp.sortCapitalNumbersSpecialChars("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator
-				+ "sortCapitalNumbersSpecialChars-n.txt";
+		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -383,7 +507,7 @@ public class TestSortApplication {
 	public void sortAll() throws SortException {
 		String actualResults = sortApp.sortAll(toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortAll.txt";
+		String resultsFile = FILE_PATH + SORT_ALL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);
@@ -399,7 +523,7 @@ public class TestSortApplication {
 	public void sortAllWithN() throws SortException {
 		String actualResults = sortApp.sortAll("-n" + toSort);
 
-		String resultsFile = "tests" + File.separator + "sortFiles" + File.separator + "sortAll-n.txt";
+		String resultsFile = FILE_PATH + SORT_ALL_N_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
 		assertEquals(expectedResults, actualResults);

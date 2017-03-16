@@ -606,10 +606,8 @@ public class ShellImpl implements Shell {
 		// TODO Auto-generated method stub
 		String processedData="";
 		try {
-			System.out.println(args+"test");
-			
 			String[] processedArgs = processSubstitution(args );
-			//results = String.join(" ", processedArgs);
+			processedData = String.join(" ", processedArgs);
 		} catch (AbstractApplicationException e) {
 			return e.getMessage();
 		} catch (ShellException e) {
@@ -657,7 +655,7 @@ public class ShellImpl implements Shell {
 		}
 		for (int i = 0; i < tokens.size(); i++) {
 			String token = tokens.get(i);
-			if (!notSingleQuote(token) && backQuote(token)) {
+			if (!notSingleQuote(token)) {
 				tokens.set(i, performCommandSubstitutionWithException(token));
 			}
 		}
