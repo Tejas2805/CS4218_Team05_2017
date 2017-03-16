@@ -15,10 +15,11 @@ import sg.edu.nus.comp.cs4218.exception.PwdException;
 import sg.edu.nus.comp.cs4218.exception.SedException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
+import sg.edu.nus.comp.cs4218.impl.app.sed.SedHelper;
 
 public class SedApplication implements Sed{
 
-	
+	SedHelper sedHelper = new SedHelper();
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws SedException {
 		if(stdout == null){
@@ -35,19 +36,7 @@ public class SedApplication implements Sed{
 				{
 					throw new SedException("InputStream not provided");
 				} else{
-					int intCount;
-					String input = "";
-					char character;
-					String[] newArgs = {};
-					try {
-						while ((intCount = stdin.read()) != -1) {
-							character = (char)intCount;
-							input += character;
-						}
-						newArgs = new String[]{args[0], input};
-					} catch (IOException e) {
-						throw (SedException) new SedException(e.getMessage()).initCause(e);
-					}
+					String[] newArgs = createNewArgsByAppeningInputStreamData(args, stdin);
 					String result = replaceInputStreamString(newArgs);
 					try {
 						stdout.write(result.getBytes());
@@ -58,7 +47,7 @@ public class SedApplication implements Sed{
 				break;
 			case 2:
 				String result = replaceString(args);
-				String[] results = splitStringToArray(result);
+				String[] results = sedHelper.splitStringToArray(result);
 				
 				for(String str : results){
 					try {
@@ -76,18 +65,35 @@ public class SedApplication implements Sed{
 		}
 	}
 
+	private String[] createNewArgsByAppeningInputStreamData(String[] args, InputStream stdin) throws SedException {
+		int intCount;
+		String input = "";
+		char character;
+		String[] newArgs = {};
+		try {
+			while ((intCount = stdin.read()) != -1) {
+				character = (char)intCount;
+				input += character;
+			}
+			newArgs = new String[]{args[0], input};
+		} catch (IOException e) {
+			throw (SedException) new SedException(e.getMessage()).initCause(e);
+		}
+		return newArgs;
+	}
+
 	private String replaceInputStreamString(String... args) throws SedException {
 
-		if(isInValidReplacement(args[0])){
+		if(sedHelper.isInValidReplacement(args[0])){
 			return args[1];
 		}	
-		else if(isInvalidPattern(args[0])){
+		else if(sedHelper.isInvalidPattern(args[0])){
 			return args[1];
 		} else{
-			if(isLocalSed(args[0])){
-				return replaceFirstSubStringFromStdin(concatenateStringsToString(args));
-			} else if(isGlobalSed(args[0])){
-				return replaceAllSubstringsInStdin(concatenateStringsToString(args));
+			if(sedHelper.isLocalSed(args[0])){
+				return replaceFirstSubStringFromStdin(sedHelper.concatenateStringsToString(args));
+			} else if(sedHelper.isGlobalSed(args[0])){
+				return replaceAllSubstringsInStdin(sedHelper.concatenateStringsToString(args));
 			}else {
 				throw new SedException("WTF IS THIS");
 			}		
@@ -104,17 +110,17 @@ public class SedApplication implements Sed{
 		try {
 			if(fileHandler.checkIfFileIsReadable(Paths.get(filePath)))
 			{
-				if(isInValidReplacement(args[0])){
-					return replaceSubstringWithInvalidReplacement(concatenateStringsToString(args));
+				if(sedHelper.isInValidReplacement(args[0])){
+					return replaceSubstringWithInvalidReplacement(sedHelper.concatenateStringsToString(args));
 				}	
-				else if(isInvalidPattern(args[0])){
-					return replaceSubstringWithInvalidRegex(concatenateStringsToString(args));
+				else if(sedHelper.isInvalidPattern(args[0])){
+					return replaceSubstringWithInvalidRegex(sedHelper.concatenateStringsToString(args));
 				} else{
 					
-					if(isLocalSed(args[0])){
-						return replaceFirstSubStringInFile(concatenateStringsToString(args));
-					} else if(isGlobalSed(args[0])){
-						return replaceAllSubstringsInFile(concatenateStringsToString(args));
+					if(sedHelper.isLocalSed(args[0])){
+						return replaceFirstSubStringInFile(sedHelper.concatenateStringsToString(args));
+					} else if(sedHelper.isGlobalSed(args[0])){
+						return replaceAllSubstringsInFile(sedHelper.concatenateStringsToString(args));
 					}else {
 						throw new SedException("WTF IS THIS");
 					}
@@ -143,68 +149,68 @@ public class SedApplication implements Sed{
 	
 	@Override
 	public String replaceFirstSubStringInFile(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		FileHandler fileHandler = new FileHandler();
 		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		
 		for(int i = 0; i < lines.size(); i++)
 		{
-			String regex = getPatternLocal(argsArray[0]);
-			String replacement = getReplacementLocal(argsArray[0]);
+			String regex = sedHelper.getPatternLocal(argsArray[0]);
+			String replacement = sedHelper.getReplacementLocal(argsArray[0]);
 			lines.set(i, replaceFirstWithRegex(regex, replacement, lines.get(i)));
 			
 		}
 		
 		String[] output = new String[lines.size()];
 		output = lines.toArray(output);
-		return concatenateStringsToString(output);
+		return sedHelper.concatenateStringsToString(output);
 	}
 
 	@Override
 	public String replaceAllSubstringsInFile(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		FileHandler fileHandler = new FileHandler();
 		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		
 		for(int i = 0; i < lines.size(); i++)
 		{
-			String regex = getPatternGlobal(argsArray[0]);
-			String replacement = getReplacementGlobal(argsArray[0]);
+			String regex = sedHelper.getPatternGlobal(argsArray[0]);
+			String replacement = sedHelper.getReplacementGlobal(argsArray[0]);
 			lines.set(i, replaceAllWithRegex(regex, replacement, lines.get(i)));
 			
 		}
 		
 		String[] output = new String[lines.size()];
 		output = lines.toArray(output);
-		return concatenateStringsToString(output);
+		return sedHelper.concatenateStringsToString(output);
 	}
 
 	@Override
 	public String replaceFirstSubStringFromStdin(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		
 		String lineString = "";
 		for(int i = 1; i < argsArray.length; i++){
 			lineString += argsArray[i]+"\n";
 		}
 			
-		String[] lines = splitStringToArray(lineString);
+		String[] lines = sedHelper.splitStringToArray(lineString);
 		
 		for(int i = 0; i < lines.length; i++)
 		{
-			String regex = getPatternLocal(argsArray[0]);
-			String replacement = getReplacementLocal(argsArray[0]);
+			String regex = sedHelper.getPatternLocal(argsArray[0]);
+			String replacement = sedHelper.getReplacementLocal(argsArray[0]);
 			lines[i] =  replaceFirstWithRegex(regex, replacement, lines[i]);
 			
 		}
 		
-		return concatenateStringsToString(lines);
+		return sedHelper.concatenateStringsToString(lines);
 
 	}
 
 	@Override
 	public String replaceAllSubstringsInStdin(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		
 		String lineString = "";
 		for(int i = 1; i < argsArray.length; i++){
@@ -212,23 +218,23 @@ public class SedApplication implements Sed{
 		}
 			
 		
-		String[] lines = splitStringToArray(lineString);
+		String[] lines = sedHelper.splitStringToArray(lineString);
 		
 		for(int i = 0; i < lines.length; i++)
 		{
-			String regex = getPatternGlobal(argsArray[0]);
-			String replacement = getReplacementGlobal(argsArray[0]);
+			String regex = sedHelper.getPatternGlobal(argsArray[0]);
+			String replacement = sedHelper.getReplacementGlobal(argsArray[0]);
 			lines[i] = replaceAllWithRegex(regex, replacement, lines[i]);
 			
 		}
 		
-		return concatenateStringsToString(lines);
+		return sedHelper.concatenateStringsToString(lines);
 
 	}
 
 	@Override
 	public String replaceSubstringWithInvalidReplacement(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		
 		FileHandler fileHandler = new FileHandler();
 		List<String> lines = fileHandler.readAllLines(argsArray[1]);
@@ -243,7 +249,7 @@ public class SedApplication implements Sed{
 
 	@Override
 	public String replaceSubstringWithInvalidRegex(String args) {
-		String[] argsArray = splitStringToArray(args);
+		String[] argsArray = sedHelper.splitStringToArray(args);
 		
 		FileHandler fileHandler = new FileHandler();
 		List<String> lines = fileHandler.readAllLines(argsArray[1]);
@@ -258,147 +264,5 @@ public class SedApplication implements Sed{
 
 	// sed s/t/ijijj
 	// sed s/t// 
-	private boolean isInValidReplacement(String arg)
-	{
-		String strRegex = "^s\\/.+\\/\\/";
-		String strRegex2 = "^s\\/.+\\/[^\\/]+";
-		String strRegex3 = "^s\\/.+\\/\\/g";
-		if(isLocalSed(arg)){
-			if(Pattern.matches(strRegex, arg) || Pattern.matches(strRegex2, arg)){
-				return true;
-			}
-				
-		}
-		else if (isGlobalSed(arg) && Pattern.matches(strRegex3, arg)){
-			return true;	
-		}
-		
-		return false;
-	}
-	
-	private boolean isInvalidPattern(String strRegex)
-	{
-		String pattern = getPattern(strRegex);
-		try
-		{
-			Pattern.compile(pattern);
-		} catch(PatternSyntaxException p)
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean isGlobalSed(String arg)
-	{
-		String strRegex = "^s\\/.+\\/.+\\/g$";
-		return Pattern.matches(strRegex, arg);
-	}
-	
-	private boolean isLocalSed(String arg)
-	{
-		String strRegex = "^s\\/.+\\/.+\\/$";
-		return Pattern.matches(strRegex, arg);
-	}
-	
-	private String getPatternLocal(String arg)
-	{
-		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
-		Pattern pattern = Pattern.compile(strRegex);
-		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find()){
-			return matcher.group(1);
-		}
-			
-		else{
-			return "";
-		}
-			
-	}
-	
-	private String getPatternGlobal(String arg)
-	{
-		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
-		Pattern pattern = Pattern.compile(strRegex);
-		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find()){
-			return matcher.group(1);
-		}
-			
-		else{
-			return "";	
-		}
-			
-	}
-	
-	private String getReplacementLocal(String arg)
-	{
-		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
-		Pattern pattern = Pattern.compile(strRegex);
-		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find()){
-			return matcher.group(2);
-		}	
-		else{
-			return "";
-		}
-			
-	}
-	
-	private String getReplacementGlobal(String arg)
-	{
-		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
-		Pattern pattern = Pattern.compile(strRegex);
-		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find()){
-			return matcher.group(2);
-		}
-			
-		else{
-			return "";
-		}
-			
-	}
-	
-	private String getPattern(String arg)
-	{
-		if(isLocalSed(arg)){
-			return getPatternLocal(arg);
-		} else if(isGlobalSed(arg)){
-			return getPatternGlobal(arg);
-		} else{
-			return null;
-		}
-			
-	}
-	
-	private String getReplacement(String arg)
-	{
-		if(isLocalSed(arg)){
-			return getReplacementLocal(arg);
-		} else if(isGlobalSed(arg)){
-			return getReplacementGlobal(arg);
-		} else{
-			return null;
-		}
-			
-	}
-	
-	private String concatenateStringsToString(String... inputStrings)
-	{
-		String strOutput = "";
-		
-		for(String string : inputStrings){
-			strOutput += string + "\n";
-		}
-			
-		
-		return strOutput;
-		
-	}
-	
-	private String[] splitStringToArray(String inputString)
-	{
-		return  inputString.split("\n");
-	}
+
 }

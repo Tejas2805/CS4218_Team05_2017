@@ -78,25 +78,6 @@ public class TestEchoApplication {
 		
 	}
 	
-	@Test
-	public void testArgumentIsWords() {
-		InputStream inputStream = System.in;
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		String[] arguments = {"Hello", "World"};
-		
-		try {
-			echoApplication.run(arguments, inputStream, outputStream);
-		} catch (EchoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String expected = "Hello World" + System.lineSeparator();
-		String actual = outputStream.toString();
-		assertEquals(expected, actual);
-		
-		
-	}
 	
 	@Test
 	public void testArgumentsIsWords() {
