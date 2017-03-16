@@ -2,6 +2,8 @@ package ef2.unit;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -16,10 +18,12 @@ import sg.edu.nus.comp.cs4218.impl.app.DateApplication;
 public class TestDateApplication {
 
 	DateApplication dataApp;
-
+	OutputStream stdout;
+	
 	@Before
 	public void setup(){
 		dataApp = new DateApplication();
+		stdout = new ByteArrayOutputStream();
 	}
 
 	@Test
@@ -49,6 +53,12 @@ public class TestDateApplication {
 		String actualResults = dataApp.printCurrentDate(args);
 		
 		assertEquals(expectedResults, actualResults);
+	}
+	
+	@Test (expected = DateException.class)
+	public void testInvalidtArgs() throws DateException {
+		String args[] = {"hello.txt"};
+		dataApp.run(args, null, stdout);
 	}
 
 	@After
