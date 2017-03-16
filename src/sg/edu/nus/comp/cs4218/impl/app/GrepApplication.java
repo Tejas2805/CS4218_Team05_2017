@@ -67,6 +67,7 @@ public class GrepApplication implements Grep {
 	 */
 	private String grepZeroFiles(InputStream stdin, String newArg) throws GrepException {
 		String output;
+		String temp = newArg;
 		if(stdin == null){
 			throw new GrepException("InputStream not provided");
 		}
@@ -85,8 +86,8 @@ public class GrepApplication implements Grep {
 		if(stdinString.compareTo("") == 0){
 			output = "";
 		}else{
-			newArg += stdinString;
-			output = grepFromStdin(newArg);
+			temp += stdinString;
+			output = grepFromStdin(temp);
 		}
 		return output;
 	}

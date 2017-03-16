@@ -44,8 +44,10 @@ public class EchoApplication implements Application {
 				stdout.write("".getBytes());
 			} else {
 				for (int i = 0; i < args.length-1; i++) {
-					if(args[i].equals(""))
+					if(args[i].equals("")){
 						continue;
+					}
+						
 					stdout.write(args[i].getBytes());
 					stdout.write(" ".getBytes());
 				}
