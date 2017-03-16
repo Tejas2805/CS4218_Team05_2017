@@ -20,7 +20,7 @@ public class TestCommandSubstitution {
                 PrintWriter writer = new PrintWriter("a.txt");
                 writer.println("123452");
                 writer.close();
-                writer = new PrintWriter("`123.txt");
+                writer = new PrintWriter("123.txt");
                 writer.println("aadfa");
                 writer.close();
             } catch (IOException ioe) {
