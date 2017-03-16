@@ -84,10 +84,10 @@ public class ShellImpl implements Shell {
 
 		for (int i = 0; i < argsArray.length; i++) {
 			char[] chToken = argsArray[i].toCharArray();
-			if(chToken.length  < 2)
-				continue;
-			if(chToken[0] == '\'' && chToken[chToken.length-1] == '\'')
-				continue;
+			if(chToken.length  < 2){
+				continue;}
+			if(chToken[0] == '\'' && chToken[chToken.length-1] == '\''){
+				continue;}
 			
 			Matcher matcherBQ = patternBQp.matcher(argsArray[i]);
 			if (matcherBQ.find()) {// found backquoted
@@ -631,11 +631,11 @@ public class ShellImpl implements Shell {
 		Pattern regex = Pattern.compile("('[^\\n']*')|(`[^\\n`]*`)|[^\\n'`]+|[^\\n]+");
 		Matcher regexMatcher = regex.matcher(args);
 		while (regexMatcher.find()) {
-			if (regexMatcher.group(0) != null) {
+			if (regexMatcher.group(0).length()>0) {
 				tokens.add(regexMatcher.group(0));
-			} else if (regexMatcher.group(1) != null) {
+			} else if (regexMatcher.group(1).length()>0) {
 				tokens.add(regexMatcher.group(1));
-			} else if (regexMatcher.group(2) != null) {
+			} else if (regexMatcher.group(2).length()>0) {
                 tokens.add(regexMatcher.group(2));
             } else {
 				tokens.add(regexMatcher.group());
