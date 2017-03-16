@@ -170,22 +170,28 @@ public class TailApplication implements Application{
 				throw new Exception("stdin is null");
 			}
 			BufferedReader buffReader = new BufferedReader(new InputStreamReader(stdin));
-			String line = null;
-			while((line = buffReader.readLine()) != null){
-				if(counter==lineCount){
-					output.remove(0);
-				}else{
-					counter++;
-				}output.add(line);
-			}
-			for(int i=0;i<counter;i++){
-				stdout.write(output.get(i).getBytes());
-				stdout.write(NEWLINE.getBytes());
-			}
+			readAndWriteLineNumber(stdout, output, counter, lineCount, buffReader);
 		}catch (IOException io) {
 			throw (TailException) new TailException(io.getMessage()).initCause(io);
 		}catch (Exception e){
 			throw (TailException) new TailException(e.getMessage()).initCause(e);
+		}
+	}
+
+	private void readAndWriteLineNumber(OutputStream stdout, ArrayList<String> output, int counter, int lineCount,
+			BufferedReader buffReader) throws IOException {
+		int count = counter;
+		String line = null;
+		while((line = buffReader.readLine()) != null){
+			if(count==lineCount){
+				output.remove(0);
+			}else{
+				count++;
+			}output.add(line);
+		}
+		for(int i=0;i<count;i++){
+			stdout.write(output.get(i).getBytes());
+			stdout.write(NEWLINE.getBytes());
 		}
 	}
 	/**
@@ -202,24 +208,10 @@ public class TailApplication implements Application{
 			if(Files.notExists(path)){
 				throw new TailException("File Not Exists");
 			}
-			BufferedReader buffRead = Files.newBufferedReader(path);
-			String line;
-			while((line = buffRead.readLine())!=null){
-				if(counter<lineCount){
-					output.add(line);
-					counter++;
-				}else{
-					output.remove(0);
-					output.add(line);
-				}
-			}
-			for (int i = 0; i < counter; i++) {
-				stdout.write(output.get(i).getBytes());
-				stdout.write(NEWLINE.getBytes());
-			}
+			BufferedReader buffReader = Files.newBufferedReader(path);
+			readAndWriteLineNumber(stdout, output, counter, lineCount, buffReader);
 		}catch (IOException io) {
 			throw (TailException) new TailException(io.getMessage()).initCause(io);
-			//throw new TailException("");
 		}catch (Exception e){
 			throw (TailException) new TailException(e.getMessage()).initCause(e);
 		}
@@ -230,9 +222,7 @@ public class TailApplication implements Application{
 	 * This method read from stdin and print the output accordingly
 	 */
 	private void readFromStdin(InputStream stdin, OutputStream stdout) {
-		BufferedReader buffRead = null;
-
-		String line;
+		BufferedReader buffRead = null;String line;
 		ArrayList<String> output = new ArrayList<String>();
 		int counter = 0;
 		try {
