@@ -98,7 +98,7 @@ public class CatApplication implements Application {
 						byte[] byteFileArray = Files
 								.readAllBytes(filePathArray.get(j));
 						stdout.write(byteFileArray);
-						stdout.write("\n".getBytes());
+						stdout.write(System.lineSeparator().getBytes());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -141,7 +141,7 @@ public class CatApplication implements Application {
 			while ((intCount = stdin.read()) != -1) {
 				stdout.write(intCount);
 			}
-			stdout.write("\n".getBytes());
+			stdout.write(System.lineSeparator().getBytes());
 		} catch (Exception exIO) {
 			exIO.printStackTrace();
 		}
