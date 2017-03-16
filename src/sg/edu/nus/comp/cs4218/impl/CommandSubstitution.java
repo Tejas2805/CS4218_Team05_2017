@@ -14,6 +14,7 @@ public class CommandSubstitution {
 	public CommandSubstitution(String args){
 		this.args = args;
 	}
+	
 	public ArrayList<String> check(String args){
 		ArrayList<String> tokens = new ArrayList<String>();
 		Pattern regex = Pattern.compile("('[^\\n']*')|(`[^\\n`]*`)|[^\\n'`]+|[^\\n]+");
