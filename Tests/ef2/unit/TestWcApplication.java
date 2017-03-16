@@ -31,7 +31,7 @@ public class TestWcApplication {
 
 	
 	@Before
-	public void setup(){
+	public void setup() throws WcException{
 		wcApp = new WcApplication();
 		wcCheckRead = new WcCheckRead();
 		data = wcCheckRead.readFileStdin(filePath + WC_FILE, null);
@@ -331,6 +331,7 @@ public class TestWcApplication {
 		String expectedResults3 = "   10 " + strArg + System.lineSeparator() + "   10 " + strArg + System.lineSeparator()
 			+ "   20 total" + System.lineSeparator();
 		assertEquals(expectedResults3, stdout.toString());
+		
 	}
 	
 	@Test
@@ -340,6 +341,7 @@ public class TestWcApplication {
 		stdout = new ByteArrayOutputStream();
 		String [] args5 = {strArg, "-m", strArg, strArg};
 		wcApp.run(args5, null, stdout);
+		
 		String expectedResults5 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg + System.lineSeparator()
 		+ "   65 " + strArg + System.lineSeparator() + "   195 total" + System.lineSeparator();
 		assertEquals(expectedResults5, stdout.toString());

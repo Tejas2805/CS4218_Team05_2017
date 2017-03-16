@@ -10,9 +10,10 @@ public class WcOption {
 	public String processArgsOption(String... args){
 		String option = "-lwm";
 		boolean isLine = false, isWord = false, isMchar = false, isIllegal = false, isLegal = false;
-		boolean tempIsLine = false, tempIsWord = false, tempIsMchar = false;
+		boolean tempIsLine = false, tempIsWord = false, tempIsMchar = false, tempIsIllegal = false;
 		
 		for(int i=0; i<args.length; i++){
+			tempIsIllegal = false;
 			if(args[i].charAt(0) == '-'){
 				for(int j=1; j<args[i].length(); j++){
 					if(args[i].charAt(j) == 'l'){
@@ -22,11 +23,12 @@ public class WcOption {
 					}else if(args[i].charAt(j) == 'm'){
 						tempIsMchar = true;
 					}else{
+						tempIsIllegal = true;
 						isIllegal = true;
 					}
 				}
 				
-				if(!isIllegal){
+				if(!tempIsIllegal){
 					isLegal = true;
 					if(tempIsLine){
 						isLine = true;
