@@ -92,7 +92,14 @@ public class CatApplication implements Application {
 
 			
 			// file could be read. perform cat command
-			if (filePathArray.size() > 0) {
+			if (filePathArray.isEmpty()) {
+				try {
+					stdout.write("".getBytes());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else{
+
 				for (int j = 0; j < filePathArray.size(); j++) {
 					try {
 						byte[] byteFileArray = Files
@@ -104,12 +111,6 @@ public class CatApplication implements Application {
 					}
 				}
 				
-			}else{
-				try {
-					stdout.write("".getBytes());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
 		
 	}
