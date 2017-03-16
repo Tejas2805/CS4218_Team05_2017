@@ -1,5 +1,6 @@
 package sg.edu.nus.comp.cs4218.impl.app.file;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -34,6 +35,17 @@ public class FileHandler {
 		}
 	}
 	
+	public List<String> readAllLines(String filePath)
+	{
+		Path p = Paths.get(filePath);
+		String[] output;
+		
+		try {
+			return Files.readAllLines(p);
+		} catch (IOException e) {
+			return null;
+		}
+	}
 	public List<Path> getValidFilePathsFromString(String[] strFilePaths, int start, int end){
 		List<Path> validFilePaths = new ArrayList<>();
 		Path filePath;

@@ -19,6 +19,7 @@ import sg.edu.nus.comp.cs4218.impl.app.EchoApplication;
 import sg.edu.nus.comp.cs4218.impl.app.GrepApplication;
 import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 import sg.edu.nus.comp.cs4218.impl.app.PwdApplication;
+import sg.edu.nus.comp.cs4218.impl.app.SedApplication;
 import sg.edu.nus.comp.cs4218.impl.app.SortApplication;
 import sg.edu.nus.comp.cs4218.impl.app.TailApplication;
 import sg.edu.nus.comp.cs4218.impl.cmd.CallCommand;
@@ -156,6 +157,8 @@ public class ShellImpl implements Shell {
 			absApp = new GrepApplication();
 		} else if (("sort").equals(app)){// sort [-n] [FILE]
 			absApp = new SortApplication();
+		}else if (("sed").equals(app)){// sort [-n] [FILE]
+			absApp = new SedApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
