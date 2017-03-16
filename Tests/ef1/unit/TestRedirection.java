@@ -60,7 +60,7 @@ public class TestRedirection {
 				
 		String input = "echo hello > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello\r\n", actual;
+		String expected = "hello"+ System.lineSeparator(), actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -125,7 +125,7 @@ public class TestRedirection {
 		
 		String input = "cat < Tests\\catFiles\\test.txt > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "this is a file \"test.txt\"\r\n", actual;
+		String expected = "this is a file \"test.txt\""+System.lineSeparator(), actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
