@@ -36,7 +36,7 @@ public class TestRedirection {
 	public void catInputRedirectionFromOneFile(){
 		String input = "cat < Tests\\catFiles\\test.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "this is a file \"test.txt\"\n", actual;
+		String expected = "this is a file \"test.txt\""+System.lineSeparator(), actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
