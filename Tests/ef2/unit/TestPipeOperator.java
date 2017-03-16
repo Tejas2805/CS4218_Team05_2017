@@ -40,5 +40,24 @@ public class TestPipeOperator {
 		actual = output.toString();
 		assertEquals(expected, actual);		
 	}
+	
+	@Test
+	public void testCdPipeEcho(){
+		String input = "cd Tests\\pipeFiles|echo test1";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "test1\n", actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
 
 }
