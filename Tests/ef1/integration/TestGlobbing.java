@@ -1,4 +1,4 @@
-package ef1.unit;
+package ef1.integration;
 
 import static org.junit.Assert.*;
 
