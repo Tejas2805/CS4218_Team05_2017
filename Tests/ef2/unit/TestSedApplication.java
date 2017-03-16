@@ -28,11 +28,103 @@ public class TestSedApplication {
 	}
 	
 	@Test
-	public void SEDWithOneArgumentsWithInputStream() {
-		String[] args = {"s/t/T/g"};
-		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
+	public void testSedsWithInvalidFileInput() {
+		String[] args = {"s/o/O/g", "Tests\\sedFiles\\helloasdasdasda.txt"};
+		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-		String expected = "Test\nTis";
+		try {
+			sedApp.run(args, stdin, stdout);
+			fail();
+		} catch (SedException e) {
+			return;
+		}
+	}
+	
+
+	@Test
+	public void testSedsWithNoArguments() {
+		String[] args = {};
+		InputStream stdin = null;
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, stdin, stdout);
+			fail();
+		} catch (SedException e) {
+			try {
+				sedApp.run(args, stdin, stdout);
+				fail();
+			} catch (SedException ee) {
+				return;
+			}
+		}
+	}
+
+
+	@Test
+	public void testLocalSedsWithNoOutputStream() {
+		String[] args = {"s/o/O/", "Tests\\sedFiles\\hello.txt"};
+		InputStream stdin = null;
+		
+		try {
+			sedApp.run(args, stdin, null);
+			fail();
+		} catch (SedException e) {
+			return;
+		}
+	}
+	
+	@Test
+	public void testSedsWithOneArgumentAndNoInputStream() {
+		String[] args = {"s/o/O/"};
+		InputStream stdin = null;
+		
+		try {
+			sedApp.run(args, stdin, null);
+			fail();
+		} catch (SedException e) {
+			return;
+		}
+	}
+	
+	@Test
+	public void testSedsWithOneInvalidReplacement() {
+		String[] args = {"s/o/O", "Tests\\sedFiles\\hello.txt"};
+		String[] args2 = {"s/o//", "Tests\\sedFiles\\hello.txt"};
+		InputStream stdin = null;
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, stdin, stdout);
+			fail();
+		} catch (SedException e) {
+			try {
+				sedApp.run(args2, stdin, stdout);
+				fail();
+			} catch (SedException ee) {
+				return;
+			}
+		}
+	}
+	
+
+	@Test
+	public void testSedsWithOneInvalidRegex() {
+		String[] args = {"s///O", "Tests\\sedFiles\\hello.txt"};
+		InputStream stdin = null;
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, stdin, stdout);
+			fail();
+		} catch (SedException e) {
+			return;
+		}
+	}
+	
+	@Test
+	public void testLocalSedsWithFileInput() {
+		String[] args = {"s/o/O/", "Tests\\sedFiles\\hello.txt"};
+		InputStream stdin = null;
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		String expected = "hellO oreo\nwOrld\n";
 		String actual;
 		
 		try {
@@ -43,73 +135,58 @@ public class TestSedApplication {
 			fail();
 		}
 	}
-	@Test
-	public void testReplaceFirstSubStringInFile() {
-		String replacement = "s/unix/linux";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		String actualResults = sedApp.replaceFirstSubStringInFile(args);
-		String expectedResults = "linux is great os. unix is opensource. unix is free os. learn operating system";
-		
-		assertEquals(expectedResults, actualResults);
-	}
+	
 
 	@Test
-	public void testReplaceAllSubstringsInFile() {
-		String replacement = "s/unix/linux/g";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		String actualResults = sedApp.replaceFirstSubStringInFile(args);
-		String expectedResults = "linux is great os. linux is opensource. linux is free os. learn operating system";
+	public void testGlobalSedsWithFileInput() {
+		String[] args = {"s/o/O/g", "Tests\\sedFiles\\hello.txt"};
+		InputStream stdin = null;
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		String expected = "hellO OreO\nwOrld\n";
+		String actual;
 		
-		assertEquals(expectedResults, actualResults);
-	}
-
-	@Test
-	public void testReplaceFirstSubStringFromStdin() {
-		String replacement = "s/unix/linux";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		String actualResults = sedApp.replaceFirstSubStringInFile(args);
-		String expectedResults = "linux is great os. unix is opensource. unix is free os. learn operating system";
-		
-		assertEquals(expectedResults, actualResults);
-	}
-
-	@Test
-	public void testReplaceAllSubstringsInStdin() {
-		String replacement = "s/unix/linux/g";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		String actualResults = sedApp.replaceFirstSubStringInFile(args);
-		String expectedResults = "linux is great os. linux is opensource. linux is free os. learn operating system";
-		
-		assertEquals(expectedResults, actualResults);
-	}
-
-	@Test
-	public void testReplaceSubstringWithInvalidReplacement() {
-		String replacement = "s/un/ix/linux/g";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		
-		thrown.expect(SedException.class);
-
-		sedApp.replaceFirstSubStringInFile(args);
-	}
-
-	@Test
-	public void testReplaceSubstringWithInvalidRegex() {
-		String replacement = "s/unix/lin/ux/g";
-		String strFile = "unix is great os. unix is opensource. unix is free os. learn operating system";
-		String args = replacement + System.lineSeparator() + strFile;
-		
-		thrown.expect(SedException.class);
-
-		sedApp.replaceFirstSubStringInFile(args);
-		
+		try {
+			sedApp.run(args, stdin, stdout);
+			actual = stdout.toString();
+			assertEquals(expected, actual);
+		} catch (SedException e) {
+			fail();
+		}
 	}
 	
+	@Test
+	public void testLocalSedsWithInputStream() {
+		String[] args = {"s/t/T/"};
+		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		String expected = "Test\nTis\n";
+		String actual;
+		
+		try {
+			sedApp.run(args, stdin, stdout);
+			actual = stdout.toString();
+			assertEquals(expected, actual);
+		} catch (SedException e) {
+			fail();
+		}
+	}
+		
+	@Test
+	public void testGlobalSedsWithInputStream() {
+		String[] args = {"s/t/T/g"};
+		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		String expected = "TesT\nTis\n";
+		String actual;
+		
+		try {
+			sedApp.run(args, stdin, stdout);
+			actual = stdout.toString();
+			assertEquals(expected, actual);
+		} catch (SedException e) {
+			fail();
+		}
+	}
 	
 	@After
 	public void tearDown(){

@@ -13,6 +13,7 @@ import sg.edu.nus.comp.cs4218.app.Sed;
 import sg.edu.nus.comp.cs4218.exception.HeadException;
 import sg.edu.nus.comp.cs4218.exception.PwdException;
 import sg.edu.nus.comp.cs4218.exception.SedException;
+import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 
 public class SedApplication implements Sed{
@@ -20,7 +21,6 @@ public class SedApplication implements Sed{
 	
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws SedException {
-		
 		if(stdout == null){
 			throw new SedException("OutputStream not provided");
 		}
@@ -30,7 +30,6 @@ public class SedApplication implements Sed{
 			{
 			case 0:
 				throw new SedException("No arguments");
-				
 			case 1: //only replacement
 				if(stdin == null)
 				{
@@ -38,12 +37,12 @@ public class SedApplication implements Sed{
 				} else{
 					int intCount;
 					String input = "";
-					char ch;
+					char character;
 					String[] newArgs = {};
 					try {
 						while ((intCount = stdin.read()) != -1) {
-							ch = (char)intCount;
-							input += ch;
+							character = (char)intCount;
+							input += character;
 						}
 						newArgs = new String[]{args[0], input};
 					} catch (IOException e) {
@@ -77,7 +76,7 @@ public class SedApplication implements Sed{
 		}
 	}
 
-	private String replaceInputStreamString(String[] args) throws SedException {
+	private String replaceInputStreamString(String... args) throws SedException {
 
 		if(isInValidReplacement(args[0])){
 			return args[1];
@@ -98,12 +97,12 @@ public class SedApplication implements Sed{
 
 	//args contain  /// file
 	//returns null if fileNotReadable
-	private String replaceString(String[] args) throws SedException{
+	private String replaceString(String... args) throws SedException{
 		String filePath = args[1];
-		FileHandler fh = new FileHandler();
+		FileHandler fileHandler = new FileHandler();
 		
 		try {
-			if(fh.checkIfFileIsReadable(Paths.get(filePath)))
+			if(fileHandler.checkIfFileIsReadable(Paths.get(filePath)))
 			{
 				if(isInValidReplacement(args[0])){
 					return replaceSubstringWithInvalidReplacement(concatenateStringsToString(args));
@@ -123,7 +122,7 @@ public class SedApplication implements Sed{
 					
 			}
 		} catch (Exception e) {
-			throw new SedException("Could not read file");
+			throw (SedException) new SedException(e.getMessage()).initCause(e);
 		}
 		
 		return null;
@@ -145,8 +144,8 @@ public class SedApplication implements Sed{
 	@Override
 	public String replaceFirstSubStringInFile(String args) {
 		String[] argsArray = splitStringToArray(args);
-		FileHandler fh = new FileHandler();
-		List<String> lines = fh.readAllLines(argsArray[1]);
+		FileHandler fileHandler = new FileHandler();
+		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		
 		for(int i = 0; i < lines.size(); i++)
 		{
@@ -164,8 +163,8 @@ public class SedApplication implements Sed{
 	@Override
 	public String replaceAllSubstringsInFile(String args) {
 		String[] argsArray = splitStringToArray(args);
-		FileHandler fh = new FileHandler();
-		List<String> lines = fh.readAllLines(argsArray[1]);
+		FileHandler fileHandler = new FileHandler();
+		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		
 		for(int i = 0; i < lines.size(); i++)
 		{
@@ -182,14 +181,19 @@ public class SedApplication implements Sed{
 
 	@Override
 	public String replaceFirstSubStringFromStdin(String args) {
-String[] argsArray = splitStringToArray(args);
+		String[] argsArray = splitStringToArray(args);
 		
-		String[] lines = splitStringToArray(argsArray[1]);
+		String lineString = "";
+		for(int i = 1; i < argsArray.length; i++){
+			lineString += argsArray[i]+"\n";
+		}
+			
+		String[] lines = splitStringToArray(lineString);
 		
 		for(int i = 0; i < lines.length; i++)
 		{
-			String regex = getPatternGlobal(argsArray[0]);
-			String replacement = getReplacementGlobal(argsArray[0]);
+			String regex = getPatternLocal(argsArray[0]);
+			String replacement = getReplacementLocal(argsArray[0]);
 			lines[i] =  replaceFirstWithRegex(regex, replacement, lines[i]);
 			
 		}
@@ -202,7 +206,13 @@ String[] argsArray = splitStringToArray(args);
 	public String replaceAllSubstringsInStdin(String args) {
 		String[] argsArray = splitStringToArray(args);
 		
-		String[] lines = splitStringToArray(argsArray[1]);
+		String lineString = "";
+		for(int i = 1; i < argsArray.length; i++){
+			lineString += argsArray[i]+"\n";
+		}
+			
+		
+		String[] lines = splitStringToArray(lineString);
 		
 		for(int i = 0; i < lines.length; i++)
 		{
@@ -220,12 +230,14 @@ String[] argsArray = splitStringToArray(args);
 	public String replaceSubstringWithInvalidReplacement(String args) {
 		String[] argsArray = splitStringToArray(args);
 		
-		FileHandler fh = new FileHandler();
-		List<String> lines = fh.readAllLines(argsArray[1]);
+		FileHandler fileHandler = new FileHandler();
+		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		String output = "";
 		
-		for(String line : lines)
-			output += line + System.getProperty("line.separator");
+		for(String line : lines){
+			output += line + "\n";
+		}
+			
 		return output;
 	}
 
@@ -233,12 +245,14 @@ String[] argsArray = splitStringToArray(args);
 	public String replaceSubstringWithInvalidRegex(String args) {
 		String[] argsArray = splitStringToArray(args);
 		
-		FileHandler fh = new FileHandler();
-		List<String> lines = fh.readAllLines(argsArray[1]);
+		FileHandler fileHandler = new FileHandler();
+		List<String> lines = fileHandler.readAllLines(argsArray[1]);
 		String output = "";
 		
-		for(String line : lines)
-			output += line + System.getProperty("line.separator");
+		for(String line : lines){
+			output += line + "\n";
+		}
+			
 		return output;
 	}
 
@@ -250,12 +264,13 @@ String[] argsArray = splitStringToArray(args);
 		String strRegex2 = "^s\\/.+\\/[^\\/]+";
 		String strRegex3 = "^s\\/.+\\/\\/g";
 		if(isLocalSed(arg)){
-			if(Pattern.matches(strRegex, arg) || Pattern.matches(strRegex2, arg))
+			if(Pattern.matches(strRegex, arg) || Pattern.matches(strRegex2, arg)){
 				return true;
+			}
+				
 		}
-		else if (isGlobalSed(arg)){
-			if(Pattern.matches(strRegex3, arg))
-				return true;
+		else if (isGlobalSed(arg) && Pattern.matches(strRegex3, arg)){
+			return true;	
 		}
 		
 		return false;
@@ -291,10 +306,14 @@ String[] argsArray = splitStringToArray(args);
 		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find())
+		if(matcher.find()){
 			return matcher.group(1);
-		else
+		}
+			
+		else{
 			return "";
+		}
+			
 	}
 	
 	private String getPatternGlobal(String arg)
@@ -302,10 +321,14 @@ String[] argsArray = splitStringToArray(args);
 		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find())
+		if(matcher.find()){
 			return matcher.group(1);
-		else
-			return "";
+		}
+			
+		else{
+			return "";	
+		}
+			
 	}
 	
 	private String getReplacementLocal(String arg)
@@ -313,10 +336,13 @@ String[] argsArray = splitStringToArray(args);
 		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find())
+		if(matcher.find()){
 			return matcher.group(2);
-		else
+		}	
+		else{
 			return "";
+		}
+			
 	}
 	
 	private String getReplacementGlobal(String arg)
@@ -324,10 +350,14 @@ String[] argsArray = splitStringToArray(args);
 		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
-		if(matcher.find())
+		if(matcher.find()){
 			return matcher.group(2);
-		else
+		}
+			
+		else{
 			return "";
+		}
+			
 	}
 	
 	private String getPattern(String arg)
@@ -336,8 +366,10 @@ String[] argsArray = splitStringToArray(args);
 			return getPatternLocal(arg);
 		} else if(isGlobalSed(arg)){
 			return getPatternGlobal(arg);
-		} else
+		} else{
 			return null;
+		}
+			
 	}
 	
 	private String getReplacement(String arg)
@@ -346,16 +378,20 @@ String[] argsArray = splitStringToArray(args);
 			return getReplacementLocal(arg);
 		} else if(isGlobalSed(arg)){
 			return getReplacementGlobal(arg);
-		} else
+		} else{
 			return null;
+		}
+			
 	}
 	
-	private String concatenateStringsToString(String[] inputStrings)
+	private String concatenateStringsToString(String... inputStrings)
 	{
 		String strOutput = "";
 		
-		for(String string : inputStrings)
-			strOutput += string + System.getProperty("line.separator");
+		for(String string : inputStrings){
+			strOutput += string + "\n";
+		}
+			
 		
 		return strOutput;
 		
@@ -363,6 +399,6 @@ String[] argsArray = splitStringToArray(args);
 	
 	private String[] splitStringToArray(String inputString)
 	{
-		return  inputString.split(System.getProperty("line.separator"));
+		return  inputString.split("\n");
 	}
 }
