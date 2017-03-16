@@ -25,8 +25,8 @@ public class TestIntegrationCat {
 	}
 
 	@Test
-	public void testArgumentIsEmpty() throws AbstractApplicationException, ShellException {
-		String input = "sed s/o/O/ Tests\\sedFiles\\hello.txt";
+	public void testArgumentIsValid() throws AbstractApplicationException, ShellException {
+		String input = "cat Tests\\catFiles\\catTestSource1.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
 		String expected = "hello world" + System.lineSeparator();
