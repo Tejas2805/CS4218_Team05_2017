@@ -54,9 +54,6 @@ public class TailApplication implements Application{
 			ArrayList<String> listOfArgs = new ArrayList<String>();
 			int lineNumber = checkDuplicateLineNumbers(args, listOfArgs);
 			if (lineNumber == -1) {
-				if(stdin==null){
-					throw new TailException("stdin is null");
-				}
 				String[] checkedArgs = new String[1];
 				for (int i = 0; i < listOfArgs.size(); i++) {
 					checkedArgs[0] = listOfArgs.get(i);
