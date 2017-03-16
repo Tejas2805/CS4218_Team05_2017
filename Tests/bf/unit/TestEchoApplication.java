@@ -91,7 +91,7 @@ public class TestEchoApplication {
 			e.printStackTrace();
 		}
 		
-		String expected = "Hello World\n";
+		String expected = "Hello World" + System.lineSeparator();
 		String actual = outputStream.toString();
 		assertEquals(expected, actual);
 		
@@ -111,7 +111,7 @@ public class TestEchoApplication {
 			e.printStackTrace();
 		}
 		
-		String expected = "Hello World\n";
+		String expected = "Hello World" + System.lineSeparator();
 		String actual = outputStream.toString();
 		assertEquals(expected, actual);
 		

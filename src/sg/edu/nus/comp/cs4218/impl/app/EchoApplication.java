@@ -50,7 +50,7 @@ public class EchoApplication implements Application {
 					stdout.write(" ".getBytes());
 				}
 				stdout.write(args[args.length-1].getBytes());
-				stdout.write("\n".getBytes());
+				stdout.write(System.lineSeparator().getBytes());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
