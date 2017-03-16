@@ -78,7 +78,9 @@ public class SortApplication implements Sort{
 	}
 
 	/*
+	 * 
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with simple letter sorted in ascending order.
 	 * Each line is separated by a line separator
 	 */
@@ -95,6 +97,7 @@ public class SortApplication implements Sort{
 	
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with capital letter sorted in ascending order.
 	 * Each line is separated by a line separator
 	 */
@@ -112,6 +115,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with numbers sorted in ascending order.
 	 * Each line is separated by a line separator
 	 */
@@ -135,6 +139,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char sorted in ascending order.
 	 * Each line is separated by a line separator
 	 */
@@ -158,6 +163,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with capital letter and simple letters sorted in order of capital letter, number 
 	 * Each line is separated by a line separator
 	 */
@@ -173,6 +179,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with number and simple letters sorted in order of number, simple letter
 	 * Each line is separated by a line separator
 	 */
@@ -188,6 +195,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special chat and simple letters sorted in order of special char, simple letter
 	 * Each line is separated by a line separator
 	 */
@@ -203,6 +211,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with number and capital letters sorted in order of number, capital letter
 	 * Each line is separated by a line separator
 	 */
@@ -218,6 +227,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char and capital letters sorted in order of special char, capital letter
 	 * Each line is separated by a line separator
 	 */
@@ -233,6 +243,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char and number sorted in order of special char, number
 	 * Each line is separated by a line separator
 	 */
@@ -248,6 +259,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with number, capital letter, simple letter sorted in order of number, capital letter, simple letter
 	 * Each line is separated by a line separator
 	 */
@@ -264,6 +276,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char, capital letter, simple letter sorted in order of special char, capital letter, simple letter
 	 * Each line is separated by a line separator
 	 */
@@ -280,6 +293,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char, number, simple letter sorted in order of special char, number, simple letter
 	 * Each line is separated by a line separator
 	 */
@@ -296,6 +310,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char, number, capital letter sorted in order of special char, number, capital letter
 	 * Each line is separated by a line separator
 	 */
@@ -312,6 +327,7 @@ public class SortApplication implements Sort{
 
 	/*
 	 * @param toSort InputStream and lines from FILE that have been converted to String
+	 * The String "toSort" does not contains "sort" or "-n" or "sort -n", only the data that is converted to string
 	 * @return String a string of lines starting with special char, number, capital letter, simple letter sorted in order of special char, number, capital letter, simple letter
 	 * Each line is separated by a line separator
 	 */

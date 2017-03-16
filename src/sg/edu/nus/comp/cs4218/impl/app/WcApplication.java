@@ -76,8 +76,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
-	 * The String args does not contains "-wc" or "-l" or "-wc -l" in front.
-	 * Only the data that is converted to string
+	 * The String args does not contains "-wc" or "-m" or "-wc -m" in front, only the data that is converted to string
 	 * @return String char count of a file/inputstream
 	 */
 	@Override
@@ -94,6 +93,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-w" or "-wc -w" in front, only the data that is converted to string
 	 * @return String word count of a file/inputstream
 	 */
 	@Override
@@ -114,6 +114,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-l" or "-wc -l" in front, only the data that is converted to string
 	 * @return String newline count of a file/inputstream
 	 */
 	@Override
@@ -136,6 +137,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-lwm" or "-wc -l -w -m" in front, only the data that is converted to string
 	 * @return String newline, word, char count of a file/inputstream
 	 */
 	@Override
@@ -151,6 +153,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-m" or "-wc -m" in front, only the data that is converted to string
 	 * @return String char count of a file/inputstream
 	 */
 	@Override
@@ -161,6 +164,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-w" or "-wc -w" in front, only the data that is converted to string
 	 * @return String word count of a file/inputstream
 	 */
 	@Override
@@ -171,6 +175,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-l" or "-wc -l" in front, only the data that is converted to string
 	 * @return String newline count of a file/inputstream
 	 */
 	@Override
@@ -181,6 +186,7 @@ public class WcApplication implements Wc {
 
 	/*
 	 * @param args InputStream and lines from FILE that have been converted to String
+	 * The String args does not contains "-wc" or "-lwm" or "-wc -l -w -m" in front, only the data that is converted to string
 	 * @return String line, word, char count of a file/inputstream
 	 */
 	@Override
@@ -190,8 +196,8 @@ public class WcApplication implements Wc {
 	}
 		
 	/*
-	 * Print the count value of either "char", "word" or "newline" or all the "char", "word" & "newline"
-	 * @param option "char", "word", "newline", "all"
+	 * Return the the count value
+	 * @param option "-m", "-w", "-m", "-lw", "-lm", "-wm", "-lwn"
 	 * @param data the string of the text file or inputstream
 	 * return the results of the count
 	 */
