@@ -25,10 +25,8 @@ public class CdApplication implements Application{
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) 
 			throws CdException {
-		
 		String osName = System.getProperty("os.name");
 		String osType = getOsType(osName);
-		
 		if(args.length == 0){
 			String root = System.getProperty("user.home"); 
 			Environment.currentDirectory = root;
@@ -50,10 +48,8 @@ public class CdApplication implements Application{
 			}else if("..".equals(dir)){
 				parentDirectory();
 			}else{
-				specificDirectory(dir);
-				
+				specificDirectory(dir);	
 			}
-		
 		}
 	}
 	
