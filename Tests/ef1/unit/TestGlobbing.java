@@ -20,6 +20,7 @@ public class TestGlobbing {
 
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
+	private static final String NEW_LINE = System.lineSeparator();
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -50,7 +51,7 @@ public class TestGlobbing {
 	public void catGlobOneFile(){
 		String input = "cat Tests\\globFiles\\glob*Source1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world\n", actual;
+		String expected = "hello world"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -62,6 +63,7 @@ public class TestGlobbing {
 			fail();
 		}
 		actual = output.toString();
+		
 		assertEquals(expected, actual);		
 	}
 	
@@ -69,7 +71,7 @@ public class TestGlobbing {
 	public void catGlobDirectories(){
 		String input = "cat Tests\\g*b*\\globTestSource1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world\n", actual;
+		String expected = "hello world"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -88,7 +90,7 @@ public class TestGlobbing {
 	public void catGlobFilesDirectories(){
 		String input = "cat Tests\\g*b*\\glob*Sou*e1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world\n", actual;
+		String expected = "hello world"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -107,7 +109,7 @@ public class TestGlobbing {
 	public void catGlobMultipleFilesDirectories(){
 		String input = "cat Tes*s\\g*b*\\glob*Sou*e1.txt Tes*s\\g*b*\\glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world\nhello world 2\n", actual;
+		String expected = "hello world"+NEW_LINE+"hello world 2"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -127,7 +129,7 @@ public class TestGlobbing {
 	public void catGlobMultipleFile(){
 		String input = "cat Tests\\globFiles\\glob*.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world\nhello world 2\n", actual;
+		String expected = "hello world"+NEW_LINE+"hello world 2"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -139,6 +141,7 @@ public class TestGlobbing {
 			fail();
 		}
 		actual = output.toString();
+		
 		assertEquals(expected, actual);		
 	}
 
