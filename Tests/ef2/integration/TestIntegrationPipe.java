@@ -144,6 +144,26 @@ public class TestIntegrationPipe {
 	}
 	
 	@Test
+	public void testPipeThreeCommandInvalid(){
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
+		String input = "cd Tests\\pipeFiles\\test|ca pipe*.txt|grep \"Hello World\"";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "shell: ca: Invalid app.", actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			actual=e.getMessage();
+			assertEquals(expected, actual);		
+		}
+			
+	}
+	
+	@Test
 	public void testPipeFourCommand(){
 		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 		String input = "cd Tests\\pipeFiles|cd test|cat pipe*.txt|grep \"Hello World\"";
@@ -161,5 +181,25 @@ public class TestIntegrationPipe {
 		}
 		actual = output.toString();
 		assertEquals(expected, actual);		
+	}
+	
+	@Test
+	public void testPipeFourCommandInvalid(){
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
+		String input = "cd Tests\\pipeFiles|cd testfefef|cat pipe*.txt|grep \"Hello World\"";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "Cd: The directory 'testfefef' does not exist.", actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			//fail();
+			actual=e.getMessage();
+			assertEquals(expected, actual);	
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}	
 	}
 }
