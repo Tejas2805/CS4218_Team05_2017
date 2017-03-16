@@ -25,7 +25,7 @@ public class TestIntegrationCat {
 	}
 
 	@Test
-	public void testArgumentIsEmpty() throws AbstractApplicationException, ShellException {
+	public void testArgumentIsValid() throws AbstractApplicationException, ShellException {
 		String input = "cat Tests\\catFiles\\catTestSource1.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
