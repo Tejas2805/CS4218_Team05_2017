@@ -19,6 +19,7 @@ public class CdApplication implements Application{
 	 * This method execute the cd function and write the data to output stream
 	 * Change to the directory specify by the path
 	 * @param args contains an array of arguments such as PATH
+	 * args does not contains "cd" in front, only the PATH is in the args
 	 * @param stdin input stream of data
 	 * @param stdout data is written to the output stream 
 	 */

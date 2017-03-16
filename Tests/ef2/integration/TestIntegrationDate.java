@@ -3,6 +3,7 @@ package ef2.integration;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -19,7 +20,7 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 public class TestIntegrationDate {
 
 	ShellImpl shellImpl;
-	ByteArrayOutputStream stdout;
+	OutputStream stdout;
 	
 	@Before
     public void setUp() {

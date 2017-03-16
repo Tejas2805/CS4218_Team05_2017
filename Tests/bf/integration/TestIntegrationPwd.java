@@ -3,6 +3,7 @@ package bf.integration;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +17,7 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 public class TestIntegrationPwd {
 
 	ShellImpl shellImpl;
-	ByteArrayOutputStream stdout;
+	OutputStream stdout;
 	
 	@Before
     public void setUp() {

@@ -28,6 +28,7 @@ public class SortApplication implements Sort{
 	 * However, if the remaining FILE or OPTION are valid the command will still be executed
 	 * The position of FILE and OPTION does not have to be in sequence
 	 * @param args contains an array of arguments such as FILE or OPTION -n
+	 * args does not contains "sort" at the front
 	 * @param stdin input stream of data
 	 * @param stdout data is written to the output stream 
 	 */
