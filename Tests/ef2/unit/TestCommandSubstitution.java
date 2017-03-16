@@ -10,6 +10,7 @@ import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 public class TestCommandSubstitution {
 
+	
 	static final String NEWLINE = System.getProperty("line.separator");
 	 @Test
 	    public void testCatWithCommandSubstitution() throws AbstractApplicationException, ShellException {
