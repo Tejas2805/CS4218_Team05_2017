@@ -1,6 +1,5 @@
 package sg.edu.nus.comp.cs4218.impl.app.wc;
 
-import java.nio.charset.IllegalCharsetNameException;
 
 public class WcOption {
 	/*
@@ -53,6 +52,9 @@ public class WcOption {
 	public boolean isValidOption(String option){
 			
 		if(option.charAt(0) == '-'){
+			if(option.length() == 1){
+				return false;
+			}
 			for(int j=1; j<option.length(); j++){
 				if(option.charAt(j) != 'l' && option.charAt(j) != 'w' && option.charAt(j) != 'm'){
 					return false;
@@ -93,25 +95,5 @@ public class WcOption {
 			option = "-lwm";
 		}
 		return option;
-	}
-	/*
-	 * Check if the option is made up of '-' followed by a combination of 'l' , 'w', 'm'
-	 * @param option
-	 * return true is the args is made up of '-' followed by a combination of 'l' , 'w', 'm'
-	 */
-	private boolean isOptionLWM(String option){
-		int lineVal = 0, wordVal = 0, mCharVal = 0; 
-		if(option.charAt(1) == 'l' ||  option.charAt(2) == 'l' || option.charAt(3) == 'l'){
-			lineVal += 1;
-		}
-		if(option.charAt(1) == 'w' ||  option.charAt(2) == 'w' || option.charAt(3) == 'w'){
-			wordVal += 1;
-		}
-		if(option.charAt(1) == 'm' ||  option.charAt(2) == 'm' || option.charAt(3) == 'm'){
-			mCharVal += 1;
-		}
-		
-		return (lineVal == 1 && wordVal == 1 && mCharVal == 1);
-		
 	}
 }

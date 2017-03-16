@@ -24,7 +24,10 @@ public class SortApplication implements Sort{
 	 * This method execute the sort function and write the data to output stream
 	 * FILE is read and converted to string 
 	 * InputStream are also converted to string before being process
-	 * @param args contains an array of arguments such as FILE or -n
+	 * Error message will be printed out if FILE or OPTION are invalid 
+	 * However, if the remaining FILE or OPTION are valid the command will still be executed
+	 * The position of FILE and OPTION does not have to be in sequence
+	 * @param args contains an array of arguments such as FILE or OPTION -n
 	 * @param stdin input stream of data
 	 * @param stdout data is written to the output stream 
 	 */
@@ -34,8 +37,10 @@ public class SortApplication implements Sort{
 		String sortCondition = "";
 		String results = "";
 		
-		
-		if(args.length == 0){
+		if(stdout == null){
+			throw new SortException("No args or outputstream");
+		}
+		if(args == null || args.length == 0){
 			if(stdin == null){
 				throw new SortException("Input stream null");
 			}
@@ -47,11 +52,8 @@ public class SortApplication implements Sort{
 			String data = sortRead.readFromFile(fileName);
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
-
 		}else if(args.length >= 2){
-			
 			String data = "";
-			//for(int i=index; i<args.length; i++){
 			for(int i=0; i<args.length; i++){
 				if("-n".equals(args[i])){
 					sortCondition = args[i];
@@ -61,7 +63,6 @@ public class SortApplication implements Sort{
 				sortCheck.checkValidFile(fileName);
 				data += sortRead.readFromFile(fileName);
 			}
-			
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 		}else{
@@ -148,10 +149,9 @@ public class SortApplication implements Sort{
 		String sortSpecialChar = "";
 		
 		if(sortCheck.isSortByNumCondition(sortCondtion)){
-			sortSpecialChar = sortNum.sortNotNumData(specialCharData);
-		}else{
-			sortSpecialChar = sortOrder.sortData(specialCharData);
+			specialCharData = sortNum.sortNotNumData(specialCharData);
 		}
+		sortSpecialChar = sortOrder.sortData(specialCharData);
 		
 		return sortSpecialChar;
 	}
