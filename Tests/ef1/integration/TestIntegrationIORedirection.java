@@ -22,7 +22,7 @@ import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
-public class TestRedirection {
+public class TestIntegrationIORedirection {
 
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
