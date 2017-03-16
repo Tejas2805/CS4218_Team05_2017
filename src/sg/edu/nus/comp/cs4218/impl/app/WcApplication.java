@@ -22,6 +22,7 @@ public class WcApplication implements Wc {
 	 * However, if the remaining FILE or OPTION are valid the command will still be executed
 	 * The position of FILE and OPTION does not have to be in sequence
 	 * @param args contains an array of arguments such as FILE or a combination of OPTION -l, -w, -m, -lwm, -ww, -mmw
+	 * args does not contains "wc" at the front
 	 * @param stdin input stream of data
 	 * @param stdout data is written to the output stream 
 	 */
