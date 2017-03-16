@@ -15,6 +15,7 @@ import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.app.CalApplication;
 import sg.edu.nus.comp.cs4218.impl.app.CatApplication;
 import sg.edu.nus.comp.cs4218.impl.app.CdApplication;
+import sg.edu.nus.comp.cs4218.impl.app.DateApplication;
 import sg.edu.nus.comp.cs4218.impl.app.EchoApplication;
 import sg.edu.nus.comp.cs4218.impl.app.GrepApplication;
 import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
@@ -160,8 +161,10 @@ public class ShellImpl implements Shell {
 			absApp = new SortApplication();
 		} else if(("wc").equals(app)){
 			absApp = new WcApplication();
-		}  else if(("sed").equals(app)){
+		} else if(("sed").equals(app)){
 			absApp = new SedApplication();
+		} else if(("date").equals(app)){
+			absApp = new DateApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
