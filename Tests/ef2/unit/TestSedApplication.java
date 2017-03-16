@@ -2,6 +2,9 @@ package ef2.unit;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.SedException;
 import sg.edu.nus.comp.cs4218.impl.app.SedApplication;
 
@@ -23,6 +27,22 @@ public class TestSedApplication {
 		sedApp = new SedApplication();
 	}
 	
+	@Test
+	public void SEDWithOneArgumentsWithInputStream() {
+		String[] args = {"s/t/T/g"};
+		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		String expected = "Test\nTis";
+		String actual;
+		
+		try {
+			sedApp.run(args, stdin, stdout);
+			actual = stdout.toString();
+			assertEquals(expected, actual);
+		} catch (SedException e) {
+			fail();
+		}
+	}
 	@Test
 	public void testReplaceFirstSubStringInFile() {
 		String replacement = "s/unix/linux";
