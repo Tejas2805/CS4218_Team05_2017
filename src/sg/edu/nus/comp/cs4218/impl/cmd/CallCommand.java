@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import sg.edu.nus.comp.cs4218.Command;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
+import sg.edu.nus.comp.cs4218.impl.InputOutputStream;
+import sg.edu.nus.comp.cs4218.impl.ProcessBQ;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
 /**
@@ -73,7 +75,8 @@ public class CallCommand implements Command {
 		InputStream inputStream;
 		OutputStream outputStream;
 
-		argsArray = ShellImpl.processBQ(argsArray);
+		ProcessBQ pBQ = new ProcessBQ();
+		argsArray = pBQ.processBQ(argsArray);
 		
 		for(int i = 0; i < argsArray.length; i++){
 			String token = argsArray[i];
@@ -86,20 +89,21 @@ public class CallCommand implements Command {
 				argsArray[i] = new String(newToken);
 			}
 	}
-		
+		InputOutputStream ioS = new InputOutputStream();
 		if (("").equals(inputStreamS)) {// empty
 			inputStream = stdin;
 		} else { // not empty
-			inputStream = ShellImpl.openInputRedir(inputStreamS);
+			
+			inputStream = ioS.openInputRedir(inputStreamS);
 		}
 		if (("").equals(outputStreamS)) { // empty
 			outputStream = stdout;
 		} else {
-			outputStream = ShellImpl.openOutputRedir(outputStreamS);
+			outputStream = ioS.openOutputRedir(outputStreamS);
 		}
 		ShellImpl.runApp(app, argsArray, inputStream, outputStream);
 		//ShellImpl.closeInputStream(inputStream);
-		ShellImpl.closeOutputStream(outputStream);
+		ioS.closeOutputStream(outputStream);
 	}
 
 	/**
