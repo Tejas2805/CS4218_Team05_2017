@@ -12,6 +12,7 @@ public class TestShellBF {
 
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
+	private static final String NEW_LINE = System.lineSeparator();
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -22,7 +23,7 @@ public class TestShellBF {
 	public void echoNoQuotes(){
 		output = new ByteArrayOutputStream();
 		String input = "echo lala";
-		String expected = "lala\n";
+		String expected = "lala"+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -41,7 +42,7 @@ public class TestShellBF {
 	public void echoSingleQuotes(){
 		String input = "echo 'lala'";
 		output = new ByteArrayOutputStream();
-		String expected = "lala\n";
+		String expected = "lala"+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -60,7 +61,7 @@ public class TestShellBF {
 	public void echoDoubleQuotes(){
 		String input = "echo \"lala\"";
 		output = new ByteArrayOutputStream();
-		String expected = "lala\n";
+		String expected = "lala"+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -97,7 +98,7 @@ public class TestShellBF {
 	public void echoDoubleWithBackQuotes(){
 		String input = "echo \"This is space:`echo \" \"`.\"";
 		output = new ByteArrayOutputStream();
-		String expected = "This is space: .\n";
+		String expected = "This is space: ."+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -116,7 +117,7 @@ public class TestShellBF {
 	public void echoSingleWithBackQuotes(){
 		String input = "echo 'This is space:`echo \" \"`.'";
 		output = new ByteArrayOutputStream();
-		String expected = "This is space:`echo \" \"`.\n";
+		String expected = "This is space:`echo \" \"`."+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -135,7 +136,7 @@ public class TestShellBF {
 	public void echoSemicolon(){
 		String input = "echo lala; echo lolo";
 		output = new ByteArrayOutputStream();
-		String expected = "lala\nlolo\n";
+		String expected = "lala"+NEW_LINE+"lolo"+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -172,7 +173,7 @@ public class TestShellBF {
 	public void echoSemicolonWithQuotes(){
 		String input = "echo 'lala'; echo \"lolo `echo lele`\"";
 		output = new ByteArrayOutputStream();
-		String expected = "lala\nlolo lele\n";
+		String expected = "lala"+NEW_LINE+"lolo lele"+NEW_LINE;
 		String actual;
 		try {
 			shellImpl.parseAndEvaluate(input, output);
