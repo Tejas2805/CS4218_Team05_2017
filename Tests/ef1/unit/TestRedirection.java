@@ -38,6 +38,7 @@ public class TestRedirection {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "this is a file \"test.txt\""+System.lineSeparator(), actual;
 		
+		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
