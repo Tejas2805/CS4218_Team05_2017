@@ -11,7 +11,7 @@ import org.junit.Test;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
-public class TestCommandSubstitution {
+public class TestIntegrationCMDSubstitution {
 
 	static final String NEWLINE = System.getProperty("line.separator");
 	private static void createFiles() {
