@@ -37,11 +37,11 @@ public class FileHandler {
 	
 	public List<String> readAllLines(String filePath)
 	{
-		Path p = Paths.get(filePath);
+		Path path = Paths.get(filePath);
 		String[] output;
 		
 		try {
-			return Files.readAllLines(p);
+			return Files.readAllLines(path);
 		} catch (IOException e) {
 			return null;
 		}
