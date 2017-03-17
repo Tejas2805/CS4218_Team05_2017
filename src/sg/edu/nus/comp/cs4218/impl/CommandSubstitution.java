@@ -25,7 +25,6 @@ public class CommandSubstitution {
 			} else if (regexMatcher.group(1).length()>0) {
 				tokens.add(regexMatcher.group(1));
 			} else if (regexMatcher.group(2).length()>0) {
-                tokens.add(regexMatcher.group(2));
             } else {
 				tokens.add(regexMatcher.group());
 			}

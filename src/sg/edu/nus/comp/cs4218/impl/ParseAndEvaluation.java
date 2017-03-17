@@ -53,8 +53,14 @@ public class ParseAndEvaluation {
 		ArrayList<String> tokens = data.check(args);
 		for (int i = 0; i < tokens.size(); i++) {
 			String token = tokens.get(i);
-			if (!notSingleQuote(token)) {
+			if (!notSingleQuote(token) && doubleBackQuote(token)) {
+				if("``".equals(token)){
+					token = "";
+					tokens.remove(i);
+					tokens.add(i, token);
+				}else{
 				tokens.set(i, performCommandSubstitutionWithException(token));
+				}
 			}
 		}
 		return String.join("", tokens);
@@ -62,6 +68,9 @@ public class ParseAndEvaluation {
 
 	public boolean notSingleQuote(String args){
 		return (args.startsWith("'") && args.endsWith("'"));
+	}
+	public boolean doubleBackQuote(String args){
+		return (args.startsWith("`") && args.endsWith("`"));
 	}
 	public String performCommandSubstitutionWithException(String args) {
 		// TODO Auto-generated method stub
