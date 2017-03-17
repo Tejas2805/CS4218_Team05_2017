@@ -42,7 +42,6 @@ public class TestIntegrationCMDSubstitution {
 	        assertEquals(1,1);
 	    assertEquals("123452" + NEWLINE + NEWLINE +"aadfa" + NEWLINE + NEWLINE , output.toString());
 	    }
-	 
 	    @Test
 	    public void testEchoWithValidCommandSubstitutionSingleQuoted() throws AbstractApplicationException, ShellException {
 	    	ShellImpl shell = new ShellImpl();
