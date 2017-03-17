@@ -53,8 +53,13 @@ public class TestIntegrationDate {
 			
 		String cmdline = "date";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		expectedResults = stdout.toString();
-		assertEquals(expectedResults, stdout.toString());
+		
+		String results = "";
+		java.util.Date date = new java.util.Date();
+		results = date.toString().replace('+', '-') + System.lineSeparator();	
+		results = results.replaceAll("GMT-08:00", "SGT");
+	
+		assertEquals(results, stdout.toString());
 	}
 	
 	@Test (expected = DateException.class)
