@@ -1,1 +1,0 @@
-tail –n 5 tail1.txt –n 2 –n 5

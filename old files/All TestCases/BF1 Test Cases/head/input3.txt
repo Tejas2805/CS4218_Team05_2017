@@ -1,1 +1,0 @@
-head head1.txt -n 2

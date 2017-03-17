@@ -1,1 +1,0 @@
-head –n 3 tail1.txt –n 2 tail2.txt tail1.txt

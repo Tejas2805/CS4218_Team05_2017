@@ -1,1 +1,0 @@
-tail pipe2.txt | head pipe1.txt -n 2 | wc

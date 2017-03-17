@@ -1,6 +1,0 @@
-Select BOOLEAN such that Follows (5, 6)
-Select s1 such that Follows (54, s1)
-Select s1 such that Follows (s1, 178)
-Select s1 such that Follows (_, 1)
-Select s1 such that Follows (_, s1)
-Select s1 such that Follows (150, _)

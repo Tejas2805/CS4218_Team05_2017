@@ -1,1 +1,0 @@
-wc -m wc1.txt -l wc2.txt -l
