@@ -104,11 +104,51 @@ public class TestIntegrationPipe {
 	}
 	
 	@Test
+	public void testEchoPipeCat(){
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
+		String input = "echo lala|cat Tests\\pipeFiles\\pipetest1.txt";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "Pipe Hello World Pipe"+NEW_LINE+"Testing Testing 123"+NEW_LINE, actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
+	
+	@Test
 	public void testCatPipeGrep(){
 		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 		String input = "cat Tests\\pipeFiles\\pipe*|grep \"Hello World\"";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "Hello World"+NEW_LINE+"Ali Hello World Ali"+NEW_LINE+"Pipe Hello World Pipe"+NEW_LINE, actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
+	
+	@Test
+	public void testPipeCMDSubstitution(){
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
+		String input = "`echo echo` test|`echo echo` lol";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "lol"+NEW_LINE, actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
