@@ -55,7 +55,7 @@ public class TestSortApplication {
 	static final String SORT_ALL_N_FILE = "sortAll-n.txt";
 	
 
-	String FILE_PATH = "tests" + File.separator + "sortFiles" + File.separator;
+	static final String FILE_PATH = "tests" + File.separator + "sortFiles" + File.separator;
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
