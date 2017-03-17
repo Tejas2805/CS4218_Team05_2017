@@ -80,8 +80,8 @@ public class CallCommand implements Command {
 		
 		for(int i = 0; i < argsArray.length; i++){
 			String token = argsArray[i];
-			if(token.length() < 2)
-				continue;
+			if(token.length() < 2){
+				continue;}
 			char[] chToken = token.toCharArray();
 			if((chToken[0] == '\"' && chToken[chToken.length-1] == '\"') || (chToken[0] == '\'' && chToken[chToken.length-1] == '\'')){
 				char[] newToken = new char[chToken.length - 2];
@@ -148,8 +148,6 @@ public class CallCommand implements Command {
 
 		String[] cmdTokensArray = cmdVector
 				.toArray(new String[cmdVector.size()]);
-		
-		
 		this.app = cmdTokensArray[0];
 		int nTokens = cmdTokensArray.length;
 

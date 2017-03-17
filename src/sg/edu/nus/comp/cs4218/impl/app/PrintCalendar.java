@@ -10,7 +10,7 @@ public class PrintCalendar {
 	public static final String SPACE = " ";
 	public static final String THREE_SPACES = SPACE+SPACE+SPACE;
 	public static final String FOUR_SPACES = THREE_SPACES+SPACE;
-	public PrintCalendar(){}
+	//public PrintCalendar(){}
 	
 	public String printCalForMonthYearMondayFirst(String args){
 		String[] strArgs = args.split("\n");
