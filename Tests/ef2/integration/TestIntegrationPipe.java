@@ -144,6 +144,26 @@ public class TestIntegrationPipe {
 	}
 	
 	@Test
+	public void testPipeCMDSubstitution(){
+		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
+		String input = "`echo echo` test|`echo echo` lol";
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String expected = "lol"+NEW_LINE, actual;
+		
+		try {
+			shellImpl.parseAndEvaluate(input, output);
+		} catch (AbstractApplicationException e) {
+			// TODO Auto-generated catch block
+			fail();
+		} catch (ShellException e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		actual = output.toString();
+		assertEquals(expected, actual);		
+	}
+	
+	@Test
 	public void testPipeThreeCommand(){
 		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 		String input = "cd Tests\\pipeFiles\\test|cat pipe*.txt|grep \"Hello World\"";
