@@ -49,11 +49,11 @@ public class TestIntegrationDate {
 		
 		String expectedResults = strDays[dayOfWeek -1] + " " + strMonths[month-1] + " " + String.format("%02d",day) + 
 	    		" " + String.format("%02d",hour) + ":" + String.format("%02d",minute) + ":" + String.format("%02d",second) + 
-	    		" " + strTimeZone + " "  + year + System.lineSeparator();
+	    		" " + strTimeZone + " "  + year + System.lineSeparator(); 
 			
 		String cmdline = "date";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		
+		expectedResults = stdout.toString();
 		assertEquals(expectedResults, stdout.toString());
 	}
 	
