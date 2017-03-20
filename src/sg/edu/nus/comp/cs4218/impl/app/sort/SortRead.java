@@ -73,7 +73,7 @@ public class SortRead {
 				fileContent += line + System.lineSeparator();
 				temp = line;
 			}
-
+			fileContent = fileContent.substring(0, fileContent.length()-System.lineSeparator().length());
 		} catch (IOException e) {
 			//e.printStackTrace();
 			//throw (SortException)new SortException("Invalid File").initCause(e);
@@ -87,7 +87,7 @@ public class SortRead {
 				//throw (SortException)new SortException("Buffer error").initCause(ex);
 			}
 		}
-		return fileContent.substring(0, fileContent.length()-System.lineSeparator().length());//.trim();
+		return fileContent;//.trim();
 	}
 	
 	/*

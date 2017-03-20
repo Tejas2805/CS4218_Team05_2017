@@ -4,22 +4,17 @@ $999
 ()
 []
 $00
-
 10 o'clock
 100
 123
-
 20
 20 dollars
 33
-
-
 Apple
 Hello Panda
 Hello world
 Sleepy woods
 A Star
-
 addiTion
 addition
 sleeping beauty
@@ -27,4 +22,3 @@ gOOd
 go0d
 g0od
 sad
-

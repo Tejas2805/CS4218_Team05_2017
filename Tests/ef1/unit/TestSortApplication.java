@@ -99,7 +99,7 @@ public class TestSortApplication {
 		sortApp.run(args, null, stdout);
 		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
 
-		assertEquals(expectedResults, stdout.toString());
+		assertEquals(expectedResults, stdout.toString().trim());
 	}
 	
 	@Test
@@ -110,7 +110,7 @@ public class TestSortApplication {
 		sortApp.run(args, null, stdout);
 		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
 
-		assertEquals(expectedResults, stdout.toString());
+		assertEquals(expectedResults, stdout.toString().trim());
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ public class TestSortApplication {
 		sortApp.run(args, null, stdout);
 		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
 
-		assertEquals(expectedResults, stdout.toString());
+		assertEquals(expectedResults, stdout.toString().trim());
 	}
 	
 	@Test
@@ -132,7 +132,7 @@ public class TestSortApplication {
 		sortApp.run(args, null, stdout);
 		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
 
-		assertEquals(expectedResults, stdout.toString());
+		assertEquals(expectedResults, stdout.toString().trim());
 	}
 	
 	@Test
@@ -146,25 +146,25 @@ public class TestSortApplication {
 		String[] args1 = {strSimple, strCapital};
 		sortApp.run(args1, null, stdout);
 		String expectedResults1 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL);
-		assertEquals(expectedResults1, stdout.toString());
+		assertEquals(expectedResults1, stdout.toString().trim());
 		
 		stdout = new ByteArrayOutputStream();
 		String[] args2 = {strCapital, strNumber, strSpecial, strSimple};
 		sortApp.run(args2, null, stdout);
 		String expectedResults2 = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
-		assertEquals(expectedResults2, stdout.toString());
+		assertEquals(expectedResults2, stdout.toString().trim());
 		
 		stdout = new ByteArrayOutputStream();
 		String[] args3 = {strCapital, strNumber, strSpecial, strSimple, "-n"};
 		sortApp.run(args3, null, stdout);
 		String expectedResults3 = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
-		assertEquals(expectedResults3, stdout.toString());
+		assertEquals(expectedResults3, stdout.toString().trim());
 		
 		stdout = new ByteArrayOutputStream();
 		String[] args4 = {strSimple, strCapital, "-n", strNumber,};
 		sortApp.run(args4, null, stdout);
 		String expectedResults4 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N);
-		assertEquals(expectedResults4, stdout.toString());
+		assertEquals(expectedResults4, stdout.toString().trim());
 	}
 	
 	
@@ -195,7 +195,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -209,7 +209,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -223,7 +223,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_NUMBER_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -238,7 +238,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_NUMBER_N_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile).trim();
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -252,7 +252,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SPECIAL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -266,7 +266,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -280,7 +280,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -295,7 +295,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -310,7 +310,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -325,7 +325,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -341,7 +341,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -356,7 +356,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -371,7 +371,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -387,7 +387,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -402,7 +402,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -418,7 +418,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -433,7 +433,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_CAPITAL_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -448,7 +448,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 	
 	/*
@@ -464,7 +464,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_SIMPLE_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -479,7 +479,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_SPECIAL;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -495,7 +495,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_CAPITAL_NUMBER_SPECIAL_N;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -510,7 +510,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_ALL_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	/*
@@ -526,7 +526,7 @@ public class TestSortApplication {
 		String resultsFile = FILE_PATH + SORT_ALL_N_FILE;
 		String expectedResults = sortRead.readFromFile(resultsFile);
 
-		assertEquals(expectedResults, actualResults);
+		assertEquals(expectedResults, actualResults.trim());
 	}
 
 	@After

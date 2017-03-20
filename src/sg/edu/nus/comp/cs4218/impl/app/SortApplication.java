@@ -63,7 +63,7 @@ public class SortApplication implements Sort{
 				}
 				fileName = args[i];
 				sortCheck.checkValidFile(fileName);
-				data += sortRead.readFromFile(fileName);
+				data += sortRead.readFromFile(fileName) + System.lineSeparator();
 			}
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
