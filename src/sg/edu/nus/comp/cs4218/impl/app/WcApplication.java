@@ -13,6 +13,7 @@ public class WcApplication implements Wc {
 	WcCheckRead wcCheckRead = new WcCheckRead();
 	WcOption wcOption = new WcOption();
 	int numOfBlankSpace = 0;
+	int countFile = 0;
 	
 	/**
 	 * This method execute the wc function and write the data to output stream
@@ -37,6 +38,9 @@ public class WcApplication implements Wc {
 				throw new WcException("No args or inputstream");
 			}
 			String readStdin = wcCheckRead.readFileStdin("", stdin); 
+			if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
+				readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
+			}
 			results = printCountInFileOrStdin("", readStdin) + System.lineSeparator();
 		}else if(args.length == 1){
 			fileName = args[0];
@@ -45,14 +49,11 @@ public class WcApplication implements Wc {
 				results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
 			}
 		}else if(args.length >=2 ){
-			
 			String option = wcOption.processArgsOption(args);
 			String data = "", totalData = "";
-			int countFile = 0;
-		
+			countFile = 0;
 			for(int i=0; i<args.length; i++){
 				fileName = args[i];
-				
 				if(wcOption.isValidOption(fileName)){
 					continue;
 				}		
@@ -122,17 +123,26 @@ public class WcApplication implements Wc {
 	public String printNewlineCountInFile(String args) {
 		// TODO Auto-generated method stub
 		String data = args;
-	
-	
+		/*
+		if (data.length() > 0){
+			data = data.substring(0, data.length()-System.lineSeparator().length());
+		}
+		*/
 		boolean hasEndline = data.endsWith(System.lineSeparator());
-	
 		String[] lineArr = data.split(System.lineSeparator());
 		int  numLine = lineArr.length;
-		if(!hasEndline){
+		if(hasEndline){
+			numLine += 1;
+		}else{
 			numLine -= 1;
 		}
+		if(countFile > 1){
+			numLine += 1;
+		}
+		if(lineArr.length == 1 && "".equals(lineArr[0])){
+			numLine = 0;
+		}
 		String strNumLine = String.valueOf(numLine);
-		
 		return "   " + strNumLine;
 	}
 
@@ -147,7 +157,7 @@ public class WcApplication implements Wc {
 		String lineCount = printNewlineCountInFile(args);
 		String wordCount= printWordCountInFile(args);
 		String charCount = printCharacterCountInFile(args);
-		String results = lineCount + wordCount + charCount;
+		String results = charCount + wordCount + lineCount;
 		
 		return results;
 	}
@@ -212,11 +222,11 @@ public class WcApplication implements Wc {
 		case "-l":
 			return printNewlineCountInFile(data);
 		case "-lw":
-			return printNewlineCountInFile(data) + printWordCountInFile(data);
+			return  printWordCountInFile(data) + printNewlineCountInFile(data);
 		case "-lm":
-			return printNewlineCountInFile(data) + printCharacterCountInFile(data);
+			return  printCharacterCountInFile(data) + printNewlineCountInFile(data);
 		case "-wm":
-			return printWordCountInFile(data) +  printCharacterCountInFile(data);
+			return  printCharacterCountInFile(data) + printWordCountInFile(data);
 		case "-lwm":
 			return printAllCountsInFile(data);
 		default:

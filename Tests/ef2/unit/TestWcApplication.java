@@ -70,7 +70,7 @@ public class TestWcApplication {
 		String strArg = filePath + NO_NEWLINE_FILE;
 		String [] args = {strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   0   3   31 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   31   3   0 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class TestWcApplication {
 		String strArg = filePath + ONE_WORD_FILE;
 		String [] args = {strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   0   1   47 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   47   1   0 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -86,7 +86,7 @@ public class TestWcApplication {
 		String strArg = filePath + ONE_WORD_FILE;
 		String [] args = {"-x", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   0   1   47 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   47   1   0 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-l", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -118,7 +118,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-l", "-w", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -126,7 +126,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-w", "-l", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -134,7 +134,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-lw", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -142,7 +142,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-wl", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -150,7 +150,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-lm", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -158,7 +158,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-ml", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -166,7 +166,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-l", "-m", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -174,7 +174,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-m", "-l", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -182,7 +182,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-wm", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -190,7 +190,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-mw", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -198,7 +198,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-w", "-m", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -206,7 +206,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-m", "-w", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -214,7 +214,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-lwm", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -222,7 +222,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-mlw", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -230,7 +230,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-l", "-w", "-m", strArg};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -238,7 +238,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args = {"-m", "-l", strArg, "-w"};
 		wcApp.run(args, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -246,7 +246,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args1 = {"-llllll", strArg};
 		wcApp.run(args1, null, stdout);
-		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String [] args2 = {"-wwwww", strArg};
@@ -266,17 +266,17 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args1 = {"-lllwmmll", strArg};
 		wcApp.run(args1, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String [] args2 = {"-wllwwwwllll", strArg};
 		wcApp.run(args2, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String [] args3 = {"-mmmllllm", strArg};
 		wcApp.run(args3, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
 	
@@ -285,17 +285,17 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args1 = {"-lllwmmll", strArg, "-mmmmmmlll"};
 		wcApp.run(args1, null, stdout);
-		assertEquals("   11   10   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String [] args2 = {"-wllwwwwllll", strArg, "-wwwwlllw"};
 		wcApp.run(args2, null, stdout);
-		assertEquals("   11   10 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String [] args3 = {"-mmmllllm", strArg, "-mmmlllll"};
 		wcApp.run(args3, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
 	
@@ -304,7 +304,7 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		String [] args1 = {"-lllmmll", strArg, "-mmmnmmmllwl"};
 		wcApp.run(args1, null, stdout);
-		assertEquals("   11   65 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -314,15 +314,15 @@ public class TestWcApplication {
 		stdout = new ByteArrayOutputStream();
 		String [] args1 = {"-lwm", strArg, strArg};
 		wcApp.run(args1, null, stdout);
-		String expectedResults1 = "   11   10   65 " + strArg + System.lineSeparator() + "   11   10   65 " + strArg + System.lineSeparator()
-			+ "   22   20   130 total" + System.lineSeparator();
+		String expectedResults1 = "   65   10   12 " + strArg + System.lineSeparator() + "   65   10   12 " + strArg + System.lineSeparator()
+			+ "   130   20   24 total" + System.lineSeparator();
 		assertEquals(expectedResults1, stdout.toString());
 				
 		stdout = new ByteArrayOutputStream();
 		String [] args2 = {"-l", strArg, strArg};
 		wcApp.run(args2, null, stdout);
-		String expectedResults2 = "   11 " + strArg + System.lineSeparator() + "   11 " + strArg + System.lineSeparator()
-			+ "   22 total" + System.lineSeparator();
+		String expectedResults2 = "   12 " + strArg + System.lineSeparator() + "   12 " + strArg + System.lineSeparator()
+			+ "   24 total" + System.lineSeparator();
 		assertEquals(expectedResults2, stdout.toString());
 		
 		stdout = new ByteArrayOutputStream();
@@ -359,13 +359,13 @@ public class TestWcApplication {
 		String inStream1 = "hello world" + System.lineSeparator();
 		stdin = new ByteArrayInputStream(inStream1.getBytes());
 		wcApp.run(null, stdin, stdout);
-		assertEquals("   1   2   13" + System.lineSeparator(), stdout.toString());
+		assertEquals("   11   2   0" + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String inStream2 = "hello world";
 		stdin = new ByteArrayInputStream(inStream2.getBytes());
 		wcApp.run(null, stdin, stdout);
-		assertEquals("   0   2   11" + System.lineSeparator(), stdout.toString());
+		assertEquals("   11   2   0" + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
 	
@@ -394,7 +394,7 @@ public class TestWcApplication {
 	@Test
 	public void testprintNewlineCountInFile() {
 		String actual = wcApp.printNewlineCountInFile(data);
-		assertEquals("   11", actual);
+		assertEquals("   12", actual);
 		
 	}
 	
@@ -404,7 +404,7 @@ public class TestWcApplication {
 	@Test
 	public void testprintAllCountsInFile() {
 		String actual = wcApp.printAllCountsInFile(data);
-		assertEquals("   11   10   65", actual);
+		assertEquals("   65   10   12", actual);
 		
 	}
 	
@@ -434,7 +434,7 @@ public class TestWcApplication {
 	@Test
 	public void testprintNewlineCountInStdin() {
 		String actual = wcApp.printNewlineCountInStdin(data);
-		assertEquals("   11", actual);
+		assertEquals("   12", actual);
 		
 	}
 	
@@ -444,7 +444,7 @@ public class TestWcApplication {
 	@Test
 	public void testprintAllCountsInStdin() {
 		String actual = wcApp.printAllCountsInStdin(data);
-		assertEquals("   11   10   65", actual);
+		assertEquals("   65   10   12", actual);
 	}
 	
 	@After

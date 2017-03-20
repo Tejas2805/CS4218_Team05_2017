@@ -1,9 +1,10 @@
 package sg.edu.nus.comp.cs4218.impl.app.sort;
 
+import java.io.PrintStream;
+
 public class SortData {
 	
 	SortCheck sortCheck = new SortCheck();
-	
 	/**
 	 * @param data contains the line of data separated by "System.lineSeparator"
 	 * @return String data which starts with a special character
@@ -11,11 +12,11 @@ public class SortData {
 	public String getSpecialCharData(String data){
 		String [] dataAarr = data.split(System.lineSeparator());
 		String specialCharData = "";
-		
 		for(String line : dataAarr){
 			if(line.isEmpty()){
 				continue;
 			}
+			
 			char[] charArr = line.toCharArray();
 			if(sortCheck.isSpecialChar(charArr[0])){
 				specialCharData += line + System.lineSeparator();
@@ -25,6 +26,7 @@ public class SortData {
 		return specialCharData;
 	}
 
+	
 	/**
 	 * @param data contains the line of data separated by "System.lineSeparator"
 	 * @return String data which starts with a number

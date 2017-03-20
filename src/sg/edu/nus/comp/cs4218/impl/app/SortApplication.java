@@ -51,6 +51,7 @@ public class SortApplication implements Sort{
 			fileName = args[0];
 			sortCheck.checkValidFile(fileName);
 			String data = sortRead.readFromFile(fileName);
+			sortRead.readFileStdin(fileName, null);
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
 		}else if(args.length >= 2){
@@ -66,6 +67,7 @@ public class SortApplication implements Sort{
 			}
 			String toSort = "" + System.lineSeparator() + data;
 			results = sortAll(sortCondition + System.lineSeparator() + toSort);
+			
 		}else{
 			
 			throw new SortException("Invalid Argument");
@@ -150,7 +152,6 @@ public class SortApplication implements Sort{
 		String[] args = toSort.split(System.lineSeparator(), 2);
 		String sortCondtion = args[0];
 		String data = args[1];
-	
 		String specialCharData = sortData.getSpecialCharData(data);
 		String sortSpecialChar = "";
 		
@@ -341,7 +342,11 @@ public class SortApplication implements Sort{
 		String simple = sortStringsSimple(toSort);
 
 		String results = specialChars + System.lineSeparator() + numbers + System.lineSeparator() + capital + System.lineSeparator() + simple;
-		return processResults(results);
+		String finalResults = processResults(results);
+		for(int i=0; i<sortRead.getNumNewLine(); i++){
+			finalResults = System.lineSeparator() + finalResults;
+		}
+		return finalResults;
 	}
 	
 	
@@ -352,6 +357,7 @@ public class SortApplication implements Sort{
 	 * @return String the proccessed results string
 	 */
 	private String processResults(String results){
+		
 		String[] resultsList = results.split(System.lineSeparator());
 		String newResults = "";
 		for(String strResults : resultsList){
@@ -359,7 +365,7 @@ public class SortApplication implements Sort{
 				newResults += strResults + System.lineSeparator();
 			}
 		}
-
+		;
 		return newResults;
 	}
 
