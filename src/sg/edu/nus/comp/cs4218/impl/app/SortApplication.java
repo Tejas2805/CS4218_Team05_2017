@@ -34,10 +34,7 @@ public class SortApplication implements Sort{
 	 */
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws SortException {
-		String fileName = "";
-		String sortCondition = "";
-		String results = "";
-		
+		String fileName = "", sortCondition = "", results = "", readStdin= "", data = "";
 		if(stdout == null){
 			throw new SortException("No args or outputstream");
 		}
@@ -45,17 +42,24 @@ public class SortApplication implements Sort{
 			if(stdin == null){
 				throw new SortException("Input stream null");
 			}
-			String readStdin = sortRead.readInputStream(stdin);
+			
+			readStdin = sortRead.readInputStream(stdin);
 			results = sortAll(sortCondition + System.lineSeparator() + readStdin);
 		}else if(args.length == 1){
-			fileName = args[0];
-			sortCheck.checkValidFile(fileName);
-			String data = sortRead.readFromFile(fileName);
-			sortRead.readFileStdin(fileName, null);
+			if("-n".equals(args[0])){
+				sortCondition = args[0];
+			}else{
+				fileName = args[0];
+				sortCheck.checkValidFile(fileName);
+				data = sortRead.readFromFile(fileName);
+				sortRead.readFileStdin(fileName, null);
+			}
 			String toSort = "" + System.lineSeparator() + data;
-			results = sortAll(sortCondition + System.lineSeparator() + toSort);
+			if(stdin != null){
+				readStdin = System.lineSeparator() + sortRead.readInputStream(stdin);
+			}
+			results = sortAll(sortCondition + System.lineSeparator() + toSort + readStdin);
 		}else if(args.length >= 2){
-			String data = "";
 			for(int i=0; i<args.length; i++){
 				if("-n".equals(args[i])){
 					sortCondition = args[i];
@@ -65,14 +69,14 @@ public class SortApplication implements Sort{
 				sortCheck.checkValidFile(fileName);
 				data += sortRead.readFromFile(fileName) + System.lineSeparator();
 			}
+			if(stdin != null){
+				readStdin = System.lineSeparator() + sortRead.readInputStream(stdin);
+			}
 			String toSort = "" + System.lineSeparator() + data;
-			results = sortAll(sortCondition + System.lineSeparator() + toSort);
-			
-		}else{
-			
+			results = sortAll(sortCondition + System.lineSeparator() + toSort + stdin);
+		}else{	
 			throw new SortException("Invalid Argument");
 		}
-		
 		try {
 			stdout.write(results.getBytes());
 		} catch (IOException e) {	

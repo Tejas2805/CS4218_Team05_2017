@@ -69,8 +69,11 @@ public class SortNumber {
 				oldLine = numFileList.get(j);
 				newLine = numFileList.get(j+1);
 
-				int oldLineValue = Integer.valueOf(oldLine.split(" ")[0]); 
-				int newLineValue = Integer.valueOf(newLine.split(" ")[0]); 
+				//int oldLineValue = Integer.valueOf(oldLine.split(" ")[0]); 
+				//int newLineValue = Integer.valueOf(newLine.split(" ")[0]); 
+				
+				float oldLineValue = Float.valueOf(oldLine.split(" ")[0]); 
+				float newLineValue = Float.valueOf(newLine.split(" ")[0]); 
 
 				if(oldLineValue > newLineValue){
 					flag = false;

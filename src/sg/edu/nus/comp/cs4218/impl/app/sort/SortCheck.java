@@ -63,7 +63,8 @@ public class SortCheck {
 		String firstWord = line.split(" ")[0];
 	
 		try { 
-	        Integer.valueOf(firstWord); 
+	        //Integer.valueOf(firstWord); 
+			Float.valueOf(firstWord); 
 	    } catch(NumberFormatException e) { 
 	        return false; 
 	    } catch(NullPointerException e) {

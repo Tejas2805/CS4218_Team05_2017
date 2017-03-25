@@ -117,7 +117,7 @@ public class SortRead {
 			}
 		
 		} catch(Exception e) {
-			throw (SortException) new WcException("invalid file").initCause(e);
+			throw (SortException) new SortException("invalid file").initCause(e);
 			//e.printStackTrace();
 		} finally {
 		     if(inputStream!=null){

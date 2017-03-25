@@ -29,7 +29,7 @@ public class WcApplication implements Wc {
 	 */
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws WcException {
-		String fileName = "", results = "";
+		String fileName = "", results = "", readStdin = "";
 		if(stdout == null){
 			throw new WcException("No args or outputstream");
 		}
@@ -37,16 +37,18 @@ public class WcApplication implements Wc {
 			if(stdin == null || stdout == null){
 				throw new WcException("No args or inputstream");
 			}
-			String readStdin = wcCheckRead.readFileStdin("", stdin); 
-			if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
-				readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
-			}
-			results = printCountInFileOrStdin("", readStdin) + System.lineSeparator();
+			results = getInputStream(stdin, "");
 		}else if(args.length == 1){
-			fileName = args[0];
-			if(wcCheckRead.checkValidFile(fileName)){
-				String data = wcCheckRead.readFileStdin(fileName, null);
-				results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
+			String option = wcOption.processArgsOption(args);
+			fileName = args[0];	
+			if(wcOption.isValidOption(fileName)){
+				results = getInputStream(stdin, option);
+			}
+			else{
+				if(wcCheckRead.checkValidFile(fileName)){
+					String data = wcCheckRead.readFileStdin(fileName, null) + System.lineSeparator();
+					results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
+				}
 			}
 		}else if(args.length >=2 ){
 			String option = wcOption.processArgsOption(args);
@@ -62,8 +64,9 @@ public class WcApplication implements Wc {
 					results += printCountInFileOrStdin(option, data) + " " + fileName + System.lineSeparator();
 					totalData += " " + wcCheckRead.readFileStdin(fileName, null);
 					countFile += 1;
-				}
+				}			
 			}
+			results += getInputStream(stdin, option);
 			if(countFile > 1){
 				numOfBlankSpace = countFile-1;
 				results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
@@ -233,5 +236,16 @@ public class WcApplication implements Wc {
 			return printAllCountsInFile(data);
 		}
 	}
-	
+	private String getInputStream(InputStream stdin, String option) throws WcException{
+		String readStdin = "";
+		String results = "";
+		if(stdin != null){
+			readStdin = wcCheckRead.readFileStdin("", stdin); 
+			if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
+				readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
+			}
+			results = printCountInFileOrStdin(option, readStdin) + System.lineSeparator();	
+		}
+		return results;
+	}
 }
