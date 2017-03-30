@@ -48,7 +48,7 @@ public class ParseAndEvaluation {
 			
 		}
 	}
-	public String checkAndPerformCommandSubstitution(String args){
+	public String checkAndPerformCommandSubstitution(String args) throws AbstractApplicationException, ShellException{
 		CommandSubstitution data = new CommandSubstitution(args);
 		ArrayList<String> tokens = data.check(args);
 		for (int i = 0; i < tokens.size(); i++) {
@@ -72,16 +72,16 @@ public class ParseAndEvaluation {
 	public boolean doubleBackQuote(String args){
 		return (args.startsWith("`") && args.endsWith("`"));
 	}
-	public String performCommandSubstitutionWithException(String args) {
+	public String performCommandSubstitutionWithException(String args) throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
 		String processedData="";
 		try {
 			CommandSubstitution data = new CommandSubstitution(args);
 			processedData = data.process();
 		} catch (AbstractApplicationException e) {
-			return e.getMessage();
-		} catch (ShellException e) {
-			return e.getMessage();
+			throw e;
+		} catch (ShellException e1) {
+			throw e1;
 		}
 		return processedData;
 	}

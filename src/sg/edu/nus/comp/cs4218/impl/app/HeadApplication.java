@@ -135,11 +135,13 @@ public class HeadApplication implements Application {
 	private int checkDuplicateLineNumbers(String[] args1,  ArrayList<String> listOfArgs)
 			throws HeadException {
 		int lineCount = -1;
+		boolean checkGotLineNumber = false;
 		for (int i = 0; i < args1.length; i++) {
 			try {
 				if (args1[i].equals("-n")) {
 					lineCount = Integer.parseInt(args1[i + 1]);
 					i++;
+					checkGotLineNumber = true;
 				} else if (args1[i].startsWith("-")) {
 					throw new HeadException(INVALID_FORMAT);
 				} else {
@@ -148,6 +150,9 @@ public class HeadApplication implements Application {
 			} catch (Exception e) {
 				throw (HeadException) new HeadException(INVALID_FORMAT).initCause(e);
 			}
+		}
+		if(checkGotLineNumber && lineCount<0){
+			throw (HeadException) new HeadException("Invalid Format\n Line Number must be non-negative value");
 		}
 		return lineCount;
 	}
