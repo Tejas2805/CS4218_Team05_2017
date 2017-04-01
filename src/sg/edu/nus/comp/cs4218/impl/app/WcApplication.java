@@ -46,7 +46,7 @@ public class WcApplication implements Wc {
 			}
 			else{
 				if(wcCheckRead.checkValidFile(fileName)){
-					String data = wcCheckRead.readFileStdin(fileName, null) + System.lineSeparator();
+					String data = wcCheckRead.readFileStdin(fileName, null);// + System.lineSeparator();
 					results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
 				}
 			}
@@ -161,7 +161,6 @@ public class WcApplication implements Wc {
 		String wordCount= printWordCountInFile(args);
 		String charCount = printCharacterCountInFile(args);
 		String results = charCount + wordCount + lineCount;
-		
 		return results;
 	}
 
