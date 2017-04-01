@@ -37,23 +37,46 @@ public class WcApplication implements Wc {
 			if(stdin == null || stdout == null){
 				throw new WcException("No args or inputstream");
 			}
-			results = getInputStream(stdin, "");
+			readStdin = getInputStream(stdin, "");
+			results = printInputStream(stdin, readStdin, "");
 		}else if(args.length == 1){
 			String option = wcOption.processArgsOption(args);
+			String totalData = "";
 			fileName = args[0];	
+			countFile = 0;
+			
 			if(wcOption.isValidOption(fileName)){
-				results = getInputStream(stdin, option);
+				readStdin = getInputStream(stdin, option);
+				results = printInputStream(stdin, readStdin, option);
+				
 			}
 			else{
 				if(wcCheckRead.checkValidFile(fileName)){
 					String data = wcCheckRead.readFileStdin(fileName, null);// + System.lineSeparator();
 					results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
+					totalData += " " + wcCheckRead.readFileStdin(fileName, null);
+					countFile += 1;
+				}
+				if(stdin != null){
+					readStdin = getInputStream(stdin, option);
+					
+					if(countFile > 0){
+						totalData += " " + readStdin;
+						countFile += 1;
+					}
+					results += printInputStream(stdin, readStdin, option);
+				}
+				if(countFile > 1){
+					numOfBlankSpace = countFile-1;
+					results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
 				}
 			}
 		}else if(args.length >=2 ){
 			String option = wcOption.processArgsOption(args);
 			String data = "", totalData = "";
 			countFile = 0;
+			
+			
 			for(int i=0; i<args.length; i++){
 				fileName = args[i];
 				if(wcOption.isValidOption(fileName)){
@@ -66,7 +89,19 @@ public class WcApplication implements Wc {
 					countFile += 1;
 				}			
 			}
-			results += getInputStream(stdin, option);
+			
+			readStdin = getInputStream(stdin, option);
+			
+			
+			if(countFile > 0 && !"".equals(readStdin)){
+				totalData += " " + readStdin;
+				countFile += 1;
+			}
+			results += printInputStream(stdin, readStdin, option);
+			
+			
+			
+			
 			if(countFile > 1){
 				numOfBlankSpace = countFile-1;
 				results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
@@ -140,7 +175,7 @@ public class WcApplication implements Wc {
 			numLine -= 1;
 		}
 		if(countFile > 1){
-			numLine += 1;
+			//numLine += 1;
 		}
 		if(lineArr.length == 1 && "".equals(lineArr[0])){
 			numLine = 0;
@@ -160,8 +195,8 @@ public class WcApplication implements Wc {
 		String lineCount = printNewlineCountInFile(args);
 		String wordCount= printWordCountInFile(args);
 		String charCount = printCharacterCountInFile(args);
-		String results = charCount + wordCount + lineCount;
-		return results;
+		return charCount + wordCount + lineCount;
+		
 	}
 
 	/*
@@ -237,14 +272,24 @@ public class WcApplication implements Wc {
 	}
 	private String getInputStream(InputStream stdin, String option) throws WcException{
 		String readStdin = "";
-		String results = "";
 		if(stdin != null){
 			readStdin = wcCheckRead.readFileStdin("", stdin); 
-			if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
-				//readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
-			}
+			
+		}
+		return readStdin;
+	}
+	
+	private String printInputStream(InputStream stdin, String  readStdin, String option) throws WcException{
+
+		String results = "";
+		
+		if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
+			//readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
+		}
+		if(stdin != null){
 			results = printCountInFileOrStdin(option, readStdin) + System.lineSeparator();	
 		}
+		
 		return results;
 	}
 }
