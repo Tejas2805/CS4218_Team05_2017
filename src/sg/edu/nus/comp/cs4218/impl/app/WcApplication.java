@@ -241,7 +241,7 @@ public class WcApplication implements Wc {
 		if(stdin != null){
 			readStdin = wcCheckRead.readFileStdin("", stdin); 
 			if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
-				readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
+				//readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
 			}
 			results = printCountInFileOrStdin(option, readStdin) + System.lineSeparator();	
 		}
