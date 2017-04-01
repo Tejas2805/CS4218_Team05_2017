@@ -52,7 +52,7 @@ public class TestIntegrationSort {
 	static final String SORT_ALL_FILE = "sortAll.txt";
 	static final String SORT_ALL_N_FILE = "sortAll-n.txt";
 	
-	String FILE_PATH = "tests" + File.separator + "sortFiles" + File.separator;
+	static final String FILE_PATH = "tests" + File.separator + "sortFiles" + File.separator;
 	static final String SORT_CMD = "sort ";
 	String cmdline;
 	
