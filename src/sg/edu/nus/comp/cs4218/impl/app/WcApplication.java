@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.tmatesoft.sqljet.core.internal.lang.SqlParser.add_subexpr_return;
+
 import sg.edu.nus.comp.cs4218.app.Wc;
 import sg.edu.nus.comp.cs4218.exception.WcException;
 import sg.edu.nus.comp.cs4218.impl.app.wc.WcCheckRead;
@@ -39,44 +41,10 @@ public class WcApplication implements Wc {
 			}
 			readStdin = getInputStream(stdin, "");
 			results = printInputStream(stdin, readStdin, "");
-		}else if(args.length == 1){
-			String option = wcOption.processArgsOption(args);
-			String totalData = "";
-			fileName = args[0];	
-			countFile = 0;
-			
-			if(wcOption.isValidOption(fileName)){
-				readStdin = getInputStream(stdin, option);
-				results = printInputStream(stdin, readStdin, option);
-				
-			}
-			else{
-				if(wcCheckRead.checkValidFile(fileName)){
-					String data = wcCheckRead.readFileStdin(fileName, null);// + System.lineSeparator();
-					results = printCountInFileOrStdin("-lwm", data) + " " + fileName + System.lineSeparator();
-					totalData += " " + wcCheckRead.readFileStdin(fileName, null);
-					countFile += 1;
-				}
-				if(stdin != null){
-					readStdin = getInputStream(stdin, option);
-					
-					if(countFile > 0){
-						totalData += " " + readStdin;
-						countFile += 1;
-					}
-					results += printInputStream(stdin, readStdin, option);
-				}
-				if(countFile > 1){
-					numOfBlankSpace = countFile-1;
-					results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
-				}
-			}
-		}else if(args.length >=2 ){
+		}else if(args.length >=1 ){
 			String option = wcOption.processArgsOption(args);
 			String data = "", totalData = "";
 			countFile = 0;
-			
-			
 			for(int i=0; i<args.length; i++){
 				fileName = args[i];
 				if(wcOption.isValidOption(fileName)){
@@ -88,20 +56,13 @@ public class WcApplication implements Wc {
 					totalData += " " + wcCheckRead.readFileStdin(fileName, null);
 					countFile += 1;
 				}			
-			}
-			
+			}	
 			readStdin = getInputStream(stdin, option);
-			
-			
 			if(countFile > 0 && !"".equals(readStdin)){
 				totalData += " " + readStdin;
 				countFile += 1;
 			}
-			results += printInputStream(stdin, readStdin, option);
-			
-			
-			
-			
+			results += printInputStream(stdin, readStdin, option);	
 			if(countFile > 1){
 				numOfBlankSpace = countFile-1;
 				results += printCountInFileOrStdin(option, totalData.substring(1)) + " total" + System.lineSeparator();
@@ -270,22 +231,39 @@ public class WcApplication implements Wc {
 			return printAllCountsInFile(data);
 		}
 	}
+	
+	/*
+	 * Return the inputstream converted to string
+	 * @param stdin the inputstream data
+	 * @param option "-m", "-w", "-m", "-lw", "-lm", "-wm", "-lwn"
+	 */
 	private String getInputStream(InputStream stdin, String option) throws WcException{
 		String readStdin = "";
 		if(stdin != null){
 			readStdin = wcCheckRead.readFileStdin("", stdin); 
-			
 		}
 		return readStdin;
 	}
 	
+	/*
+	 * Return the char, word and newline count value of the inpustream
+	 * @param stdin the inputstream data
+	 * @param readStdin the inputstream data whihc had been converted to string
+	 * @param option "-m", "-w", "-m", "-lw", "-lm", "-wm", "-lwn"
+	 * 
+	 */
 	private String printInputStream(InputStream stdin, String  readStdin, String option) throws WcException{
 
 		String results = "";
 		
-		if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
+		//if(readStdin.length() > 0 && readStdin.endsWith(System.lineSeparator())){
+		if(readStdin.length() > 0 && readStdin.startsWith(System.lineSeparator())){
 			//readStdin = readStdin.substring(0,readStdin.length()-System.lineSeparator().length());
 		}
+		
+		String[] newlineArr = readStdin.split(System.lineSeparator());
+		System.out.println(newlineArr.length);
+		
 		if(stdin != null){
 			results = printCountInFileOrStdin(option, readStdin) + System.lineSeparator();	
 		}

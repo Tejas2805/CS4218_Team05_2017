@@ -34,6 +34,7 @@ public class WcCheckRead {
 			
 			while((value = bufRead.read()) != -1){
 				char charVal = (char)value;
+				//System.out.println(charVal);
 				results += String.valueOf(charVal);
 			}
 		
