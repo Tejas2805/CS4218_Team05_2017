@@ -262,7 +262,7 @@ public class WcApplication implements Wc {
 		}
 		
 		String[] newlineArr = readStdin.split(System.lineSeparator());
-		System.out.println(newlineArr.length);
+		
 		
 		if(stdin != null){
 			results = printCountInFileOrStdin(option, readStdin) + System.lineSeparator();	

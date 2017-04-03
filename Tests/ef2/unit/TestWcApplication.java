@@ -312,17 +312,10 @@ public class TestWcApplication {
 		String strArg = filePath + WC_FILE;
 		
 		stdout = new ByteArrayOutputStream();
-		String [] args1 = {"-lwm", strArg, strArg};
-		wcApp.run(args1, null, stdout);
-		String expectedResults1 = "   65   10   12 " + strArg + System.lineSeparator() + "   65   10   12 " + strArg + System.lineSeparator()
-			+ "   130   20   24 total" + System.lineSeparator();
-		assertEquals(expectedResults1, stdout.toString());
-				
-		stdout = new ByteArrayOutputStream();
-		String [] args2 = {"-l", strArg, strArg};
+		String [] args2 = {"-m", strArg, strArg};
 		wcApp.run(args2, null, stdout);
-		String expectedResults2 = "   12 " + strArg + System.lineSeparator() + "   12 " + strArg + System.lineSeparator()
-			+ "   24 total" + System.lineSeparator();
+		String expectedResults2 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg + System.lineSeparator()
+			+ "   130 total" + System.lineSeparator();
 		assertEquals(expectedResults2, stdout.toString());
 		
 		stdout = new ByteArrayOutputStream();
@@ -359,7 +352,7 @@ public class TestWcApplication {
 		String inStream1 = "hello world" + System.lineSeparator();
 		stdin = new ByteArrayInputStream(inStream1.getBytes());
 		wcApp.run(null, stdin, stdout);
-		assertEquals("   11   2   0" + System.lineSeparator(), stdout.toString());
+		assertEquals("   13   2   2" + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String inStream2 = "hello world";
