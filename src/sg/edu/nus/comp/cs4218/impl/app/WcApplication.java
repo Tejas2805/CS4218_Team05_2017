@@ -122,22 +122,19 @@ public class WcApplication implements Wc {
 	public String printNewlineCountInFile(String args) {
 		// TODO Auto-generated method stub
 		String data = args;
-		/*
+		
 		if (data.length() > 0){
 			data = data.substring(0, data.length()-System.lineSeparator().length());
 		}
-		*/
+		
 		boolean hasEndline = data.endsWith(System.lineSeparator());
 		String[] lineArr = data.split(System.lineSeparator());
 		int  numLine = lineArr.length;
+		
 		if(hasEndline){
 			numLine += 1;
-		}else{
-			numLine -= 1;
 		}
-		if(countFile > 1){
-			//numLine += 1;
-		}
+		
 		if(lineArr.length == 1 && "".equals(lineArr[0])){
 			numLine = 0;
 		}
