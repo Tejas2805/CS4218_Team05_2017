@@ -328,6 +328,28 @@ public class TestIntegrationWc {
 		assertEquals(expectedResults5, stdout.toString());
 	}
 	
+	@Test
+	public void testCatPipeWc() throws AbstractApplicationException, ShellException{
+		String strArg = filePath + WC_FILE;
+		stdout = new ByteArrayOutputStream();
+		String cmdline = "cat " + strArg + " | wc";
+		shellImpl.parseAndEvaluate(cmdline, stdout);
+		String expectedResults = "   65   10   11" + System.lineSeparator();
+		assertEquals(expectedResults, stdout.toString());
+		
+	}
+	
+	@Test
+	public void testRedirectionWc() throws AbstractApplicationException, ShellException{
+		String strArg = filePath + WC_FILE;
+		stdout = new ByteArrayOutputStream();
+		String cmdline = "wc < " + strArg ;
+		shellImpl.parseAndEvaluate(cmdline, stdout);
+		String expectedResults = "   65   10   11" + System.lineSeparator();
+		assertEquals(expectedResults, stdout.toString());
+		
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		shellImpl = null;
