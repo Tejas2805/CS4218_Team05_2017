@@ -53,7 +53,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + NO_NEWLINE_FILE;
 		String cmdline = "wc " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   31   3   0 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   31   3   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + ONE_WORD_FILE;
 		String cmdline = "wc " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   47   1   0 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   47   1   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + ONE_WORD_FILE;
 		String cmdline = "wc -x " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   47   1   0 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   47   1   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -101,7 +101,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -w " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -109,7 +109,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -w -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -117,7 +117,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lw " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -125,7 +125,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -wl " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -133,7 +133,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -141,7 +141,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -ml " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -149,7 +149,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -157,7 +157,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -197,7 +197,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lwm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -205,7 +205,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -mlw " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -213,7 +213,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -w -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -221,7 +221,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m -l " + strArg + " -w";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
@@ -229,7 +229,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline1 = "wc -llllll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
-		assertEquals("   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String cmdline2 = "wc -wwwww " + strArg;
@@ -250,17 +250,17 @@ public class TestIntegrationWc {
 	
 		String cmdline1 = "wc -lllwmmll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String cmdline2 = "wc -wllwwwwllll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String cmdline3 = "wc -mmmllllm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
 	
@@ -270,17 +270,17 @@ public class TestIntegrationWc {
 	
 		String cmdline1 = "wc -lllwmmll " + strArg + " -mmmmmmlll";
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
-		assertEquals("   65   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String cmdline2 = "wc -wllwwwwllll " + strArg + " -wwwwlllw";
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
-		assertEquals("   10   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 		
 		String cmdline3 = "wc -mmmllllm " + strArg + " -mmmlllll";
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
 	
@@ -289,7 +289,7 @@ public class TestIntegrationWc {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lllmmll " + strArg + " -mmmnmmmllwl";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		assertEquals("   65   12 " + strArg + System.lineSeparator(), stdout.toString());
+		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
 	
 	@Test
