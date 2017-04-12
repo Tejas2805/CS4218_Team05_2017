@@ -29,7 +29,7 @@ public class GrepApplication implements Grep {
 		String output;
 		
 		if (args == null || args.length == 0) {
-			output = ""; 
+			throw new GrepException("No arguments found");
 		}else {
 			for(String arg : args){ newArg += arg + "\n";}
 			int numOfFiles = args.length - 1;
@@ -47,6 +47,8 @@ public class GrepApplication implements Grep {
 		}
 		
 		try {
+			if(output == null)
+				throw new GrepException("Error occurred");
 			stdout.write(output.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -88,6 +90,8 @@ public class GrepApplication implements Grep {
 		}else{
 			temp += stdinString;
 			output = grepFromStdin(temp);
+			if(output == null)
+				throw new GrepException("Error occurred");
 		}
 		return output;
 	}
@@ -103,8 +107,8 @@ public class GrepApplication implements Grep {
 	 */
 	@Override
 	public String grepFromStdin(String args) {
-		if(grepInvalidPatternInFile(args) != null){
-			return "\n";
+		if(grepInvalidPatternInStdin(args) != null){
+			return null;
 		}
 		
 		String[] eachArg = args.split("\n");
@@ -125,7 +129,7 @@ public class GrepApplication implements Grep {
 	@Override
 	public String grepFromOneFile(String args) {
 		if(grepInvalidPatternInFile(args) != null){
-			return "\n";
+			return null;
 		}
 		String strPattern = args.split("\n")[0];
 		String[] eachArg = args.split("\n");
@@ -137,7 +141,7 @@ public class GrepApplication implements Grep {
 		List<Path> validFilePaths = fileHandler.getValidFilePathsFromString(eachArg, 1, 1);
 		
 		if(validFilePaths.isEmpty()){
-			return "\n";
+			return null;
 		}
 			
 		
@@ -158,8 +162,15 @@ public class GrepApplication implements Grep {
 	
 	String performGrep(String strPattern, Path filePath)
 	{
-		Pattern pattern;
-		pattern = Pattern.compile(strPattern);
+		Pattern pattern = null;
+		try
+		{
+			pattern = Pattern.compile(strPattern);
+		}catch(PatternSyntaxException e)
+		{
+			
+		}
+		
 		List<String> linesInFile = new ArrayList<>();
 		String output="";
 		
@@ -187,7 +198,7 @@ public class GrepApplication implements Grep {
 	@Override
 	public String grepFromMultipleFiles(String args) {
 		if(grepInvalidPatternInFile(args) != null){
-			return "\n";
+			return null;
 		}
 		String strPattern = args.split("\n")[0];
 		String[] eachArg = args.split("\n");
@@ -199,7 +210,7 @@ public class GrepApplication implements Grep {
 		List<Path> validFilePaths = fileHandler.getValidFilePathsFromString(eachArg, 1, eachArg.length-1);
 		
 		if(validFilePaths.isEmpty()){
-			return "\n";
+			return null;
 		}
 			
 		

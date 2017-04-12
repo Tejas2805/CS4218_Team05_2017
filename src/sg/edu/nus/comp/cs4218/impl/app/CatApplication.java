@@ -74,45 +74,40 @@ public class CatApplication implements Application {
 		
 			Path filePath;
 			List<Path> filePathArray = new ArrayList<>();
+			List<Path> invalidFilePathArray = new ArrayList<>();
 			Path currentDir = Paths.get(Environment.currentDirectory);
 			boolean isFileReadable = false;
-
+			
 			for (int i = 0; i < args.length; i++) {
 				filePath = currentDir.resolve(args[i]);
 				try {
 					isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
 				} catch (Exception e) {
+					invalidFilePathArray.add(filePath.getFileName());
 					continue;
 				}
 				if (isFileReadable) {
 					filePathArray.add(filePath);
-					
 				}
 			}
 
 			
-			// file could be read. perform cat command
-			if (filePathArray.isEmpty()) {
+			
+			for (int j = 0; j < filePathArray.size(); j++) {
 				try {
-					stdout.write("".getBytes());
+					byte[] byteFileArray = Files
+							.readAllBytes(filePathArray.get(j));
+					stdout.write(byteFileArray);
+					//stdout.write(System.lineSeparator().getBytes());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}else{
-
-				for (int j = 0; j < filePathArray.size(); j++) {
-					try {
-						byte[] byteFileArray = Files
-								.readAllBytes(filePathArray.get(j));
-						stdout.write(byteFileArray);
-						//stdout.write(System.lineSeparator().getBytes());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				
 			}
-		
+			
+			if(invalidFilePathArray.size() > 0)
+			{
+				throw new CatException(invalidFilePathArray.toString() + " could not be found.");
+			}
 	}
 
 	/**

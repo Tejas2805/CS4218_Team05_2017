@@ -55,14 +55,18 @@ static GrepApplication grepApplication;
 			grepApplication.run(argsEmpty, inputStream, outputStream);
 			actual = outputStream.toString();
 			assertEquals(expected, actual);
-			
+			fail();
+		} catch (AbstractApplicationException e) {
+		}
+		
+		
+		try {
 			grepApplication.run(argsNull, inputStream, outputStream);
 			actual = outputStream.toString();
 			assertEquals(expected, actual);
-		} catch (AbstractApplicationException e) {
 			fail();
+		} catch (AbstractApplicationException e) {
 		}
-		
 	}
 	
 	@Test
@@ -125,14 +129,11 @@ static GrepApplication grepApplication;
 		String[] argsOnlyPattern = {"pattern", "aaa.txt"};
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
-		String expected = "\n";
-		String actual;
 		try {
 			grepApplication.run(argsOnlyPattern, inputStream, outputStream);
-			actual = outputStream.toString();
-			assertEquals(expected, actual);
-		} catch (AbstractApplicationException e) {
 			fail();
+		} catch (AbstractApplicationException e) {
+			
 		}
 		
 	}

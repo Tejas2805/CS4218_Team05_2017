@@ -3,6 +3,7 @@ package ef1.unit;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.impl.app.CalApplication;
 
 public class TestCalApplication {
@@ -94,5 +96,62 @@ public class TestCalApplication {
 		
 		assertEquals(expected.length(), actual.length());
 		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testInvalidDates()
+	{
+		String[] args1 = {"cal", "-3"};
+		String[] args2 = {"cal", "-m", "-3"};
+		String[] args3 = {"cal", "-m", "-3", "-12"};
+		String[] args4 = {"cal", "-3", "-12"};
+		OutputStream os = System.out;
+		try {
+			calApplication.run(args1, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		try {
+			calApplication.run(args2, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		try {
+			calApplication.run(args3, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		try {
+			calApplication.run(args4, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		
+	}
+	@Test
+	public void testMoreThanThreeArgs()
+	{
+		OutputStream os = System.out;
+		String[] args1 = {"1", "2", "3", "4"};
+		String[] args2 = {"1", "2", "3", "4", "5"};
+		
+		try {
+			calApplication.run(args1, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		
+		try {
+			calApplication.run(args2, null, os);
+			fail();
+		} catch (AbstractApplicationException e) {
+			
+		}
+		
 	}
 }

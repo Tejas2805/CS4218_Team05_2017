@@ -52,7 +52,7 @@ public class SedApplication implements Sed{
 				for(String str : results){
 					try {
 						stdout.write(str.getBytes());
-						stdout.write("\n".getBytes());
+						stdout.write(System.lineSeparator().getBytes());
 					} catch (IOException e) {
 						throw (SedException) new SedException(e.getMessage()).initCause(e);
 					}

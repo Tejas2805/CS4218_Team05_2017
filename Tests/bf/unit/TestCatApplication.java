@@ -35,10 +35,9 @@ public class TestCatApplication {
 		
 		try {
 			catApplication.run(args, stdin, output);
-		} catch (CatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			fail();
+		} catch (CatException e) {
+		
 		}
 
 		actual = output.toString();
@@ -52,7 +51,7 @@ public class TestCatApplication {
 		String[] args = {"Tests\\catFiles\\catTestSource1.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world" + System.lineSeparator();
+		String expected = "hello world";
 		String actual;
 		try{
 			catApplication.run(args, stdin, output);
@@ -70,7 +69,7 @@ public class TestCatApplication {
 		String[] args = {"Tests\\catFiles\\catTestSource1.txt","Tests\\catFiles\\catTestSource2.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world" + System.lineSeparator() + "hello world" + System.lineSeparator();
+		String expected = "hello world"+"hello world";
 		String actual;
 		try{
 			catApplication.run(args, stdin, output);

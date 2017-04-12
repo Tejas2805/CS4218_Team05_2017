@@ -10,6 +10,7 @@ import sg.edu.nus.comp.cs4218.app.Cal;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CalException;
 import sg.edu.nus.comp.cs4218.impl.app.cal.CallHelper;
+import sg.edu.nus.comp.cs4218.impl.app.cal.PrintCalendar;;
 
 public class CalApplication implements Cal{
 
@@ -52,6 +53,10 @@ public class CalApplication implements Cal{
 		else if(args.length == 3){
 			output = processThreeArgs(args, strArgs, output, bStartWithMonday);
 		}
+		else
+		{
+			throw new CalException("Invalid number of Arguments");
+		}
 		try {
 			stdout.write((output + "\n").getBytes());
 		} catch (IOException e) {
@@ -62,12 +67,18 @@ public class CalApplication implements Cal{
 	private String processThreeArgs(String[] args, String strArgs, String output, boolean bStartWithMonday)
 			throws CalException {
 		String temp = output;
+		int month, year;
 		if(bStartWithMonday){
+			
 			try{
-				Integer.parseInt(args[1]);
-				Integer.parseInt(args[2]);
+				month = Integer.parseInt(args[1]);
+				year = Integer.parseInt(args[2]);
 				}catch(NumberFormatException ee){
 					throw (CalException) new CalException(INVALID_ARG).initCause(ee);
+			}
+			
+			if(month < 1 || month > 12 || year <0){
+				throw new CalException("Invalid month/year specified");
 			}
 			temp = printCalForMonthYearMondayFirst(strArgs);
 		}
@@ -85,13 +96,17 @@ public class CalApplication implements Cal{
 		}
 		//Year only
 		else{
-			
+			int year;
 			try{
-				Integer.parseInt(args[0]);
+				year = Integer.parseInt(args[0]);
 			}catch(NumberFormatException e){
 				throw (CalException) new CalException(INVALID_ARG).initCause(e);
 				
 			}
+			if(year < 0){
+				throw new CalException("Invalid year specified");
+			}
+				
 			output = printCalForYear(strArgs);
 			
 		}
@@ -100,23 +115,29 @@ public class CalApplication implements Cal{
 
 	private String processTwoArgs(String[] args, String strArgs, boolean bStartWithMonday) throws CalException {
 		String output;
+		int year = -1;
+		int month = -1;
 		if(bStartWithMonday){
+		
 			try{
-				Integer.parseInt(args[1]);
+				year = Integer.parseInt(args[1]);
 			}catch(NumberFormatException ee){
 				throw (CalException) new CalException(INVALID_ARG).initCause(ee);
 			}
-
+			if(year < 0)
+				throw new CalException("Invalid year specified");
 			output = printCalForYearMondayFirst(strArgs);
 		}else{
 
 			try{
-				Integer.parseInt(args[0]);
-				Integer.parseInt(args[1]);
+				month = Integer.parseInt(args[0]);
+				year = Integer.parseInt(args[1]);
 				}catch(NumberFormatException ee){
 					throw (CalException) new CalException(INVALID_ARG).initCause(ee);
 				}
-
+				if(month < 1 || month > 12 || year <0){
+					throw new CalException("Invalid month/year specified");
+				}
 				output = printCalForMonthYear(strArgs);
 		}
 		return output;

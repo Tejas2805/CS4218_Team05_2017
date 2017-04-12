@@ -40,6 +40,23 @@ public class TestSedApplication {
 		}
 	}
 	
+	@Test
+	public void testSedsWithPipe() {
+		String[] args = {"s/\\|/O/g"};
+		InputStream stdin = new ByteArrayInputStream("h|llo".getBytes());
+		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, stdin, stdout);
+			
+		} catch (SedException e) {
+			fail();
+			return;
+		}
+		String actual = stdout.toString();
+		String expected = "hOllo\n";
+		
+		assertEquals(expected, actual);
+	}
 
 	@Test
 	public void testSedsWithNoArguments() {
