@@ -16,10 +16,12 @@ import sg.edu.nus.comp.cs4218.impl.app.sort.SortRead;
 
 public class DateWcSortBugFix {
 
+	//Reported Bug:
+	//8 Date: run correctly and also throw exception on more than 0 input args
 	//13 Wc: throw exception when using option + stdin
 	//14 Wc: return nothing when using more than 1 options + stdin
 	//19 Sort: numbers (-n option) wit stdin returns nothing
-	//8 Date: run correctly and also throw exception on more than 0 input args
+	
 	
 	ShellImpl shellImpl;
 	OutputStream stdout;
