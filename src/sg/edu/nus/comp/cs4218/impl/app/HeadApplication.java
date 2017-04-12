@@ -152,7 +152,7 @@ public class HeadApplication implements Application {
 			}
 		}
 		if(checkGotLineNumber && lineCount<0){
-			throw (HeadException) new HeadException("Invalid Format\n Line Number must be non-negative value");
+			throw (HeadException) new HeadException("Invalid Format"+NEWLINE+"Line Number must be non-negative value");
 		}
 		return lineCount;
 	}

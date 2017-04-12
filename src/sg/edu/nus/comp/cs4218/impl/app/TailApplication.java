@@ -113,7 +113,7 @@ public class TailApplication implements Application{
 			}
 		}
 		if(checkGotLineNumber && lineCount<0){
-			throw (TailException) new TailException("Invalid Format\n Line Number must be non-negative value");
+			throw (TailException) new TailException("Invalid Format"+NEWLINE+"Line Number must be non-negative value");
 		}
 		return lineCount;
 	}
