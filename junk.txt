@@ -1,0 +1,13 @@
+landingHeight
+rowTransition
+colTransition 
+hole 
+well 
+maxHeight 
+rowsCleared
+bumpiness 
+aggregateHeight 
+edgeFloor 
+edgeWall 
+edgeEdge 
+blockage
