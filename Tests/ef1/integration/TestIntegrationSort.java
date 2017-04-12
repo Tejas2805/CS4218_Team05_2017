@@ -73,7 +73,7 @@ public class TestIntegrationSort {
 		cmdline = SORT_CMD + strArgs;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		
-		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE) + System.lineSeparator();
 
 		assertEquals(expectedResults, stdout.toString());
 	}
@@ -85,7 +85,7 @@ public class TestIntegrationSort {
 		cmdline = SORT_CMD + strArgs;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		
-		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE) + System.lineSeparator();
 
 		assertEquals(expectedResults, stdout.toString());
 	}
@@ -97,7 +97,7 @@ public class TestIntegrationSort {
 		cmdline = SORT_CMD + strArgs;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		
-		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE) + System.lineSeparator();
 
 		assertEquals(expectedResults, stdout.toString());
 	}
@@ -109,7 +109,7 @@ public class TestIntegrationSort {
 		cmdline = SORT_CMD + strArgs;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		
-		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+		String expectedResults = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE) + System.lineSeparator();
 
 		assertEquals(expectedResults, stdout.toString());
 	}
@@ -124,25 +124,25 @@ public class TestIntegrationSort {
 		
 		cmdline = SORT_CMD + strSimple + " " + strCapital;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		String expectedResults1 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL);
+		String expectedResults1 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL) + System.lineSeparator();
 		assertEquals(expectedResults1, stdout.toString());
 		
 		stdout = new ByteArrayOutputStream();
 		cmdline = SORT_CMD + strCapital + " " + strNumber + " " + strSpecial + " " + strSimple;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		String expectedResults2 = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE);
+		String expectedResults2 = sortRead.readFromFile(FILE_PATH + SORT_ALL_FILE) + System.lineSeparator();
 		assertEquals(expectedResults2, stdout.toString());
 		
 		stdout = new ByteArrayOutputStream();
 		cmdline = SORT_CMD + strCapital + " " + strNumber + " " + strSpecial + " " + strSimple + " -n";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		String expectedResults3 = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE);
+		String expectedResults3 = sortRead.readFromFile(FILE_PATH + SORT_ALL_N_FILE) + System.lineSeparator();
 		assertEquals(expectedResults3, stdout.toString());
 		
 		stdout = new ByteArrayOutputStream();
 		cmdline = SORT_CMD + strSimple + " " + strCapital + " -n " + strNumber ;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		String expectedResults4 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N);
+		String expectedResults4 = sortRead.readFromFile(FILE_PATH + SORT_SIMPLE_CAPITAL_NUMBER_N) + System.lineSeparator();
 		assertEquals(expectedResults4, stdout.toString());
 	}
 	

@@ -84,7 +84,7 @@ public class SortData {
 	public String getSimpleData(String data){
 		String [] dataAarr = data.split(System.lineSeparator());
 		String simpleData = "";
-
+		
 		for(String line : dataAarr){
 			if(line.isEmpty()){
 				continue;

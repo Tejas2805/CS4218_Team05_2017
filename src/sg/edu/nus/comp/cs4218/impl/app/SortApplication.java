@@ -72,7 +72,7 @@ public class SortApplication implements Sort{
 				readStdin = System.lineSeparator() + sortRead.readInputStream(stdin);
 			}
 			String toSort = "" + System.lineSeparator() + data;
-			results = sortAll(sortCondition + System.lineSeparator() + toSort + stdin);
+			results = sortAll(sortCondition + System.lineSeparator() + toSort + readStdin);
 		}else{	
 			throw new SortException("Invalid Argument");
 		}
@@ -93,11 +93,12 @@ public class SortApplication implements Sort{
 	@Override
 	public String sortStringsSimple(String toSort) {
 		// TODO Auto-generated method stub
-		String[] args = toSort.split(System.lineSeparator(), 2);
+		String[] args = toSort.split(System.lineSeparator(),2);
 		String data = args[1];
 		String simpleData = sortData.getSimpleData(data);
 		String sortSimple = sortOrder.sortData(simpleData);
 
+		
 		return sortSimple;
 	}
 	
