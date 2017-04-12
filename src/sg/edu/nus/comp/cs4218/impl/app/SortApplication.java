@@ -42,7 +42,6 @@ public class SortApplication implements Sort{
 			if(stdin == null){
 				throw new SortException("Input stream null");
 			}
-			
 			readStdin = sortRead.readInputStream(stdin);
 			results = sortAll(sortCondition + System.lineSeparator() + readStdin);
 		}else if(args.length == 1){
@@ -347,6 +346,7 @@ public class SortApplication implements Sort{
 
 		String results = specialChars + System.lineSeparator() + numbers + System.lineSeparator() + capital + System.lineSeparator() + simple;
 		String finalResults = processResults(results);
+		
 		for(int i=0; i<sortRead.getNumNewLine(); i++){
 			finalResults = System.lineSeparator() + finalResults;
 		}

@@ -30,6 +30,9 @@ public class SortRead {
 
 			bufReader = new BufferedReader(new InputStreamReader(inputStream));
 			while ((line = bufReader.readLine()) != null) {
+				if("".equals(line)){
+					count += 1;
+				}
 				line += System.lineSeparator();
 				strBuilder.append(line);
 			}
