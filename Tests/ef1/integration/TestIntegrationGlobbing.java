@@ -32,19 +32,19 @@ public class TestIntegrationGlobbing {
 	public void catGlobNoPath(){
 		String input = "cat asds*d.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "", actual;
+		String expected = "cat: [CS4218_Team05_2017, asds*d.txt] could not be found.", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			fail();
+			actual = e.getMessage();
+			assertEquals(expected, actual);	
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
 			fail();
 		}
-		actual = output.toString();
-		assertEquals(expected, actual);		
+			
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobDirectories(){
 		String input = "cat Tests\\g*b*\\globTestSource1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+NEW_LINE, actual;
+		String expected = "hello world", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -90,7 +90,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobFilesDirectories(){
 		String input = "cat Tests\\g*b*\\glob*Sou*e1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+NEW_LINE, actual;
+		String expected = "hello world", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -109,7 +109,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobMultipleFilesDirectories(){
 		String input = "cat Tes*s/g*b*/glob*Sou*e1.txt Tes*s/g*b*/glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+NEW_LINE+"hello world 2"+NEW_LINE, actual;
+		String expected = "hello worldhello world 2", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -129,7 +129,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobMultipleFile(){
 		String input = "cat Tests\\globFiles\\glob*.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+NEW_LINE+"hello world 2"+NEW_LINE, actual;
+		String expected = "hello worldhello world 2", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
