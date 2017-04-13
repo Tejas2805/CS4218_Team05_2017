@@ -74,16 +74,29 @@ public class CatApplication implements Application {
 		
 			Path filePath;
 			List<Path> filePathArray = new ArrayList<>();
-			List<Path> invalidFilePathArray = new ArrayList<>();
+			List<String> invalidFilePathArray = new ArrayList<>();
 			Path currentDir = Paths.get(Environment.currentDirectory);
 			boolean isFileReadable = false;
 			
 			for (int i = 0; i < args.length; i++) {
-				filePath = currentDir.resolve(args[i]);
+				filePath = null;
+				if(args[i] == null)
+					continue;
 				try {
+
+					filePath = currentDir.resolve(args[i]);
 					isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
+					
 				} catch (Exception e) {
-					invalidFilePathArray.add(filePath.getFileName());
+					if(filePath == null)
+					{
+						invalidFilePathArray.add(args[i]);
+					}
+					else
+					{
+						invalidFilePathArray.add(filePath.getFileName().toString());	
+					}
+					
 					continue;
 				}
 				if (isFileReadable) {
