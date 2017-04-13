@@ -12,6 +12,7 @@ import sg.edu.nus.comp.cs4218.Environment;
 public class Preprocess {
 	 
 	private static ArrayList<String> allFiles = new ArrayList<String>();
+	private static String inputPath;
 
 	public Preprocess(){
 		// This constructor is intentionally empty. Nothing special is needed here.
@@ -30,6 +31,7 @@ public class Preprocess {
 			int numberOfLevel=0;
 			if(argsArray[i].contains("*")&&!hasQuotes){
 				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i);
+				inputPath=argsArray[i];
 			}else{
 				allFiles.add(argsArray[i]);
 			}
@@ -120,6 +122,7 @@ public class Preprocess {
 	 * 
 	 */
 	public void listFilesForFolder(final File folder, Pattern pattern, int numOfLevel) {
+		int count=0;
 	    for (final File fileEntry : folder.listFiles()) {
 	        if (fileEntry.isDirectory()) {
 	            listFilesForFolder(fileEntry,pattern,numOfLevel);
@@ -128,9 +131,15 @@ public class Preprocess {
 	        	while (matcher.find()) {
 	        		if(numOfLevel==fileEntry.getPath().split("\\\\").length){
 	        			allFiles.add(fileEntry.getPath());
+	        			count++;
 	        		}
 	        	}
 	        }
+	    }
+	    if(count==0){
+	    	allFiles.add(inputPath);
+	    }else{
+	    	count=0;
 	    }
 	}
 }
