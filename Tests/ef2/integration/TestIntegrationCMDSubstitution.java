@@ -38,9 +38,14 @@ public class TestIntegrationCMDSubstitution {
 		 ShellImpl shell = new ShellImpl();
 		 createFiles();
 		 ByteArrayOutputStream output = new ByteArrayOutputStream();
+		 try{
 		 shell.parseAndEvaluate("cat `echo a.txt` 123.txt", output);
+		 }catch (Exception e){
+			 String actual = e.getMessage();
+			 assertEquals("123452" + NEWLINE +"aadfa" + NEWLINE  , actual);
+		 }
 	        assertEquals(1,1);
-	    assertEquals("123452" + NEWLINE + NEWLINE +"aadfa" + NEWLINE + NEWLINE , output.toString());
+	    
 	    }
 	    @Test
 	    public void testEchoWithValidCommandSubstitutionSingleQuoted() throws AbstractApplicationException, ShellException {
@@ -70,8 +75,13 @@ public class TestIntegrationCMDSubstitution {
 	    public void testEchoWithInvalidCommandSubstitutionDoubleQuoted() throws AbstractApplicationException, ShellException {
 	    	ShellImpl shell = new ShellImpl();
 			 ByteArrayOutputStream output = new ByteArrayOutputStream();
+			 try{
 	    	shell.parseAndEvaluate("echo \"testing: `error_input`\"", output);
-	        assertEquals("testing: shell: error_input: Invalid app."+ NEWLINE, output.toString());
+			 }catch(Exception e){
+				 String actual = e.getMessage();
+				 assertEquals("shell: error_input: Invalid app.", actual);
+			 }
+	        
 	        deleteFiles();
 	    }
 }
