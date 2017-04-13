@@ -18,7 +18,7 @@ public class HeadTailBugFix {
 
 	//Reported Bug:
 	//6 Head, Tail: run correctly and throws exception message when input negative line numbers
-	
+	//20 Pipe: no exception thrown when a component is invalid 
 	private final static String NEWLINE = System.lineSeparator();
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
 	
@@ -64,5 +64,22 @@ public class HeadTailBugFix {
 		}
 		
 	}
+	/*
+	 * Fixed Bug No.20
+	 * Test for Bug No. 20
+	 * "head" command will throw exception if a component is invalid
+	 */
+	@Test
+	public void testPipeWithInvalidComponent()
+			throws AbstractApplicationException, ShellException {	
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		ShellImpl shell = new ShellImpl();
+		try{
+		shell.parseAndEvaluate("echo `head invalid.txt` | grep \"usage\"",outStream);
+		}catch(Exception e){
+			assertEquals(e.getMessage(),"Head: File Not Exists");
+		}
+	}
+
 
 }
