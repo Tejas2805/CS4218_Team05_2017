@@ -141,7 +141,7 @@ public class TestSedApplication {
 		String[] args = {"s/o/O/", "Tests\\sedFiles\\hello.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-		String expected = "hellO oreo\nwOrld\n";
+		String expected = "hellO oreo"+System.lineSeparator() + "wOrld"+System.lineSeparator();
 		String actual;
 		
 		try {
@@ -159,12 +159,21 @@ public class TestSedApplication {
 		String[] args = {"s/o/O/g", "Tests\\sedFiles\\hello.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-		String expected = "hellO OreO\nwOrld\n";
+		String expected = "hellO OreO"+System.lineSeparator()+"wOrld"+System.lineSeparator();
 		String actual;
 		
 		try {
 			sedApp.run(args, stdin, stdout);
 			actual = stdout.toString();
+			
+			for(int i = 0; i < actual.length(); i++)
+			{
+				System.out.println("a:"+(int)actual.charAt(i));
+			}
+			for(int i = 0; i < expected.length(); i++)
+			{
+				System.out.println((int)expected.charAt(i));
+			}
 			assertEquals(expected, actual);
 		} catch (SedException e) {
 			fail();
