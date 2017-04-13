@@ -49,9 +49,9 @@ public class TestIntegrationGlobbing {
 
 	@Test
 	public void catGlobOneFile(){
-		String input = "cat Tests\\globFiles\\glob*Source1.txt";
+		String input = "cat Tests/globFiles/glob*Source1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+NEW_LINE, actual;
+		String expected = "hello world", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -107,7 +107,7 @@ public class TestIntegrationGlobbing {
 	
 	@Test
 	public void catGlobMultipleFilesDirectories(){
-		String input = "cat Tes*s\\g*b*\\glob*Sou*e1.txt Tes*s\\g*b*\\glob*e2.txt";
+		String input = "cat Tes*s/g*b*/glob*Sou*e1.txt Tes*s/g*b*/glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world"+NEW_LINE+"hello world 2"+NEW_LINE, actual;
 		
