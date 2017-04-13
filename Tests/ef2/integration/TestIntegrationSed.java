@@ -30,7 +30,7 @@ ShellImpl shellImpl;
 		String input = "sed s/o/O/ Tests\\sedFiles\\hello.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected ="hellO oreo\nwOrld\n";
+		String expected ="hellO oreo"+System.lineSeparator()+"wOrld"+System.lineSeparator();
 		
 		assertEquals(expected, stdout.toString());
 	}
@@ -40,7 +40,7 @@ ShellImpl shellImpl;
 		String input = "sed s/o/O/g Tests\\sedFiles\\hello.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected ="hellO OreO\nwOrld\n";
+		String expected ="hellO OreO"+System.lineSeparator()+"wOrld"+System.lineSeparator();
 		
 		assertEquals(expected, stdout.toString());
 	}
