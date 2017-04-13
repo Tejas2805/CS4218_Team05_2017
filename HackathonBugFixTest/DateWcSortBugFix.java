@@ -71,7 +71,7 @@ public class DateWcSortBugFix {
 	 * Error msg will be thrown when "date" cmd has an arg
 	 */
 	@Test (expected = DateException.class)
-	public void testInvalidtArgs() throws AbstractApplicationException, ShellException {
+	public void testDateInvalidArgs() throws AbstractApplicationException, ShellException {
 		String cmdline = "date invalidArg";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 	}

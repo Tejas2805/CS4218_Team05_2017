@@ -309,7 +309,7 @@ public class HackathonBugFixTestCases {
 	 * Error msg will be thrown when "date" cmd has an arg
 	 */
 	@Test (expected = DateException.class)
-	public void testInvalidtArgs() throws AbstractApplicationException, ShellException {
+	public void testDateInvalidArgs() throws AbstractApplicationException, ShellException {
 		String cmdline = "date invalidArg";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 	}
@@ -357,6 +357,28 @@ public class HackathonBugFixTestCases {
 		fail();
 		
 	}
+	
+	/*
+	 * Fixed Bug No.12
+	 * Test for Bug No. 12
+	 * "sed" command will handle different seperators as well
+	 */
+	@Test
+	public void testSedWithDifferentSeparator() throws Exception {
+		String[] args = {"s|e|E|","Tests\\sedFiles\\test.txt"};
+		InputStream inputStream = System.in;
+		OutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, inputStream, outputStream);
+			
+		} catch (AbstractApplicationException e) {
+			fail();
+		}
+		String actual = outputStream.toString();
+		String expected = "hEllo"+System.lineSeparator();
+		
+		assertEquals(expected, actual);
+	}
 
 	/*
 	 * Fixed Bug No 13
@@ -381,7 +403,7 @@ public class HackathonBugFixTestCases {
 	 * using wc -m -w -l < wc.txt
 	 */
 	@Test
-	public void testWcOptionStdin1() throws AbstractApplicationException, ShellException{
+	public void testWcOptionStdinRedir() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + WC_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "wc -m -w -l < " + strArg ;
@@ -398,7 +420,7 @@ public class HackathonBugFixTestCases {
 	 * using cat wc.txt | wc -m -w -l
 	 */
 	@Test
-	public void testWcOptionStdin2() throws AbstractApplicationException, ShellException{
+	public void testWcOptionStdinPipe() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + WC_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "cat " + strArg  + " | wc -m -w -l ";
@@ -494,7 +516,7 @@ public class HackathonBugFixTestCases {
 	 * using sort -n < sort.txt
 	 */
 	@Test
-	public void testSortOptionNStdin1() throws AbstractApplicationException, ShellException{
+	public void testSortOptionNStdinRedir() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + UNSORTED_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "sort -n < " + strArg ;
@@ -510,7 +532,7 @@ public class HackathonBugFixTestCases {
 	 * using cat sort.txt | sort -n
 	 */
 	@Test
-	public void testSortOptionNStdin2() throws AbstractApplicationException, ShellException{
+	public void testSortOptionNStdinPipe() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + UNSORTED_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "cat " + strArg  + " | sort -n";
