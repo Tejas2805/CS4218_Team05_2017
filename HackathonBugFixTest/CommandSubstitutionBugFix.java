@@ -7,7 +7,7 @@ import org.junit.Test;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
 public class CommandSubstitutionBugFix {
-	private final static String NEWLINE = "\n";
+	private final static String NEWLINE = System.lineSeparator();// "\n";
 	
 
 	//Reported Bug:

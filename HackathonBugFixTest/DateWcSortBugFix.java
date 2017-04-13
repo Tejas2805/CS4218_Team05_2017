@@ -97,9 +97,10 @@ public class DateWcSortBugFix {
 	 * Fixed Bug No 14
 	 * Test for Bug No.14
 	 * wc does not throw exception when using option + stdin
+	 * using wc -m -w -l < wc.txt
 	 */
 	@Test
-	public void testWcOptionStdin() throws AbstractApplicationException, ShellException{
+	public void testWcOptionStdin1() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + WC_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "wc -m -w -l < " + strArg ;
@@ -112,13 +113,47 @@ public class DateWcSortBugFix {
 	/*
 	 * Fixed Bug No 14
 	 * Test for Bug No.14
-	 * sort numbers (-n option) with stdin returns a result
+	 * wc does not throw exception when using option + stdin
+	 * using cat wc.txt | wc -m -w -l
 	 */
 	@Test
-	public void testSortOptionNStdin() throws AbstractApplicationException, ShellException{
+	public void testWcOptionStdin2() throws AbstractApplicationException, ShellException{
+		String strArg = HACKATHON_FILE_PATH + WC_FILE;
+		stdout = new ByteArrayOutputStream();
+		String cmdline = "cat " + strArg  + " | wc -m -w -l ";
+		shellImpl.parseAndEvaluate(cmdline, stdout);
+		String expectedResults = "   65   10   11" + System.lineSeparator();
+		assertEquals(expectedResults, stdout.toString());
+		
+	}
+	
+	/*
+	 * Fixed Bug No 19
+	 * Test for Bug No.19
+	 * sort numbers (-n option) with stdin returns a result
+	 * using sort -n < sort.txt
+	 */
+	@Test
+	public void testSortOptionNStdin1() throws AbstractApplicationException, ShellException{
 		String strArg = HACKATHON_FILE_PATH + UNSORTED_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "sort -n < " + strArg ;
+		shellImpl.parseAndEvaluate(cmdline, stdout);
+		String expectedResults = SORTED_TEXT_N;
+		assertEquals(expectedResults, stdout.toString());		
+	}
+	
+	/*
+	 * Fixed Bug No 19
+	 * Test for Bug No.19
+	 * sort numbers (-n option) with stdin returns a result
+	 * using cat sort.txt | sort -n
+	 */
+	@Test
+	public void testSortOptionNStdin2() throws AbstractApplicationException, ShellException{
+		String strArg = HACKATHON_FILE_PATH + UNSORTED_FILE;
+		stdout = new ByteArrayOutputStream();
+		String cmdline = "cat " + strArg  + " | sort -n";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		String expectedResults = SORTED_TEXT_N;
 		assertEquals(expectedResults, stdout.toString());		
