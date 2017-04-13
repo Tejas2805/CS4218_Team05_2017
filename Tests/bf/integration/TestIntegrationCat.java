@@ -29,7 +29,7 @@ public class TestIntegrationCat {
 		String input = "cat Tests\\catFiles\\catTestSource1.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected = "hello world" + System.lineSeparator();
+		String expected = "hello world" ;
 		
 		assertEquals(expected, stdout.toString());
 	}
