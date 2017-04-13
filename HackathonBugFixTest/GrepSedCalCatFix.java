@@ -10,9 +10,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import sg.edu.nus.comp.cs4218.Shell;
 import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.CatException;
 import sg.edu.nus.comp.cs4218.exception.SedException;
+import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 import sg.edu.nus.comp.cs4218.impl.app.*;
 
 public class GrepSedCalCatFix {
@@ -223,5 +225,27 @@ public class GrepSedCalCatFix {
 		
 		fail();
 		
+	}
+	
+	/*
+	 * Fixed Bug No.12
+	 * Test for Bug No. 12
+	 * "sed" command will handle different seperators as well
+	 */
+	@Test
+	public void testSedWithDifferentSeparator() throws Exception {
+		String[] args = {"s|e|E|","Tests\\sedFiles\\test.txt"};
+		InputStream inputStream = System.in;
+		OutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			sedApp.run(args, inputStream, outputStream);
+			
+		} catch (AbstractApplicationException e) {
+			fail();
+		}
+		String actual = outputStream.toString();
+		String expected = "hEllo"+System.lineSeparator();
+		
+		assertEquals(expected, actual);
 	}
 }
