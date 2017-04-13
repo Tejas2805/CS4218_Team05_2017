@@ -14,12 +14,20 @@ import sg.edu.nus.comp.cs4218.exception.AbstractApplicationException;
 import sg.edu.nus.comp.cs4218.exception.ShellException;
 import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
-public class TestFixedBug {
+public class HeadTailBugFix {
 
+	//Reported Bug:
+	//6 Head, Tail: run correctly and throws exception message when input negative line numbers
 	
 	private final static String NEWLINE = System.lineSeparator();
 	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
 	
+	
+	/*
+	 * Fixed Bug No.6
+	 * Test for Bug No. 6
+	 * "head" command will throw exception if receives negative value of line numbers
+	 */
 	@Test
 	public void testHeadNegativeLineValues() throws ShellException{
 		ShellImpl shell = new ShellImpl();
@@ -36,6 +44,11 @@ public class TestFixedBug {
 		
 	}
 	
+	/*
+	 * Fixed Bug No.6
+	 * Test for Bug No. 6
+	 * "tail" command will throw exception if receives negative value of line numbers
+	 */
 	@Test
 	public void testTailNegativeLineValues() throws ShellException{
 		ShellImpl shell = new ShellImpl();
