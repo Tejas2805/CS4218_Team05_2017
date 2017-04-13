@@ -69,6 +69,7 @@ public class HeadTailBugFix {
 	 * Test for Bug No. 20
 	 * "head" command will throw exception if a component is invalid
 	 */
+	
 	@Test
 	public void testPipeWithInvalidComponent()
 			throws AbstractApplicationException, ShellException {	
