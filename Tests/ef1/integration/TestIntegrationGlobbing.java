@@ -109,7 +109,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobMultipleFilesDirectories(){
 		String input = "cat Tes*s/g*b*/glob*Sou*e1.txt Tes*s/g*b*/glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello worldhello world 2", actual;
+		String expected = "hello world" + System.lineSeparator() + "hello world 2", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
@@ -129,7 +129,7 @@ public class TestIntegrationGlobbing {
 	public void catGlobMultipleFile(){
 		String input = "cat Tests\\globFiles\\glob*.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello worldhello world 2", actual;
+		String expected = "hello world" + System.lineSeparator() + "hello world 2", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);

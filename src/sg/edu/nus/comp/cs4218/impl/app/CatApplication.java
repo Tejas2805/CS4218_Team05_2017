@@ -111,6 +111,9 @@ public class CatApplication implements Application {
 					byte[] byteFileArray = Files
 							.readAllBytes(filePathArray.get(j));
 					stdout.write(byteFileArray);
+					if(j!= filePathArray.size()-1)
+						stdout.write(System.lineSeparator().getBytes());
+
 					//stdout.write(System.lineSeparator().getBytes());
 				} catch (IOException e) {
 					e.printStackTrace();

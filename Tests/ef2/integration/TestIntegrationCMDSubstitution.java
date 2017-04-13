@@ -67,8 +67,18 @@ public class TestIntegrationCMDSubstitution {
 	    public void testEchoWithInvalidCommandSubstitutionBackQuoted() throws AbstractApplicationException, ShellException {
 	    	ShellImpl shell = new ShellImpl();
 			 ByteArrayOutputStream output = new ByteArrayOutputStream();
-			 shell.parseAndEvaluate("echo `error_input`", output);
-	        assertEquals("shell: error_input: Invalid app."+ NEWLINE, output.toString());
+			 try
+			 {
+				 shell.parseAndEvaluate("echo `error_input`", output);
+				 fail();
+			 }
+			 catch(ShellException s)
+			 {
+				 
+				 assertEquals("shell: error_input: Invalid app.", s.getMessage());
+			 }
+			
+	       
 	    }
 	    
 	    @Test

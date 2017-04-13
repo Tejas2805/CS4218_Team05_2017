@@ -74,7 +74,7 @@ public class TestCatApplication {
 		String[] args = {"Tests\\catFiles\\catTestSource1.txt","Tests\\catFiles\\catTestSource2.txt"};
 		InputStream stdin = null;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello world"+"hello world";
+		String expected = "hello world"+System.lineSeparator()+"hello world";
 		String actual;
 		try{
 			catApplication.run(args, stdin, output);
