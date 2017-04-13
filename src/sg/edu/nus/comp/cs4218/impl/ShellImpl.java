@@ -54,7 +54,7 @@ public class ShellImpl implements Shell {
 	
 	private static String[] finalArgsArray;
 
-	
+	private static boolean hasQuotes=false;
 
 	/**
 	 * Static method to run the application as specified by the application
@@ -114,7 +114,7 @@ public class ShellImpl implements Shell {
 		appCalled = app;
 		//globbing
 		Preprocess prepro = new Preprocess();
-		allFiles = prepro.preprocessArg(argsArray);
+		allFiles = prepro.preprocessArg(hasQuotes,argsArray);
 		finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
@@ -278,6 +278,12 @@ public class ShellImpl implements Shell {
 			return e.getMessage();
 		}
 		return processedData;
+	}
+
+	public static void setHasQuotes(boolean b) {
+		// TODO Auto-generated method stub
+		hasQuotes=b;
+		
 	}
 
 }

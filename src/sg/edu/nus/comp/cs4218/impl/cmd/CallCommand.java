@@ -77,7 +77,7 @@ public class CallCommand implements Command {
 
 		ProcessBQ pBQ = new ProcessBQ();
 		argsArray = pBQ.processBQ(argsArray);
-		
+		ShellImpl.setHasQuotes(false);
 		for(int i = 0; i < argsArray.length; i++){
 			String token = argsArray[i];
 			if(token.length() < 2){
@@ -87,6 +87,7 @@ public class CallCommand implements Command {
 				char[] newToken = new char[chToken.length - 2];
 				System.arraycopy(chToken, 1, newToken, 0, newToken.length);
 				argsArray[i] = new String(newToken);
+				ShellImpl.setHasQuotes(true);
 			}
 	}
 		InputOutputStream ioS = new InputOutputStream();

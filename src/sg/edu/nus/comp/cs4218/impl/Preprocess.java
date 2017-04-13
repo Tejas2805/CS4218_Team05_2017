@@ -18,16 +18,17 @@ public class Preprocess {
 	 }
 	/**
 	 * Static method to preprocess the argument in order to find the file which meet the regex.
+	 * @param hasQuotes 
 	 * 
 	 * @param argsArray
 	 *             String array containing the arguments to pass to the
 	 *            applications for running.
 	 */
-	public ArrayList<String> preprocessArg(String... argsArray) {
+	public ArrayList<String> preprocessArg(boolean hasQuotes, String... argsArray) {
 
 		for(int i=0;i<argsArray.length;i++){
 			int numberOfLevel=0;
-			if(argsArray[i].contains("*")){
+			if(argsArray[i].contains("*")&&!hasQuotes){
 				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i);
 			}else{
 				allFiles.add(argsArray[i]);
