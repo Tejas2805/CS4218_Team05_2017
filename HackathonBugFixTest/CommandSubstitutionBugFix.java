@@ -23,7 +23,7 @@ public class CommandSubstitutionBugFix {
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		ShellImpl shell = new ShellImpl();
 		try{
-		shell.parseAndEvaluate("cat `echo \"Tests\\headFiles\\123.txt\"`",outStream);
+		shell.parseAndEvaluate("cat `echo \"Tests/headFiles/123.txt\"`",outStream);
 		}catch(Exception e){
 			assertEquals(e.getMessage(),"Head: File Not Exists");
 		}
