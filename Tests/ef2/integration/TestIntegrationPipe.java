@@ -108,7 +108,7 @@ public class TestIntegrationPipe {
 		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 		String input = "echo lala|cat Tests\\pipeFiles\\pipetest1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "Pipe Hello World Pipe"+NEW_LINE+"Testing Testing 123"+NEW_LINE, actual;
+		String expected = "Pipe Hello World Pipe"+NEW_LINE+"Testing Testing 123", actual;
 		
 		try {
 			shellImpl.parseAndEvaluate(input, output);
