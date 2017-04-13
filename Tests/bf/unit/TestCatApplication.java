@@ -25,7 +25,11 @@ public class TestCatApplication {
 		catApplication = new CatApplication();
 	}
 	
-	
+	/*
+	 * Fixed Bug No.1
+	 * Test for Bug No. 1
+	 * "tail" command will throw exception if receives negative value of line numbers
+	 */
 	@Test
 	public void catWithNonExistantFile(){
 		String[] args = {"asdsad.txt"};
@@ -37,12 +41,13 @@ public class TestCatApplication {
 			catApplication.run(args, stdin, output);
 			fail();
 		} catch (CatException e) {
-		
+
+			actual = output.toString();
+			assertEquals(expected, actual);
+			return;
 		}
 
-		actual = output.toString();
-		assertEquals(expected, actual);
-			
+		fail();
 		
 	}
 	
