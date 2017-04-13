@@ -64,7 +64,6 @@ public class TestIntegrationHead {
 				assertEquals("shell: : Invalid app.",actual);
 			}
 	}
-	
 	@Test
 	public void testOneArgument() throws ShellException{
 		ShellImpl shell = new ShellImpl();
