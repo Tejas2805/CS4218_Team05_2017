@@ -10,6 +10,20 @@ public class SedHelper {
 		String strRegex = "^s\\/.+\\/\\/";
 		String strRegex2 = "^s\\/.+\\/[^\\/]+";
 		String strRegex3 = "^s\\/.+\\/\\/g";
+		
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|.+\\|\\|";
+			strRegex2 = "^s\\|.+\\|[^\\|]+";
+			strRegex3 = "^s\\|.+\\|\\|g";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\.+\\\\\\\\";
+			strRegex2 = "^s\\\\.+\\\\[^\\\\]+";
+			strRegex3 = "^s\\\\.+\\\\\\\\g";
+		}
+		
 		if(isLocalSed(arg)){
 			if(Pattern.matches(strRegex, arg) || Pattern.matches(strRegex2, arg)){
 				return true;
@@ -39,18 +53,46 @@ public class SedHelper {
 	public boolean isGlobalSed(String arg)
 	{
 		String strRegex = "^s\\/.+\\/.+\\/g$";
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|.+\\|.+\\|g$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\.+\\/.+\\\\g$";
+		}
 		return Pattern.matches(strRegex, arg);
 	}
 	
 	public boolean isLocalSed(String arg)
 	{
 		String strRegex = "^s\\/.+\\/.+\\/$";
+		
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|.+\\|.+\\|$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\.+\\/.+\\\\$";
+		}
+		
 		return Pattern.matches(strRegex, arg);
 	}
 	
 	public String getPatternLocal(String arg)
 	{
 		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
+		
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|(.+)\\|(.*)\\|$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\(.+)\\\\(.*)\\\\$";
+		}
+		
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
 		if(matcher.find()){
@@ -66,6 +108,15 @@ public class SedHelper {
 	public String getPatternGlobal(String arg)
 	{
 		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|(.+)\\|(.*)\\|g$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\(.+)\\\\(.*)\\\\g$";
+		}
+		
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
 		if(matcher.find()){
@@ -81,6 +132,14 @@ public class SedHelper {
 	public String getReplacementLocal(String arg)
 	{
 		String strRegex = "^s\\/(.+)\\/(.*)\\/$";
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|(.+)\\|(.*)\\|$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\(.+)\\\\(.*)\\\\$";
+		}
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
 		if(matcher.find()){
@@ -95,6 +154,14 @@ public class SedHelper {
 	public String getReplacementGlobal(String arg)
 	{
 		String strRegex = "^s\\/(.+)\\/(.*)\\/g$";
+		if(arg.charAt(1) == '|')
+		{
+			strRegex = "^s\\|(.+)\\|(.*)\\|g$";
+		}
+		else if(arg.charAt(1) == '\\')
+		{
+			strRegex = "^s\\\\(.+)\\\\(.*)\\\\g$";
+		}
 		Pattern pattern = Pattern.compile(strRegex);
 		Matcher matcher = pattern.matcher(arg);
 		if(matcher.find()){
