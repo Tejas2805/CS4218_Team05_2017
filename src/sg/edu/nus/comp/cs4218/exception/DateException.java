@@ -4,7 +4,7 @@ public class DateException extends AbstractApplicationException {
 
 	private static final long serialVersionUID = -4071979116776975963L;
 
-	public DateException(String message){
+	public DateException(String message) {
 		super("Date: " + message);
 	}
 }

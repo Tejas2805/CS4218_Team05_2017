@@ -12,49 +12,44 @@ import sg.edu.nus.comp.cs4218.exception.CalException;
 import sg.edu.nus.comp.cs4218.impl.app.cal.CallHelper;
 import sg.edu.nus.comp.cs4218.impl.app.cal.PrintCalendar;;
 
-public class CalApplication implements Cal{
+public class CalApplication implements Cal {
 
 	public static final String INVALID_ARG = "Invalid argument";
 	public static final String SPACE = " ";
-	public static final String THREE_SPACES = SPACE+SPACE+SPACE;
-	public static final String FOUR_SPACES = THREE_SPACES+SPACE;
+	public static final String THREE_SPACES = SPACE + SPACE + SPACE;
+	public static final String FOUR_SPACES = THREE_SPACES + SPACE;
 	public CallHelper callHelper = new CallHelper();
-	
-	
-	//-m [[month] year]
+
+	// -m [[month] year]
 	@Override
 	public void run(String[] args, InputStream stdin, OutputStream stdout) throws AbstractApplicationException {
-		
+
 		String strArgs = "";
-		for(String str:args){
+		for (String str : args) {
 			strArgs += str + "\n";
 		}
-		String output="";
-		
-		if(stdout == null)
-		{
+		String output = "";
+
+		if (stdout == null) {
 			throw new CalException("OutputStream not provided");
 		}
-		
-		//Print current Month
-		if(args == null || args.length == 0){
+
+		// Print current Month
+		if (args == null || args.length == 0) {
 			output = printCal(strArgs);
 		}
 		boolean bStartWithMonday = callHelper.isStartWithMonday(args);
-		
-		//Print current Month starting With Monday
-		if(args.length == 1){
+
+		// Print current Month starting With Monday
+		if (args.length == 1) {
 			output = processOneArg(args, strArgs, bStartWithMonday);
 		}
-		//month and year
-		else if(args.length == 2){
+		// month and year
+		else if (args.length == 2) {
 			output = processTwoArgs(args, strArgs, bStartWithMonday);
-		}
-		else if(args.length == 3){
+		} else if (args.length == 3) {
 			output = processThreeArgs(args, strArgs, output, bStartWithMonday);
-		}
-		else
-		{
+		} else {
 			throw new CalException("Invalid number of Arguments");
 		}
 		try {
@@ -68,22 +63,22 @@ public class CalApplication implements Cal{
 			throws CalException {
 		String temp = output;
 		int month, year;
-		if(bStartWithMonday){
-			
-			try{
+		if (bStartWithMonday) {
+
+			try {
 				month = Integer.parseInt(args[1]);
 				year = Integer.parseInt(args[2]);
-				}catch(NumberFormatException ee){
-					throw (CalException) new CalException(INVALID_ARG).initCause(ee);
+			} catch (NumberFormatException ee) {
+				throw (CalException) new CalException(INVALID_ARG).initCause(ee);
 			}
-			
-			if(month < 1 || month > 12 || year <0){
+
+			if (month < 1 || month > 12 || year < 0) {
 				throw new CalException("Invalid month/year specified");
 			}
 			temp = printCalForMonthYearMondayFirst(strArgs);
 		}
-			
-		else{
+
+		else {
 			throw new CalException("Invalid arguments format");
 		}
 		return temp;
@@ -91,24 +86,24 @@ public class CalApplication implements Cal{
 
 	private String processOneArg(String[] args, String strArgs, boolean bStartWithMonday) throws CalException {
 		String output;
-		if(bStartWithMonday){
+		if (bStartWithMonday) {
 			output = printCalWithMondayFirst(strArgs);
 		}
-		//Year only
-		else{
+		// Year only
+		else {
 			int year;
-			try{
+			try {
 				year = Integer.parseInt(args[0]);
-			}catch(NumberFormatException e){
+			} catch (NumberFormatException e) {
 				throw (CalException) new CalException(INVALID_ARG).initCause(e);
-				
+
 			}
-			if(year < 0){
+			if (year < 0) {
 				throw new CalException("Invalid year specified");
 			}
-				
+
 			output = printCalForYear(strArgs);
-			
+
 		}
 		return output;
 	}
@@ -117,69 +112,66 @@ public class CalApplication implements Cal{
 		String output;
 		int year = -1;
 		int month = -1;
-		if(bStartWithMonday){
-		
-			try{
+		if (bStartWithMonday) {
+
+			try {
 				year = Integer.parseInt(args[1]);
-			}catch(NumberFormatException ee){
+			} catch (NumberFormatException ee) {
 				throw (CalException) new CalException(INVALID_ARG).initCause(ee);
 			}
-			if(year < 0)
+			if (year < 0)
 				throw new CalException("Invalid year specified");
 			output = printCalForYearMondayFirst(strArgs);
-		}else{
+		} else {
 
-			try{
+			try {
 				month = Integer.parseInt(args[0]);
 				year = Integer.parseInt(args[1]);
-				}catch(NumberFormatException ee){
-					throw (CalException) new CalException(INVALID_ARG).initCause(ee);
-				}
-				if(month < 1 || month > 12 || year <0){
-					throw new CalException("Invalid month/year specified");
-				}
-				output = printCalForMonthYear(strArgs);
+			} catch (NumberFormatException ee) {
+				throw (CalException) new CalException(INVALID_ARG).initCause(ee);
+			}
+			if (month < 1 || month > 12 || year < 0) {
+				throw new CalException("Invalid month/year specified");
+			}
+			output = printCalForMonthYear(strArgs);
 		}
 		return output;
 	}
 
-	
 	@Override
 	public String printCal(String args) {
-		
+
 		String[] output = new String[7];
 		int[][] dates = new int[5][7];
-		
-		//Get now
+
+		// Get now
 		LocalDate today = LocalDate.now();
-		//Get Month
+		// Get Month
 		String month = callHelper.formatMonth(today.getMonth().toString());
 		String year = String.valueOf(today.getYear());
-		
-		output[0] = FOUR_SPACES + month + SPACE+  year + FOUR_SPACES;
+
+		output[0] = FOUR_SPACES + month + SPACE + year + FOUR_SPACES;
 		output[1] = "Su Mo Tu We Th Fr Sa ";
-		
-		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
-		
+
+		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth() - 1);
+
 		int dayOfWeek = startOfMonth.getDayOfWeek().getValue();
-		dayOfWeek = dayOfWeek == 7 ? 0: dayOfWeek;
+		dayOfWeek = dayOfWeek == 7 ? 0 : dayOfWeek;
 		int day = 1;
 		int maxDays = startOfMonth.lengthOfMonth();
-		//for first row
-		for(int col = dayOfWeek; col < 7; col++)
-		{
+		// for first row
+		for (int col = dayOfWeek; col < 7; col++) {
 			dates[0][col] = day++;
 		}
 		day = callHelper.addDays(dates, day, maxDays);
-		
-		callHelper.loopForMonthYear(dates,output);
-		
+
+		callHelper.loopForMonthYear(dates, output);
+
 		String realOutput = "";
-		for(String str: output){
+		for (String str : output) {
 			realOutput += str + "\n";
 		}
-			
-		
+
 		return realOutput;
 	}
 
@@ -187,72 +179,64 @@ public class CalApplication implements Cal{
 	public String printCalWithMondayFirst(String args) {
 		String[] output = new String[7];
 		int[][] dates = new int[5][7];
-		
-		//Get now
+
+		// Get now
 		LocalDate today = LocalDate.now();
-		
-		//Get Month
+
+		// Get Month
 		String month = callHelper.formatMonth(today.getMonth().toString());
 		String year = String.valueOf(today.getYear());
-		
-		output[0] = FOUR_SPACES+month + " " + year + FOUR_SPACES;
+
+		output[0] = FOUR_SPACES + month + " " + year + FOUR_SPACES;
 		output[1] = "Mo Tu We Th Fr Sa Su ";
-		
-		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth()-1);
-		
+
+		LocalDate startOfMonth = today.minusDays(today.getDayOfMonth() - 1);
+
 		int dayOfWeek = startOfMonth.getDayOfWeek().getValue() - 1;
 		int day = 1;
 		int maxDays = startOfMonth.lengthOfMonth();
-		//for first row
-		for(int col = dayOfWeek; col < 7; col++)
-		{
+		// for first row
+		for (int col = dayOfWeek; col < 7; col++) {
 			dates[0][col] = day++;
 		}
 		day = callHelper.addDays(dates, day, maxDays);
-		
-		callHelper.loopForMonthYear(dates,output);
-		
+
+		callHelper.loopForMonthYear(dates, output);
+
 		String realOutput = "";
-		for(String str: output){
+		for (String str : output) {
 			realOutput += str + "\n";
 		}
-			
-		
+
 		return realOutput;
 	}
 
 	@Override
 	public String printCalForMonthYear(String args) {
-		
-			
+
 		PrintCalendar print = new PrintCalendar();
 		return print.printCalForMonthYear(args);
 	}
 
-	
 	@Override
 	public String printCalForYear(String args) {
-		
-			
+
 		PrintCalendar print = new PrintCalendar();
 		return print.printCalForYear(args);
 	}
 
 	@Override
 	public String printCalForMonthYearMondayFirst(String args) {
-		
 
 		PrintCalendar print = new PrintCalendar();
 		return print.printCalForMonthYearMondayFirst(args);
 	}
 
-	
 	@Override
 	public String printCalForYearMondayFirst(String args) {
 		PrintCalendar print = new PrintCalendar();
-		
+
 		return print.printCalForYearMondayFirst(args);
 	}
 
-	
 }

@@ -22,21 +22,20 @@ import sg.edu.nus.comp.cs4218.impl.app.HeadApplication;
 
 public class TestIntegrationHead {
 
-	
 	private final static String NEWLINE = System.lineSeparator();
-	private final static String TESTMESSAGE = "test"+NEWLINE+"string";
-	
+	private final static String TESTMESSAGE = "test" + NEWLINE + "string";
+
 	@Test
 	public void testAllNullArgument() {
 		ShellImpl shell = new ShellImpl();
 
-		try{
+		try {
 			shell.parseAndEvaluate(null, null);
-		}catch (Exception e){
-			String actual=e.getMessage();
-			assertEquals(null,actual);
-			
-	}
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			assertEquals(null, actual);
+
+		}
 	}
 
 	@Test
@@ -44,28 +43,30 @@ public class TestIntegrationHead {
 		ShellImpl shell = new ShellImpl();
 		String testString = TESTMESSAGE;
 		OutputStream stdout = null;
-		try{
+		try {
 			shell.parseAndEvaluate(testString, stdout);
-		}catch (Exception e){
-			String actual=e.getMessage();
-			assertEquals("shell: test: Invalid app.",actual);
-			
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			assertEquals("shell: test: Invalid app.", actual);
+
+		}
 	}
-	}
+
 	@Test
-	public void testNoArgument() throws ShellException{
+	public void testNoArgument() throws ShellException {
 		ShellImpl shell = new ShellImpl();
 		OutputStream stdout = new ByteArrayOutputStream();
-		//No args with InputStream and OutputStream
-			try {
-				shell.parseAndEvaluate("", stdout);
-			} catch (Exception e) {
-				String actual=e.getMessage();
-				assertEquals("shell: : Invalid app.",actual);
-			}
+		// No args with InputStream and OutputStream
+		try {
+			shell.parseAndEvaluate("", stdout);
+		} catch (Exception e) {
+			String actual = e.getMessage();
+			assertEquals("shell: : Invalid app.", actual);
+		}
 	}
+
 	@Test
-	public void testOneArgument() throws ShellException{
+	public void testOneArgument() throws ShellException {
 		ShellImpl shell = new ShellImpl();
 		OutputStream stdout = new ByteArrayOutputStream();
 		stdout = new ByteArrayOutputStream();
@@ -75,12 +76,14 @@ public class TestIntegrationHead {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		String testStr = "31423" + NEWLINE + "1" + NEWLINE + "15ew"+ NEWLINE + "afg" + NEWLINE + "gaqwtq345" + NEWLINE +"tqtqt" + NEWLINE + "c592859v" +NEWLINE +"gasgsad" +NEWLINE;
-		assertEquals( testStr,stdout.toString());
+
+		String testStr = "31423" + NEWLINE + "1" + NEWLINE + "15ew" + NEWLINE + "afg" + NEWLINE + "gaqwtq345" + NEWLINE
+				+ "tqtqt" + NEWLINE + "c592859v" + NEWLINE + "gasgsad" + NEWLINE;
+		assertEquals(testStr, stdout.toString());
 	}
+
 	@Test
-	public void testThreeArgument() throws ShellException{
+	public void testThreeArgument() throws ShellException {
 		ShellImpl shell = new ShellImpl();
 		OutputStream stdout = new ByteArrayOutputStream();
 		String testStr = "31423" + NEWLINE + "1" + NEWLINE;
@@ -91,11 +94,11 @@ public class TestIntegrationHead {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals( testStr,stdout.toString());
+		assertEquals(testStr, stdout.toString());
 	}
 
 	@Test
-	public void testThreeArgumentTwo() throws ShellException{
+	public void testThreeArgumentTwo() throws ShellException {
 		ShellImpl shell = new ShellImpl();
 		OutputStream stdout = new ByteArrayOutputStream();
 		String testStr = "31423" + NEWLINE + "1" + NEWLINE;
@@ -106,10 +109,11 @@ public class TestIntegrationHead {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals( testStr,stdout.toString());
+		assertEquals(testStr, stdout.toString());
 	}
+
 	@Test
-	public void testInvalidThreeArgument() throws ShellException{
+	public void testInvalidThreeArgument() throws ShellException {
 		ShellImpl shell = new ShellImpl();
 		OutputStream stdout = new ByteArrayOutputStream();
 		String testStr = "31423" + NEWLINE + "1" + NEWLINE;
@@ -118,9 +122,9 @@ public class TestIntegrationHead {
 			shell.parseAndEvaluate("head -n Tests/headFiles/123.txt 2", stdout);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
-			String actual=e.getMessage();
-			assertEquals("Head: Invalid Command Format"+NEWLINE+"Usage: head [-n lines] [file]",actual);
+			String actual = e.getMessage();
+			assertEquals("Head: Invalid Command Format" + NEWLINE + "Usage: head [-n lines] [file]", actual);
 		}
-		
+
 	}
 }

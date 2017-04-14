@@ -14,12 +14,14 @@ import sg.edu.nus.comp.cs4218.exception.ShellException;
 
 public class InputOutputStream {
 	public static final String EXP_STDOUT = "Error writing to stdout.";
-	
-	public InputOutputStream(){
-		
-			// This constructor is intentionally empty. Nothing special is needed here.
-		 
+
+	public InputOutputStream() {
+
+		// This constructor is intentionally empty. Nothing special is needed
+		// here.
+
 	}
+
 	/**
 	 * Static method to creates an inputStream based on the file name or file
 	 * path.
@@ -32,8 +34,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If file is not found.
 	 */
-	public InputStream openInputRedir(String inputStreamS)
-			throws ShellException {
+	public InputStream openInputRedir(String inputStreamS) throws ShellException {
 		File inputFile = new File(inputStreamS);
 		FileInputStream fInputStream = null;
 		try {
@@ -56,8 +57,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If file destination cannot be opened or inaccessible.
 	 */
-	public OutputStream openOutputRedir(String outputStreamS)
-			throws ShellException {
+	public OutputStream openOutputRedir(String outputStreamS) throws ShellException {
 		File outputFile = new File(outputStreamS);
 		FileOutputStream fOutputStream = null;
 		try {
@@ -68,7 +68,6 @@ public class InputOutputStream {
 		return fOutputStream;
 	}
 
-
 	/**
 	 * Static method to close an inputStream.
 	 * 
@@ -78,8 +77,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If inputStream cannot be closed successfully.
 	 */
-	public void closeInputStream(InputStream inputStream)
-			throws ShellException {
+	public void closeInputStream(InputStream inputStream) throws ShellException {
 		if (inputStream != System.in) {
 			try {
 				inputStream.close();
@@ -88,7 +86,6 @@ public class InputOutputStream {
 			}
 		}
 	}
-
 
 	/**
 	 * Static method to close an outputStream. If outputStream provided is
@@ -100,8 +97,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If outputStream cannot be closed successfully.
 	 */
-	public void closeOutputStream(OutputStream outputStream)
-			throws ShellException {
+	public void closeOutputStream(OutputStream outputStream) throws ShellException {
 		if (outputStream != System.out) {
 			try {
 				outputStream.close();
@@ -110,8 +106,6 @@ public class InputOutputStream {
 			}
 		}
 	}
-
-
 
 	/**
 	 * Static method to write output of an outputStream to another outputStream,
@@ -124,8 +118,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If exception is thrown during writing.
 	 */
-	public void writeToStdout(OutputStream outputStream,
-			OutputStream stdout) throws ShellException {
+	public void writeToStdout(OutputStream outputStream, OutputStream stdout) throws ShellException {
 		if (outputStream instanceof FileOutputStream) {
 			return;
 		}
@@ -135,7 +128,6 @@ public class InputOutputStream {
 			throw (ShellException) new ShellException(EXP_STDOUT).initCause(e);
 		}
 	}
-
 
 	/**
 	 * Static method to pipe data from an outputStream to an inputStream, for
@@ -149,9 +141,7 @@ public class InputOutputStream {
 	 * @throws ShellException
 	 *             If exception is thrown during piping.
 	 */
-	public InputStream outputStreamToInputStream(
-			OutputStream outputStream) throws ShellException {
-		return new ByteArrayInputStream(
-				((ByteArrayOutputStream) outputStream).toByteArray());
+	public InputStream outputStreamToInputStream(OutputStream outputStream) throws ShellException {
+		return new ByteArrayInputStream(((ByteArrayOutputStream) outputStream).toByteArray());
 	}
 }

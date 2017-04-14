@@ -16,18 +16,17 @@ import sg.edu.nus.comp.cs4218.impl.app.GrepApplication;
 
 public class TestGrepApplication {
 
-static GrepApplication grepApplication;
-	
+	static GrepApplication grepApplication;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		grepApplication = new GrepApplication();
 	}
 
-	
 	@Test
-	public void testRunWithNullOutputStream(){
-		
-		String[] args = {"Dummy", "Args"};
+	public void testRunWithNullOutputStream() {
+
+		String[] args = { "Dummy", "Args" };
 		InputStream inputStream = System.in;
 		OutputStream outputStream = null;
 		String expected = "grep: OutputStream not provided";
@@ -39,12 +38,12 @@ static GrepApplication grepApplication;
 			actual = e.getMessage();
 			assertEquals(expected, actual);
 		}
-		
+
 	}
-	
+
 	@Test
-	public void testRunWithoutArguments(){
-		
+	public void testRunWithoutArguments() {
+
 		String[] argsEmpty = {};
 		String[] argsNull = null;
 		InputStream inputStream = System.in;
@@ -58,8 +57,7 @@ static GrepApplication grepApplication;
 			fail();
 		} catch (AbstractApplicationException e) {
 		}
-		
-		
+
 		try {
 			grepApplication.run(argsNull, inputStream, outputStream);
 			actual = outputStream.toString();
@@ -68,11 +66,11 @@ static GrepApplication grepApplication;
 		} catch (AbstractApplicationException e) {
 		}
 	}
-	
+
 	@Test
-	public void testRunWithOnlyPatternWithoutInputStream(){
-		
-		String[] argsOnlyPattern = {"pattern"};
+	public void testRunWithOnlyPatternWithoutInputStream() {
+
+		String[] argsOnlyPattern = { "pattern" };
 		InputStream inputStream = null;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "grep: InputStream not provided";
@@ -84,13 +82,13 @@ static GrepApplication grepApplication;
 			actual = e.getMessage();
 			assertEquals(expected, actual);
 		}
-		
+
 	}
 
 	@Test
-	public void testRunWithOnlyPatternAndInputStream(){
-		
-		String[] argsOnlyPattern = {"pattern"};
+	public void testRunWithOnlyPatternAndInputStream() {
+
+		String[] argsOnlyPattern = { "pattern" };
 		InputStream inputStream = new ByteArrayInputStream("pattern".getBytes());
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\n";
@@ -102,13 +100,13 @@ static GrepApplication grepApplication;
 		} catch (AbstractApplicationException e) {
 			fail();
 		}
-		
+
 	}
-	
+
 	@Test
-	public void testRunWithOnlyOneFile(){
-		
-		String[] argsOnlyPattern = {"pattern", "Tests\\grepFiles\\grepTestSource1.txt"};
+	public void testRunWithOnlyOneFile() {
+
+		String[] argsOnlyPattern = { "pattern", "Tests\\grepFiles\\grepTestSource1.txt" };
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\n";
@@ -120,27 +118,29 @@ static GrepApplication grepApplication;
 		} catch (AbstractApplicationException e) {
 			fail();
 		}
-		
+
 	}
-	
+
 	@Test
-	public void testRunWithNonExistantFile(){
-		
-		String[] argsOnlyPattern = {"pattern", "aaa.txt"};
+	public void testRunWithNonExistantFile() {
+
+		String[] argsOnlyPattern = { "pattern", "aaa.txt" };
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		try {
 			grepApplication.run(argsOnlyPattern, inputStream, outputStream);
 			fail();
 		} catch (AbstractApplicationException e) {
-			
+
 		}
-		
+
 	}
+
 	@Test
-	public void testRunWithOnlyMultipleFiles(){
-		
-		String[] argsOnlyPattern = {"pattern", "Tests\\grepFiles\\grepTestSource1.txt", "Tests\\grepFiles\\grepTestSource2.txt"};
+	public void testRunWithOnlyMultipleFiles() {
+
+		String[] argsOnlyPattern = { "pattern", "Tests\\grepFiles\\grepTestSource1.txt",
+				"Tests\\grepFiles\\grepTestSource2.txt" };
 		InputStream inputStream = System.in;
 		OutputStream outputStream = new ByteArrayOutputStream();
 		String expected = "pattern\npattern\n";
@@ -152,6 +152,6 @@ static GrepApplication grepApplication;
 		} catch (AbstractApplicationException e) {
 			fail();
 		}
-		
+
 	}
 }

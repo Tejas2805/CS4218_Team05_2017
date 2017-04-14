@@ -10,36 +10,40 @@ import java.util.regex.Pattern;
 import sg.edu.nus.comp.cs4218.Environment;
 
 public class Preprocess {
-	 
+
 	private static ArrayList<String> allFiles = new ArrayList<String>();
 	private static String inputPath;
-	private static int count=0;
+	private static int count = 0;
 
-	public Preprocess(){
-		// This constructor is intentionally empty. Nothing special is needed here.
-	 }
+	public Preprocess() {
+		// This constructor is intentionally empty. Nothing special is needed
+		// here.
+	}
+
 	/**
-	 * Static method to preprocess the argument in order to find the file which meet the regex.
-	 * @param hasQuotes 
+	 * Static method to preprocess the argument in order to find the file which
+	 * meet the regex.
+	 * 
+	 * @param hasQuotes
 	 * 
 	 * @param argsArray
-	 *             String array containing the arguments to pass to the
+	 *            String array containing the arguments to pass to the
 	 *            applications for running.
 	 */
 	public ArrayList<String> preprocessArg(boolean hasQuotes, String... argsArray) {
 
-		for(int i=0;i<argsArray.length;i++){
-			int numberOfLevel=0;
-			if(argsArray[i].contains("*")&&!hasQuotes){
-				inputPath=argsArray[i];
+		for (int i = 0; i < argsArray.length; i++) {
+			int numberOfLevel = 0;
+			if (argsArray[i].contains("*") && !hasQuotes) {
+				inputPath = argsArray[i];
 				numberOfLevel = processAsterisk(argsArray, numberOfLevel, i);
-				if(count==0){	    	
-			    	allFiles.add(inputPath);
-			    	inputPath="";
-			    }else{
-			    	count=0;
-			    }
-			}else{
+				if (count == 0) {
+					allFiles.add(inputPath);
+					inputPath = "";
+				} else {
+					count = 0;
+				}
+			} else {
 				allFiles.add(argsArray[i]);
 			}
 		}
@@ -59,21 +63,21 @@ public class Preprocess {
 	 * 
 	 */
 	private int processAsterisk(String[] argsArray, int numberOfLevel, int num) {
-		String pathUsed="";
+		String pathUsed = "";
 		String[] inputTemp = argsArray[num].split("/");
 		String input = "";
-		for(int j=0;j<inputTemp.length;j++){
-			if(inputTemp[j].contains("*")){
-				for(int k=0;k<inputTemp.length-j;k++){
-					if(k==inputTemp.length-j-1){
-						input=input+inputTemp[j+k];
-					}else{
-						input=input+inputTemp[j+k]+"/";
+		for (int j = 0; j < inputTemp.length; j++) {
+			if (inputTemp[j].contains("*")) {
+				for (int k = 0; k < inputTemp.length - j; k++) {
+					if (k == inputTemp.length - j - 1) {
+						input = input + inputTemp[j + k];
+					} else {
+						input = input + inputTemp[j + k] + "/";
 					}
 				}
 				break;
-			}else{
-				pathUsed = pathUsed+inputTemp[j]+"/";
+			} else {
+				pathUsed = pathUsed + inputTemp[j] + "/";
 			}
 		}
 		int output;
@@ -94,24 +98,24 @@ public class Preprocess {
 	 */
 	private int preprocessMatchFile(int number, String path, String inputFile) {
 		String filePathString;
-		int numberOfLevel=number;
+		int numberOfLevel = number;
 		Path currentDir = Paths.get(Environment.currentDirectory);
 		Path filePath = currentDir.resolve(path);
-		filePathString=filePath.toString();
-		String inputRegex = "^" +filePathString+"\\"+inputFile.replaceAll("\\*", ".*")+"$";
-		String doubleBackSlash="\\\\";
-		String finalInputRegex= inputRegex.replace("\\", doubleBackSlash);
-		finalInputRegex =finalInputRegex.replace("/", doubleBackSlash);
-		
+		filePathString = filePath.toString();
+		String inputRegex = "^" + filePathString + "\\" + inputFile.replaceAll("\\*", ".*") + "$";
+		String doubleBackSlash = "\\\\";
+		String finalInputRegex = inputRegex.replace("\\", doubleBackSlash);
+		finalInputRegex = finalInputRegex.replace("/", doubleBackSlash);
+
 		Pattern pattern = Pattern.compile(finalInputRegex);
-		for(int k=0;k<finalInputRegex.split(doubleBackSlash).length;k++){
-			if(!finalInputRegex.split(doubleBackSlash)[k].isEmpty()){
-				numberOfLevel= numberOfLevel+1;
+		for (int k = 0; k < finalInputRegex.split(doubleBackSlash).length; k++) {
+			if (!finalInputRegex.split(doubleBackSlash)[k].isEmpty()) {
+				numberOfLevel = numberOfLevel + 1;
 			}
 		}
 		final File folder = new File(filePath.toString());
-		listFilesForFolder(folder,pattern,numberOfLevel);
-		if(allFiles.isEmpty()){
+		listFilesForFolder(folder, pattern, numberOfLevel);
+		if (allFiles.isEmpty()) {
 			allFiles.add("");
 		}
 		return numberOfLevel;
@@ -129,21 +133,21 @@ public class Preprocess {
 	 * 
 	 */
 	public void listFilesForFolder(final File folder, Pattern pattern, int numOfLevel) {
-		
+
 		for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	            listFilesForFolder(fileEntry,pattern,numOfLevel);
-	        } else {
-	   
-	        	Matcher matcher = pattern.matcher(fileEntry.getPath());
-	        	while (matcher.find()) {
-	        		if(numOfLevel==fileEntry.getPath().split("\\\\").length){
-	        			allFiles.add(fileEntry.getPath());
-	        			count++;
-	        		}
-	        	}
-	        }
-	    }
-	    
+			if (fileEntry.isDirectory()) {
+				listFilesForFolder(fileEntry, pattern, numOfLevel);
+			} else {
+
+				Matcher matcher = pattern.matcher(fileEntry.getPath());
+				while (matcher.find()) {
+					if (numOfLevel == fileEntry.getPath().split("\\\\").length) {
+						allFiles.add(fileEntry.getPath());
+						count++;
+					}
+				}
+			}
+		}
+
 	}
 }

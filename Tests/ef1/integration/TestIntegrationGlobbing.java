@@ -21,38 +21,38 @@ public class TestIntegrationGlobbing {
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
 	private static final String NEW_LINE = System.lineSeparator();
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		shellImpl = new ShellImpl();
 		sg.edu.nus.comp.cs4218.Environment.currentDirectory = System.getProperty("user.dir");
 	}
-	
+
 	@Test
-	public void catGlobNoPath(){
+	public void catGlobNoPath() {
 		String input = "cat asds*d.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "cat: [CS4218_Team05_2017, asds*d.txt] could not be found.", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
 			// TODO Auto-generated catch block
 			actual = e.getMessage();
-			assertEquals(expected, actual);	
+			assertEquals(expected, actual);
 		} catch (ShellException e) {
 			// TODO Auto-generated catch block
 			fail();
 		}
-			
+
 	}
 
 	@Test
-	public void catGlobOneFile(){
+	public void catGlobOneFile() {
 		String input = "cat Tests/globFiles/glob*Source1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -63,16 +63,16 @@ public class TestIntegrationGlobbing {
 			fail();
 		}
 		actual = output.toString();
-		
-		assertEquals(expected, actual);		
+
+		assertEquals(expected, actual);
 	}
-	
+
 	@Test
-	public void catGlobDirectories(){
+	public void catGlobDirectories() {
 		String input = "cat Tests\\g*b*\\globTestSource1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -83,15 +83,15 @@ public class TestIntegrationGlobbing {
 			fail();
 		}
 		actual = output.toString();
-		assertEquals(expected, actual);		
+		assertEquals(expected, actual);
 	}
-	
+
 	@Test
-	public void catGlobFilesDirectories(){
+	public void catGlobFilesDirectories() {
 		String input = "cat Tests\\g*b*\\glob*Sou*e1.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -102,15 +102,15 @@ public class TestIntegrationGlobbing {
 			fail();
 		}
 		actual = output.toString();
-		assertEquals(expected, actual);		
+		assertEquals(expected, actual);
 	}
-	
+
 	@Test
-	public void catGlobMultipleFilesDirectories(){
+	public void catGlobMultipleFilesDirectories() {
 		String input = "cat Tes*s/g*b*/glob*Sou*e1.txt Tes*s/g*b*/glob*e2.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world" + System.lineSeparator() + "hello world 2", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -121,16 +121,15 @@ public class TestIntegrationGlobbing {
 			fail();
 		}
 		actual = output.toString();
-		assertEquals(expected, actual);		
+		assertEquals(expected, actual);
 	}
-	
 
 	@Test
-	public void catGlobMultipleFile(){
+	public void catGlobMultipleFile() {
 		String input = "cat Tests\\globFiles\\glob*.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String expected = "hello world" + System.lineSeparator() + "hello world 2", actual;
-		
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -141,8 +140,8 @@ public class TestIntegrationGlobbing {
 			fail();
 		}
 		actual = output.toString();
-		
-		assertEquals(expected, actual);		
+
+		assertEquals(expected, actual);
 	}
 
 }

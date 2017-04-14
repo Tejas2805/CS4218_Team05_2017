@@ -21,13 +21,13 @@ public class TestIntegrationDate {
 
 	ShellImpl shellImpl;
 	OutputStream stdout;
-	
+
 	@Before
-    public void setUp() {
+	public void setUp() {
 		shellImpl = new ShellImpl();
 		stdout = new ByteArrayOutputStream();
 	}
-	
+
 	@Test
 	public void testPrintCurrentDate() throws AbstractApplicationException, ShellException {
 		LocalDateTime now = LocalDateTime.now();
@@ -42,38 +42,36 @@ public class TestIntegrationDate {
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
 		String[] strDays = new String[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-		String[] strMonths = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+		String[] strMonths = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+				"Dec" };
 
 		TimeZone timeZone = TimeZone.getTimeZone("Asia/Singapore");
 		String strTimeZone = timeZone.getDisplayName(false, TimeZone.SHORT);
-		
-		String expectedResults = strDays[dayOfWeek -1] + " " + strMonths[month-1] + " " + String.format("%02d",day) + 
-	    		" " + String.format("%02d",hour) + ":" + String.format("%02d",minute) + ":" + String.format("%02d",second) + 
-	    		" " + strTimeZone + " "  + year + System.lineSeparator(); 
-			
+
+		String expectedResults = strDays[dayOfWeek - 1] + " " + strMonths[month - 1] + " " + String.format("%02d", day)
+				+ " " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":"
+				+ String.format("%02d", second) + " " + strTimeZone + " " + year + System.lineSeparator();
+
 		String cmdline = "date";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
-		
+
 		String results = "";
 		java.util.Date date = new java.util.Date();
-		results = date.toString().replace('+', '-') + System.lineSeparator();	
+		results = date.toString().replace('+', '-') + System.lineSeparator();
 		results = results.replaceAll("GMT-08:00", "SGT");
-	
+
 		assertEquals(results, stdout.toString());
 	}
-	
-	@Test (expected = DateException.class)
+
+	@Test(expected = DateException.class)
 	public void testInvalidtArgs() throws AbstractApplicationException, ShellException {
 		String cmdline = "date hello.txt";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 	}
 
-	
 	@After
 	public void tearDown() throws Exception {
 		shellImpl = null;
 	}
-
-	
 
 }

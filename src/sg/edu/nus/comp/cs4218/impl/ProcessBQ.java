@@ -10,9 +10,11 @@ import sg.edu.nus.comp.cs4218.exception.ShellException;
 
 public class ProcessBQ {
 
-	public ProcessBQ(){
-		// This constructor is intentionally empty. Nothing special is needed here.
+	public ProcessBQ() {
+		// This constructor is intentionally empty. Nothing special is needed
+		// here.
 	}
+
 	/**
 	 * Searches for and processes the commands enclosed by back quotes for
 	 * command substitution.If no back quotes are found, the argsArray from the
@@ -32,8 +34,7 @@ public class ProcessBQ {
 	 *             If an exception happens while processing the content in the
 	 *             back quotes.
 	 */
-	public String[] processBQ(String... argsArray)
-			throws AbstractApplicationException, ShellException {
+	public String[] processBQ(String... argsArray) throws AbstractApplicationException, ShellException {
 		// echo "this is space `echo "nbsp"`"
 		// echo "this is space `echo "nbsp"` and `echo "2nd space"`"
 		// Back quoted: any char except \n,`
@@ -44,11 +45,13 @@ public class ProcessBQ {
 
 		for (int i = 0; i < argsArray.length; i++) {
 			char[] chToken = argsArray[i].toCharArray();
-			if(chToken.length  < 2){
-				continue;}
-			if(chToken[0] == '\'' && chToken[chToken.length-1] == '\''){
-				continue;}
-			
+			if (chToken.length < 2) {
+				continue;
+			}
+			if (chToken[0] == '\'' && chToken[chToken.length - 1] == '\'') {
+				continue;
+			}
+
 			Matcher matcherBQ = patternBQp.matcher(argsArray[i]);
 			if (matcherBQ.find()) {// found backquoted
 				String bqStr = matcherBQ.group(1);
@@ -61,12 +64,10 @@ public class ProcessBQ {
 
 				ByteArrayOutputStream outByte = (ByteArrayOutputStream) bqOutputStream;
 				byte[] byteArray = outByte.toByteArray();
-				String bqResult = new String(byteArray).replace("\n", "")
-						.replace("\r", "");
+				String bqResult = new String(byteArray).replace("\n", "").replace("\r", "");
 
 				// replace substring of back quote with result
-				String replacedStr = argsArray[i].replace("`" + bqStr + "`",
-						bqResult);
+				String replacedStr = argsArray[i].replace("`" + bqStr + "`", bqResult);
 				resultArr[i] = replacedStr;
 			}
 		}

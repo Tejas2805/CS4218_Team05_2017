@@ -15,20 +15,20 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
 public class TestIntegrationGrep {
 
-ShellImpl shellImpl;
-	
+	ShellImpl shellImpl;
+
 	@Before
-    public void setUp() {
+	public void setUp() {
 		shellImpl = new ShellImpl();
 	}
-	
+
 	@Test
 	public void testRunWithOnlyOneFile() throws AbstractApplicationException, ShellException {
 		String input = "grep pattern Tests\\grepFiles\\grepTestSource1.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
 		String expected = "pattern\n";
-		
+
 		assertEquals(expected, stdout.toString());
 	}
 
@@ -38,7 +38,7 @@ ShellImpl shellImpl;
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
 		String expected = "pattern\npattern\n";
-		
+
 		assertEquals(expected, stdout.toString());
 	}
 }

@@ -26,19 +26,18 @@ public class TestIntegrationIORedirection {
 
 	static ShellImpl shellImpl;
 	static ByteArrayOutputStream output;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		shellImpl = new ShellImpl();
 	}
-	
+
 	@Test
-	public void catInputRedirectionFromOneFile(){
+	public void catInputRedirectionFromOneFile() {
 		String input = "cat < Tests\\catFiles\\test.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "this is a file \"test.txt\""+System.lineSeparator(), actual;
-		
-		
+		String expected = "this is a file \"test.txt\"" + System.lineSeparator(), actual;
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -47,21 +46,21 @@ public class TestIntegrationIORedirection {
 			fail();
 		}
 		actual = output.toString();
-		assertEquals(expected, actual);		
+		assertEquals(expected, actual);
 	}
 
 	@Test
-	public void echoOutputRedirection(){
+	public void echoOutputRedirection() {
 		File f = new File("a.txt");
-		
-		if(f.exists() && !f.isDirectory()){
+
+		if (f.exists() && !f.isDirectory()) {
 			f.delete();
 		}
-				
+
 		String input = "echo hello > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "hello"+ System.lineSeparator(), actual;
-		
+		String expected = "hello" + System.lineSeparator(), actual;
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -69,7 +68,7 @@ public class TestIntegrationIORedirection {
 		} catch (ShellException e) {
 			fail();
 		}
-		
+
 		BufferedReader br = null;
 		StringBuilder sb = null;
 		try {
@@ -78,55 +77,52 @@ public class TestIntegrationIORedirection {
 			fail();
 		}
 		try {
-		    sb = new StringBuilder();
-		    String line = null;
+			sb = new StringBuilder();
+			String line = null;
 			try {
 				line = br.readLine();
 			} catch (IOException e) {
 				fail();
 			}
 
-		    while (line != null) {
-		        sb.append(line);
-		        sb.append(System.lineSeparator());
-		        try {
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				try {
 					line = br.readLine();
 				} catch (IOException e) {
 					fail();
 				}
-		    }
-		    String everything = sb.toString();
+			}
+			String everything = sb.toString();
 
 			actual = everything;
-			
-			
+
 			assertEquals(expected, actual);
 		} finally {
-		    try {
+			try {
 				br.close();
 			} catch (IOException e) {
 				fail();
 			}
 
 		}
-				
+
 	}
-	
 
 	@Test
-	public void catInputAndOutputRedirection(){
+	public void catInputAndOutputRedirection() {
 
 		File f = new File("a.txt");
-		
-		if(f.exists() && !f.isDirectory()){
+
+		if (f.exists() && !f.isDirectory()) {
 			f.delete();
 		}
-			
-		
+
 		String input = "cat < Tests\\catFiles\\test.txt > a.txt";
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		String expected = "this is a file \"test.txt\""+System.lineSeparator(), actual;
-		
+		String expected = "this is a file \"test.txt\"" + System.lineSeparator(), actual;
+
 		try {
 			shellImpl.parseAndEvaluate(input, output);
 		} catch (AbstractApplicationException e) {
@@ -144,30 +140,30 @@ public class TestIntegrationIORedirection {
 			fail();
 		}
 		try {
-		    sb = new StringBuilder();
-		    String line = null;
+			sb = new StringBuilder();
+			String line = null;
 			try {
 				line = br.readLine();
 			} catch (IOException e) {
 				fail();
 			}
 
-		    while (line != null) {
-		        sb.append(line);
-		        sb.append(System.lineSeparator());
-		        try {
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				try {
 					line = br.readLine();
 				} catch (IOException e) {
 					fail();
 				}
-		    }
-		    String everything = sb.toString();
+			}
+			String everything = sb.toString();
 
 			actual = everything;
-			
+
 			assertEquals(expected, actual);
 		} finally {
-		    try {
+			try {
 				br.close();
 			} catch (IOException e) {
 				fail();

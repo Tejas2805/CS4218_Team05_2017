@@ -11,28 +11,30 @@ import sg.edu.nus.comp.cs4218.exception.ShellException;
 
 public class CommandSubstitution {
 	String args;
-	public CommandSubstitution(String args){
+
+	public CommandSubstitution(String args) {
 		this.args = args;
 	}
-	
-	public ArrayList<String> check(String args){
+
+	public ArrayList<String> check(String args) {
 		ArrayList<String> tokens = new ArrayList<String>();
 		Pattern regex = Pattern.compile("('[^\\n']*')|(`[^\\n`]*`)|[^\\n'`]+|[^\\n]+");
 		Matcher regexMatcher = regex.matcher(args);
 		while (regexMatcher.find()) {
-			if (regexMatcher.group(0).length()>0) {
+			if (regexMatcher.group(0).length() > 0) {
 				tokens.add(regexMatcher.group(0));
-			} else if (regexMatcher.group(1).length()>0) {
+			} else if (regexMatcher.group(1).length() > 0) {
 				tokens.add(regexMatcher.group(1));
-			} else if (regexMatcher.group(2).length()>0) {
-            } else {
+			} else if (regexMatcher.group(2).length() > 0) {
+			} else {
 				tokens.add(regexMatcher.group());
 			}
 		}
 		return tokens;
 	}
-	public String process() throws AbstractApplicationException, ShellException{
-		String[] cmd = new String[]{args};
+
+	public String process() throws AbstractApplicationException, ShellException {
+		String[] cmd = new String[] { args };
 		String[] resultArr = new String[cmd.length];
 		System.arraycopy(cmd, 0, resultArr, 0, cmd.length);
 		String pattern = "`([^\\n`]*)`";
@@ -52,7 +54,6 @@ public class CommandSubstitution {
 				resultArr[i] = replacedStr;
 			}
 		}
-		return String.join(" ",resultArr);
+		return String.join(" ", resultArr);
 	}
 }
-

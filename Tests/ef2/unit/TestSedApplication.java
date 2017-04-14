@@ -17,19 +17,19 @@ import sg.edu.nus.comp.cs4218.exception.SedException;
 import sg.edu.nus.comp.cs4218.impl.app.SedApplication;
 
 public class TestSedApplication {
-	
+
 	SedApplication sedApp;
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
-	
-	@Before 
-	public void setup(){
+
+	@Before
+	public void setup() {
 		sedApp = new SedApplication();
 	}
-	
+
 	@Test
 	public void testSedsWithInvalidFileInput() {
-		String[] args = {"s/o/O/g", "Tests\\sedFiles\\helloasdasdasda.txt"};
+		String[] args = { "s/o/O/g", "Tests\\sedFiles\\helloasdasdasda.txt" };
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		try {
@@ -39,22 +39,22 @@ public class TestSedApplication {
 			return;
 		}
 	}
-	
+
 	@Test
 	public void testSedsWithPipe() {
-		String[] args = {"s/\\|/O/g"};
+		String[] args = { "s/\\|/O/g" };
 		InputStream stdin = new ByteArrayInputStream("h|llo".getBytes());
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		try {
 			sedApp.run(args, stdin, stdout);
-			
+
 		} catch (SedException e) {
 			fail();
 			return;
 		}
 		String actual = stdout.toString();
 		String expected = "hOllo\n";
-		
+
 		assertEquals(expected, actual);
 	}
 
@@ -76,12 +76,11 @@ public class TestSedApplication {
 		}
 	}
 
-
 	@Test
 	public void testLocalSedsWithNoOutputStream() {
-		String[] args = {"s/o/O/", "Tests\\sedFiles\\hello.txt"};
+		String[] args = { "s/o/O/", "Tests\\sedFiles\\hello.txt" };
 		InputStream stdin = null;
-		
+
 		try {
 			sedApp.run(args, stdin, null);
 			fail();
@@ -89,12 +88,12 @@ public class TestSedApplication {
 			return;
 		}
 	}
-	
+
 	@Test
 	public void testSedsWithOneArgumentAndNoInputStream() {
-		String[] args = {"s/o/O/"};
+		String[] args = { "s/o/O/" };
 		InputStream stdin = null;
-		
+
 		try {
 			sedApp.run(args, stdin, null);
 			fail();
@@ -102,11 +101,11 @@ public class TestSedApplication {
 			return;
 		}
 	}
-	
+
 	@Test
 	public void testSedsWithOneInvalidReplacement() {
-		String[] args = {"s/o/O", "Tests\\sedFiles\\hello.txt"};
-		String[] args2 = {"s/o//", "Tests\\sedFiles\\hello.txt"};
+		String[] args = { "s/o/O", "Tests\\sedFiles\\hello.txt" };
+		String[] args2 = { "s/o//", "Tests\\sedFiles\\hello.txt" };
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		try {
@@ -121,11 +120,10 @@ public class TestSedApplication {
 			}
 		}
 	}
-	
 
 	@Test
 	public void testSedsWithOneInvalidRegex() {
-		String[] args = {"s///O", "Tests\\sedFiles\\hello.txt"};
+		String[] args = { "s///O", "Tests\\sedFiles\\hello.txt" };
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		try {
@@ -135,15 +133,15 @@ public class TestSedApplication {
 			return;
 		}
 	}
-	
+
 	@Test
 	public void testLocalSedsWithFileInput() {
-		String[] args = {"s/o/O/", "Tests\\sedFiles\\hello.txt"};
+		String[] args = { "s/o/O/", "Tests\\sedFiles\\hello.txt" };
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-		String expected = "hellO oreo"+System.lineSeparator() + "wOrld"+System.lineSeparator();
+		String expected = "hellO oreo" + System.lineSeparator() + "wOrld" + System.lineSeparator();
 		String actual;
-		
+
 		try {
 			sedApp.run(args, stdin, stdout);
 			actual = stdout.toString();
@@ -152,42 +150,39 @@ public class TestSedApplication {
 			fail();
 		}
 	}
-	
 
 	@Test
 	public void testGlobalSedsWithFileInput() {
-		String[] args = {"s/o/O/g", "Tests\\sedFiles\\hello.txt"};
+		String[] args = { "s/o/O/g", "Tests\\sedFiles\\hello.txt" };
 		InputStream stdin = null;
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-		String expected = "hellO OreO"+System.lineSeparator()+"wOrld"+System.lineSeparator();
+		String expected = "hellO OreO" + System.lineSeparator() + "wOrld" + System.lineSeparator();
 		String actual;
-		
+
 		try {
 			sedApp.run(args, stdin, stdout);
 			actual = stdout.toString();
-			
-			for(int i = 0; i < actual.length(); i++)
-			{
-				System.out.println("a:"+(int)actual.charAt(i));
+
+			for (int i = 0; i < actual.length(); i++) {
+				System.out.println("a:" + (int) actual.charAt(i));
 			}
-			for(int i = 0; i < expected.length(); i++)
-			{
-				System.out.println((int)expected.charAt(i));
+			for (int i = 0; i < expected.length(); i++) {
+				System.out.println((int) expected.charAt(i));
 			}
 			assertEquals(expected, actual);
 		} catch (SedException e) {
 			fail();
 		}
 	}
-	
+
 	@Test
 	public void testLocalSedsWithInputStream() {
-		String[] args = {"s/t/T/"};
+		String[] args = { "s/t/T/" };
 		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		String expected = "Test\nTis\n";
 		String actual;
-		
+
 		try {
 			sedApp.run(args, stdin, stdout);
 			actual = stdout.toString();
@@ -196,15 +191,15 @@ public class TestSedApplication {
 			fail();
 		}
 	}
-		
+
 	@Test
 	public void testGlobalSedsWithInputStream() {
-		String[] args = {"s/t/T/g"};
+		String[] args = { "s/t/T/g" };
 		InputStream stdin = new ByteArrayInputStream("test\ntis".getBytes());
 		ByteArrayOutputStream stdout = new ByteArrayOutputStream();
 		String expected = "TesT\nTis\n";
 		String actual;
-		
+
 		try {
 			sedApp.run(args, stdin, stdout);
 			actual = stdout.toString();
@@ -213,9 +208,9 @@ public class TestSedApplication {
 			fail();
 		}
 	}
-	
+
 	@After
-	public void tearDown(){
+	public void tearDown() {
 		sedApp = null;
 	}
 

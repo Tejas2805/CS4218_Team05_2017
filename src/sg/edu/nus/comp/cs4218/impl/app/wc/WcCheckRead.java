@@ -12,66 +12,69 @@ import sg.edu.nus.comp.cs4218.exception.WcException;
 public class WcCheckRead {
 	/*
 	 * Read from either a file or inputstream and convert them to String
+	 * 
 	 * @param fileName name of the text file
-	 * @param stdin the inputstream data
-	 * return the data in String format 
+	 * 
+	 * @param stdin the inputstream data return the data in String format
 	 */
-	public String readFileStdin(String fileName, InputStream stdin) throws WcException{
-		InputStream inputStream = null; 
-		InputStreamReader inputStreamReader= null;
+	public String readFileStdin(String fileName, InputStream stdin) throws WcException {
+		InputStream inputStream = null;
+		InputStreamReader inputStreamReader = null;
 		BufferedReader bufRead = null;
 		String results = "";
 		try {
-			if(fileName.isEmpty()){
+			if (fileName.isEmpty()) {
 				inputStream = stdin;
-			}else{
-				inputStream = new FileInputStream(fileName); 	
+			} else {
+				inputStream = new FileInputStream(fileName);
 			}
 			inputStreamReader = new InputStreamReader(inputStream);
 			bufRead = new BufferedReader(inputStreamReader);
-		
+
 			int value = 0;
-			
-			while((value = bufRead.read()) != -1){
-				char charVal = (char)value;
-				//System.out.println(charVal);
+
+			while ((value = bufRead.read()) != -1) {
+				char charVal = (char) value;
+				// System.out.println(charVal);
 				results += String.valueOf(charVal);
 			}
-		
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			throw (WcException) new WcException("invalid file").initCause(e);
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
-		     if(inputStream!=null){
+			if (inputStream != null) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		     }
-		     if(inputStreamReader!=null){
+			}
+			if (inputStreamReader != null) {
 				try {
 					inputStreamReader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		     if(bufRead!=null){
+			if (bufRead != null) {
 				try {
 					bufRead.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		     }
-	     }
+			}
+		}
 		return results;
 	}
-	
+
 	/**
 	 * Determine if the file is valid. Throw exception if the file is not valid
-	 * @param fileName name of the file
+	 * 
+	 * @param fileName
+	 *            name of the file
 	 */
-	public boolean checkValidFile(String fileName){
+	public boolean checkValidFile(String fileName) {
 		BufferedReader bufReader = null;
 		boolean isValid = false;
 		try {
@@ -82,21 +85,23 @@ public class WcCheckRead {
 			}
 			isValid = true;
 		} catch (IOException e) {
-			System.out.println("Invalid file or option: " + fileName); //e.printStackTrace();
+			System.out.println("Invalid file or option: " + fileName); // e.printStackTrace();
 			isValid = false;
 			return isValid;
-			//throw (WcException) new WcException("error reading file").initCause(e);
+			// throw (WcException) new WcException("error reading
+			// file").initCause(e);
 		} finally {
 			try {
-				if (bufReader != null){
+				if (bufReader != null) {
 					bufReader.close();
 				}
 				isValid = true;
 			} catch (IOException ex) {
 				ex.printStackTrace();
 				isValid = false;
-			
-				//throw (SortException) new SortException("error closing buffer reader").initCause(ex);
+
+				// throw (SortException) new SortException("error closing buffer
+				// reader").initCause(ex);
 			}
 		}
 		return isValid;

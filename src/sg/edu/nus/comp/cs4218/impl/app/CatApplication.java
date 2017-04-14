@@ -29,7 +29,7 @@ import sg.edu.nus.comp.cs4218.impl.app.file.FileHandler;
 public class CatApplication implements Application {
 
 	FileHandler fileHandler = new FileHandler();
-	
+
 	/**
 	 * Runs the cat application with the specified arguments.
 	 * 
@@ -47,13 +47,12 @@ public class CatApplication implements Application {
 	 *             If the file(s) specified do not exist or are unreadable.
 	 */
 	@Override
-	public void run(String[] args, InputStream stdin, OutputStream stdout)
-			throws CatException {
+	public void run(String[] args, InputStream stdin, OutputStream stdout) throws CatException {
 
-		if(stdout == null){
+		if (stdout == null) {
 			catWithNoOutputStream();
 		}
-		
+
 		if (args == null || args.length == 0) {
 			catWithNoArguments(stdin, stdout);
 		} else {
@@ -63,84 +62,81 @@ public class CatApplication implements Application {
 	}
 
 	/**
-	 * This methods checks for valid filepath
-	 * and concatenates the output and displays them
-	 * @param args Array of paths to files
+	 * This methods checks for valid filepath and concatenates the output and
+	 * displays them
+	 * 
+	 * @param args
+	 *            Array of paths to files
 	 * @return none
-	 * @throws CatException 
+	 * @throws CatException
 	 */
 	private void catWithArguments(String[] args, OutputStream stdout) throws CatException {
 
-		
-			Path filePath;
-			List<Path> filePathArray = new ArrayList<>();
-			List<String> invalidFilePathArray = new ArrayList<>();
-			Path currentDir = Paths.get(Environment.currentDirectory);
-			boolean isFileReadable = false;
-			
-			for (int i = 0; i < args.length; i++) {
-				filePath = null;
-				if(args[i] == null)
-					continue;
-				try {
+		Path filePath;
+		List<Path> filePathArray = new ArrayList<>();
+		List<String> invalidFilePathArray = new ArrayList<>();
+		Path currentDir = Paths.get(Environment.currentDirectory);
+		boolean isFileReadable = false;
 
-					filePath = currentDir.resolve(args[i]);
-					isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
-					
-				} catch (Exception e) {
-					if(filePath == null)
-					{
-						invalidFilePathArray.add(args[i]);
-					}
-					else
-					{
-						invalidFilePathArray.add(filePath.getFileName().toString());	
-					}
-					
-					continue;
-				}
-				if (isFileReadable) {
-					filePathArray.add(filePath);
-				}
-			}
+		for (int i = 0; i < args.length; i++) {
+			filePath = null;
+			if (args[i] == null)
+				continue;
+			try {
 
-			
-			
-			for (int j = 0; j < filePathArray.size(); j++) {
-				try {
-					byte[] byteFileArray = Files
-							.readAllBytes(filePathArray.get(j));
-					stdout.write(byteFileArray);
-					if(j!= filePathArray.size()-1)
-						stdout.write(System.lineSeparator().getBytes());
+				filePath = currentDir.resolve(args[i]);
+				isFileReadable = fileHandler.checkIfFileIsReadable(filePath);
 
-					//stdout.write(System.lineSeparator().getBytes());
-				} catch (IOException e) {
-					e.printStackTrace();
+			} catch (Exception e) {
+				if (filePath == null) {
+					invalidFilePathArray.add(args[i]);
+				} else {
+					invalidFilePathArray.add(filePath.getFileName().toString());
 				}
+
+				continue;
 			}
-			
-			if(invalidFilePathArray.size() > 0)
-			{
-				throw new CatException(invalidFilePathArray.toString() + " could not be found.");
+			if (isFileReadable) {
+				filePathArray.add(filePath);
 			}
+		}
+
+		for (int j = 0; j < filePathArray.size(); j++) {
+			try {
+				byte[] byteFileArray = Files.readAllBytes(filePathArray.get(j));
+				stdout.write(byteFileArray);
+				if (j != filePathArray.size() - 1)
+					stdout.write(System.lineSeparator().getBytes());
+
+				// stdout.write(System.lineSeparator().getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (invalidFilePathArray.size() > 0) {
+			throw new CatException(invalidFilePathArray.toString() + " could not be found.");
+		}
 	}
 
 	/**
-	 * This methods throws an exception when no outputstream is included
-	 * and concatenates the output and displays them
+	 * This methods throws an exception when no outputstream is included and
+	 * concatenates the output and displays them
+	 * 
 	 * @return none
 	 */
 	private void catWithNoOutputStream() throws CatException {
 		throw new CatException("OutputStream not provided");
 	}
 
-
 	/**
-	 * This methods throws an exception when no inputstream is found
-	 * Else, it would perform cat with the inputstream
-	 * @param stdin InputStream
-	 * @param stdout OutputStream
+	 * This methods throws an exception when no inputstream is found Else, it
+	 * would perform cat with the inputstream
+	 * 
+	 * @param stdin
+	 *            InputStream
+	 * @param stdout
+	 *            OutputStream
 	 * @return none
 	 */
 

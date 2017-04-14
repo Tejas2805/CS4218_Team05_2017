@@ -18,9 +18,9 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 public class TestIntegrationCat {
 
 	ShellImpl shellImpl;
-	
+
 	@Before
-    public void setUp() {
+	public void setUp() {
 		shellImpl = new ShellImpl();
 	}
 
@@ -29,8 +29,8 @@ public class TestIntegrationCat {
 		String input = "cat Tests\\catFiles\\catTestSource1.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected = "hello world" ;
-		
+		String expected = "hello world";
+
 		assertEquals(expected, stdout.toString());
 	}
 

@@ -17,21 +17,20 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 
 public class TestIntegrationSed {
 
-ShellImpl shellImpl;
-	
+	ShellImpl shellImpl;
+
 	@Before
-    public void setUp() {
+	public void setUp() {
 		shellImpl = new ShellImpl();
 	}
-
 
 	@Test
 	public void testLocalSedsWithValidFileInput() throws AbstractApplicationException, ShellException {
 		String input = "sed s/o/O/ Tests\\sedFiles\\hello.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected ="hellO oreo"+System.lineSeparator()+"wOrld"+System.lineSeparator();
-		
+		String expected = "hellO oreo" + System.lineSeparator() + "wOrld" + System.lineSeparator();
+
 		assertEquals(expected, stdout.toString());
 	}
 
@@ -40,8 +39,8 @@ ShellImpl shellImpl;
 		String input = "sed s/o/O/g Tests\\sedFiles\\hello.txt";
 		OutputStream stdout = new ByteArrayOutputStream();
 		shellImpl.parseAndEvaluate(input, stdout);
-		String expected ="hellO OreO"+System.lineSeparator()+"wOrld"+System.lineSeparator();
-		
+		String expected = "hellO OreO" + System.lineSeparator() + "wOrld" + System.lineSeparator();
+
 		assertEquals(expected, stdout.toString());
 	}
 }

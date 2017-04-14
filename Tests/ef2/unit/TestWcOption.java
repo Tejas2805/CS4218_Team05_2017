@@ -19,45 +19,44 @@ public class TestWcOption {
 	String lineMchar = "-lm";
 	String wordMchar = "-wm";
 	String lineWordMchar = "-lwm";
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		wcOpton = new WcOption();
 	}
-	
+
 	@Test
 	public void testProcessArgsOption() {
-		
-		
-		String[] args1 = {line};
+
+		String[] args1 = { line };
 		assertEquals(line, wcOpton.processArgsOption(args1));
-		String[] args2 = {word};
+		String[] args2 = { word };
 		assertEquals(word, wcOpton.processArgsOption(args2));
-		String[] args3 = {mChar};
+		String[] args3 = { mChar };
 		assertEquals(mChar, wcOpton.processArgsOption(args3));
-		String[] args4 = {line, word};
+		String[] args4 = { line, word };
 		assertEquals(lineWord, wcOpton.processArgsOption(args4));
-		String[] args5 = {line, mChar};
+		String[] args5 = { line, mChar };
 		assertEquals(lineMchar, wcOpton.processArgsOption(args5));
-		String[] args6 = {word, mChar};
+		String[] args6 = { word, mChar };
 		assertEquals(wordMchar, wcOpton.processArgsOption(args6));
-		String[] args7 = {mChar, line};
+		String[] args7 = { mChar, line };
 		assertEquals(lineMchar, wcOpton.processArgsOption(args7));
-		String[] args8 = {line, word, mChar};
+		String[] args8 = { line, word, mChar };
 		assertEquals(lineWordMchar, wcOpton.processArgsOption(args8));
-		String[] args9 = {mChar, "-1", word};
+		String[] args9 = { mChar, "-1", word };
 		assertEquals(wordMchar, wcOpton.processArgsOption(args9));
-		String[] args10 = {"-n", word, "-1", line};
+		String[] args10 = { "-n", word, "-1", line };
 		assertEquals(lineWord, wcOpton.processArgsOption(args10));
-		String[] args11 = {"-n", word, "-1", line, "-ml"};
+		String[] args11 = { "-n", word, "-1", line, "-ml" };
 		assertEquals(lineWordMchar, wcOpton.processArgsOption(args11));
-		String[] args12 = {"-n", "-1", "-wl", };
+		String[] args12 = { "-n", "-1", "-wl", };
 		assertEquals(lineWord, wcOpton.processArgsOption(args12));
-		String[] args13 = {"-n", word, "-1", line, "-mlw"};
+		String[] args13 = { "-n", word, "-1", line, "-mlw" };
 		assertEquals(lineWordMchar, wcOpton.processArgsOption(args13));
-		
+
 	}
-	
+
 	@Test
 	public void testIsValidOption() {
 		assertTrue(wcOpton.isValidOption("-l"));
@@ -82,9 +81,9 @@ public class TestWcOption {
 		assertFalse(wcOpton.isValidOption("- l"));
 		assertFalse(wcOpton.isValidOption("-n"));
 	}
-	
+
 	@After
-	public void tearDown(){
+	public void tearDown() {
 		wcOpton = null;
 	}
 

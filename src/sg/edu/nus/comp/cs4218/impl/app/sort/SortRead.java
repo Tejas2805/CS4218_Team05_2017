@@ -13,14 +13,18 @@ import sg.edu.nus.comp.cs4218.exception.SortException;
 import sg.edu.nus.comp.cs4218.exception.WcException;
 
 public class SortRead {
-	
+
 	int count = 0;
+
 	/**
 	 * This methods convert the inputStream data to string
-	 * @param input stream data of inputStream
+	 * 
+	 * @param input
+	 *            stream data of inputStream
 	 * @return String inputStream data to String
 	 */
-	public String readInputStream(InputStream inputStream){// throws SortException {
+	public String readInputStream(InputStream inputStream) {// throws
+															// SortException {
 
 		BufferedReader bufReader = null;
 		StringBuilder strBuilder = new StringBuilder();
@@ -30,7 +34,7 @@ public class SortRead {
 
 			bufReader = new BufferedReader(new InputStreamReader(inputStream));
 			while ((line = bufReader.readLine()) != null) {
-				if("".equals(line)){
+				if ("".equals(line)) {
 					count += 1;
 				}
 				line += System.lineSeparator();
@@ -39,118 +43,125 @@ public class SortRead {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			//throw (SortException) new SortException("error reading input stream").initCause(e); 
+			// throw (SortException) new SortException("error reading input
+			// stream").initCause(e);
 		} finally {
 			if (bufReader != null) {
 				try {
 					bufReader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
-					//throw (SortException) new SortException("error closing buffe read input stream").initCause(e); 
+					// throw (SortException) new SortException("error closing
+					// buffe read input stream").initCause(e);
 				}
 			}
 		}
 		return strBuilder.toString();
 	}
 
-
 	/**
 	 * This method extract the data from a file and convert it to string
-	 * @param fileName name of file
+	 * 
+	 * @param fileName
+	 *            name of file
 	 * @return String file data to String
-	 * @throws SortException 
+	 * @throws SortException
 	 */
-	public String readFromFile(String fileName){// throws SortException{
+	public String readFromFile(String fileName) {// throws SortException{
 		BufferedReader bufReader = null;
 		String fileContent = "";
-		
+
 		try {
-			
+
 			bufReader = new BufferedReader(new FileReader(fileName));
 			String line;
 			String temp = "";
 			while ((line = bufReader.readLine()) != null) {
-				if("".equals(line)){
+				if ("".equals(line)) {
 					count += 1;
 				}
 				fileContent += line + System.lineSeparator();
 				temp = line;
 			}
-			fileContent = fileContent.substring(0, fileContent.length()-System.lineSeparator().length());
+			fileContent = fileContent.substring(0, fileContent.length() - System.lineSeparator().length());
 		} catch (IOException e) {
-			//e.printStackTrace();
-			//throw (SortException)new SortException("Invalid File").initCause(e);
+			// e.printStackTrace();
+			// throw (SortException)new SortException("Invalid
+			// File").initCause(e);
 		} finally {
 			try {
-				if (bufReader != null){
+				if (bufReader != null) {
 					bufReader.close();
 				}
 			} catch (IOException ex) {
 				ex.printStackTrace();
-				//throw (SortException)new SortException("Buffer error").initCause(ex);
+				// throw (SortException)new SortException("Buffer
+				// error").initCause(ex);
 			}
 		}
-		return fileContent;//.trim();
+		return fileContent;// .trim();
 	}
-	
+
 	/*
 	 * Read from either a file or inputstream and convert them to String
+	 * 
 	 * @param fileName name of the text file
-	 * @param stdin the inputstream data
-	 * return the data in String format 
+	 * 
+	 * @param stdin the inputstream data return the data in String format
 	 */
-	public String readFileStdin(String fileName, InputStream stdin) throws SortException{
-		InputStream inputStream = null; 
-		InputStreamReader inputStreamReader= null;
+	public String readFileStdin(String fileName, InputStream stdin) throws SortException {
+		InputStream inputStream = null;
+		InputStreamReader inputStreamReader = null;
 		BufferedReader bufRead = null;
 		String results = "";
 		try {
-			if(fileName.isEmpty()){
+			if (fileName.isEmpty()) {
 				inputStream = stdin;
-			}else{
-				inputStream = new FileInputStream(fileName); 	
+			} else {
+				inputStream = new FileInputStream(fileName);
 			}
 			inputStreamReader = new InputStreamReader(inputStream);
 			bufRead = new BufferedReader(inputStreamReader);
-		
+
 			int value = 0;
-			while((value = bufRead.read()) != -1){
-				char charVal = (char)value;
+			while ((value = bufRead.read()) != -1) {
+				char charVal = (char) value;
 				results += String.valueOf(charVal);
 			}
-		
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			throw (SortException) new SortException("invalid file").initCause(e);
-			//e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
-		     if(inputStream!=null){
+			if (inputStream != null) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		     }
-		     if(inputStreamReader!=null){
+			}
+			if (inputStreamReader != null) {
 				try {
 					inputStreamReader.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		     if(bufRead!=null){
+			if (bufRead != null) {
 				try {
 					bufRead.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		     }
-	     }
+			}
+		}
 		return results;
 	}
+
 	/*
 	 * Set the number of empty lines
 	 */
-	public int getNumNewLine(){
+	public int getNumNewLine() {
 		return count;
 	}
 }

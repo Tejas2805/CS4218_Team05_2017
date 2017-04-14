@@ -43,18 +43,17 @@ public class ShellImpl implements Shell {
 	public static final String EXP_SYNTAX = "Invalid syntax encountered.";
 	public static final String EXP_REDIR_PIPE = "File output redirection and "
 			+ "pipe operator cannot be used side by side.";
-	public static final String EXP_SAME_REDIR = "Input redirection file same "
-			+ "as output redirection file.";
+	public static final String EXP_SAME_REDIR = "Input redirection file same " + "as output redirection file.";
 	public static final String EXP_STDOUT = "Error writing to stdout.";
 	public static final String EXP_NOT_SUPPORTED = " not supported yet";
-	
+
 	private static ArrayList<String> allFiles = new ArrayList<String>();
-	
+
 	private static String appCalled;
-	
+
 	private static String[] finalArgsArray;
 
-	private static boolean hasQuotes=false;
+	private static boolean hasQuotes = false;
 
 	/**
 	 * Static method to run the application as specified by the application
@@ -78,11 +77,10 @@ public class ShellImpl implements Shell {
 	 * @throws ShellException
 	 *             If an unsupported or invalid application command is detected.
 	 */
-	public static void runApp(String app, String[] argsArray,
-			InputStream inputStream, OutputStream outputStream)
+	public static void runApp(String app, String[] argsArray, InputStream inputStream, OutputStream outputStream)
 			throws AbstractApplicationException, ShellException {
 		Application absApp = null;
-		//calling application
+		// calling application
 		if (("cat").equals(app)) {// cat [FILE]...
 			absApp = new CatApplication();
 		} else if (("echo").equals(app)) {// echo [args]...
@@ -91,52 +89,53 @@ public class ShellImpl implements Shell {
 			absApp = new HeadApplication();
 		} else if (("tail").equals(app)) {// tail [OPTIONS] [FILE]
 			absApp = new TailApplication();
-		} else if (("cd").equals(app)){// cd PATH
+		} else if (("cd").equals(app)) {// cd PATH
 			absApp = new CdApplication();
-		} else if (("pwd").equals(app)){// pwd
+		} else if (("pwd").equals(app)) {// pwd
 			absApp = new PwdApplication();
-		} else if (("cal").equals(app)){// cal [-m] [[month] year]
+		} else if (("cal").equals(app)) {// cal [-m] [[month] year]
 			absApp = new CalApplication();
-		} else if (("grep").equals(app)){// grep PATTERN [FILE] ...
+		} else if (("grep").equals(app)) {// grep PATTERN [FILE] ...
 			absApp = new GrepApplication();
-		} else if (("sort").equals(app)){// sort [-n] [FILE]
+		} else if (("sort").equals(app)) {// sort [-n] [FILE]
 			absApp = new SortApplication();
-		} else if(("wc").equals(app)){
+		} else if (("wc").equals(app)) {
 			absApp = new WcApplication();
-		} else if(("sed").equals(app)){
+		} else if (("sed").equals(app)) {
 			absApp = new SedApplication();
-		} else if(("date").equals(app)){
+		} else if (("date").equals(app)) {
 			absApp = new DateApplication();
 		} else { // invalid command
 			throw new ShellException(app + ": " + EXP_INVALID_APP);
 		}
 		allFiles.clear();
 		appCalled = app;
-		//globbing
+		// globbing
 		Preprocess prepro = new Preprocess();
-		allFiles = prepro.preprocessArg(hasQuotes,argsArray);
+		allFiles = prepro.preprocessArg(hasQuotes, argsArray);
 		finalArgsArray = readAllFile();
 		absApp.run(finalArgsArray, inputStream, outputStream);
 	}
-	
+
 	/**
 	 * Static method to read all the file fulfill the regex to process.
 	 */
-	
+
 	private static String[] readAllFile() {
 		String[] finalArgsArray = new String[allFiles.size()];
-		for(int i=0;i<allFiles.size();i++){
-			finalArgsArray[i]=allFiles.get(i);
+		for (int i = 0; i < allFiles.size(); i++) {
+			finalArgsArray[i] = allFiles.get(i);
 		}
 		return finalArgsArray;
 	}
-	public String getAppCalled(){
+
+	public String getAppCalled() {
 		return appCalled;
 	}
-	public String[] getArgument(){
+
+	public String[] getArgument() {
 		return finalArgsArray;
 	}
-
 
 	/**
 	 * Main method for the Shell Interpreter program.
@@ -163,7 +162,7 @@ public class ShellImpl implements Shell {
 				if (("").equals(readLine)) {
 					continue;
 				}
-				//System.out.println(readLine);
+				// System.out.println(readLine);
 				shell.parseAndEvaluate(readLine, System.out);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
@@ -175,12 +174,12 @@ public class ShellImpl implements Shell {
 	public void parseAndEvaluate(String cmdline, OutputStream stdout)
 			throws AbstractApplicationException, ShellException {
 		// TODO Auto-generated method stub
-		//semicolon operator
+		// semicolon operator
 		ParseAndEvaluation pEva = new ParseAndEvaluation();
-		pEva.parseAndEvaluate(cmdline,stdout);
-		
-		}
-	
+		pEva.parseAndEvaluate(cmdline, stdout);
+
+	}
+
 	@Override
 	public String pipeTwoCommands(String args) {
 		// TODO Auto-generated method stub
@@ -264,11 +263,11 @@ public class ShellImpl implements Shell {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public String performCommandSubstitutionWithException(String args) {
 		// TODO Auto-generated method stub
-		String processedData="";
+		String processedData = "";
 		try {
 			CommandSubstitution data = new CommandSubstitution(args);
 			processedData = data.process();
@@ -282,8 +281,8 @@ public class ShellImpl implements Shell {
 
 	public static void setHasQuotes(boolean b) {
 		// TODO Auto-generated method stub
-		hasQuotes=b;
-		
+		hasQuotes = b;
+
 	}
 
 }

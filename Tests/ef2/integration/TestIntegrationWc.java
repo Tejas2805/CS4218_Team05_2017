@@ -27,332 +27,329 @@ public class TestIntegrationWc {
 	static final String EMPTY_FILE = "empty.txt";
 	static final String NO_NEWLINE_FILE = "noNewLine.txt";
 	String data = "";
-	
+
 	@Before
-    public void setUp() throws WcException {
+	public void setUp() throws WcException {
 		shellImpl = new ShellImpl();
 		wcCheckRead = new WcCheckRead();
 		data = wcCheckRead.readFileStdin(filePath + WC_FILE, null);
 		stdout = new ByteArrayOutputStream();
 	}
-	
-	
-	
+
 	@Test
-	public void testEmptyFile() throws AbstractApplicationException, ShellException{
+	public void testEmptyFile() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + EMPTY_FILE;
-		
+
 		String cmdline = "wc " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 
 		assertEquals("   0   0   0 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testNoNewlineFile() throws AbstractApplicationException, ShellException{
+	public void testNoNewlineFile() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + NO_NEWLINE_FILE;
 		String cmdline = "wc " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   31   3   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testOneWordFile() throws AbstractApplicationException, ShellException{
+	public void testOneWordFile() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + ONE_WORD_FILE;
 		String cmdline = "wc " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   47   1   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testInvalidOption() throws AbstractApplicationException, ShellException{
+	public void testInvalidOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + ONE_WORD_FILE;
 		String cmdline = "wc -x " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   47   1   1 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testNewLineOption() throws AbstractApplicationException, ShellException{
+	public void testNewLineOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testWordOption() throws AbstractApplicationException, ShellException{
+	public void testWordOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -w " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testCharOption() throws AbstractApplicationException, ShellException{
+	public void testCharOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordOptionSplit() throws AbstractApplicationException, ShellException{
+	public void testLineWordOptionSplit() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -w " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordOptionReorder() throws AbstractApplicationException, ShellException{
+	public void testLineWordOptionReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -w -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordOptionTogether() throws AbstractApplicationException, ShellException{
+	public void testLineWordOptionTogether() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lw " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordOptionTogetherReorder() throws AbstractApplicationException, ShellException{
+	public void testLineWordOptionTogetherReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -wl " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineCharOptionTogether() throws AbstractApplicationException, ShellException{
+	public void testLineCharOptionTogether() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineCharOptionTogetherReorder() throws AbstractApplicationException, ShellException{
+	public void testLineCharOptionTogetherReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -ml " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineCharOptionSplit() throws AbstractApplicationException, ShellException{
+	public void testLineCharOptionSplit() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineCharOptionReorder() throws AbstractApplicationException, ShellException{
+	public void testLineCharOptionReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m -l " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testWordCharOptionTogether() throws AbstractApplicationException, ShellException{
+	public void testWordCharOptionTogether() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -wm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testWordCharOptionTogetherReorder() throws AbstractApplicationException, ShellException{
+	public void testWordCharOptionTogetherReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -mw " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testWordCharOptionSplit() throws AbstractApplicationException, ShellException{
+	public void testWordCharOptionSplit() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -w -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testWordCharOptionReorder() throws AbstractApplicationException, ShellException{
+	public void testWordCharOptionReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m -w " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordCharOptionTogether() throws AbstractApplicationException, ShellException{
+	public void testLineWordCharOptionTogether() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lwm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordCharOptionTogetherReorder() throws AbstractApplicationException, ShellException{
+	public void testLineWordCharOptionTogetherReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -mlw " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWOrdCharOptionSplit() throws AbstractApplicationException, ShellException{
+	public void testLineWOrdCharOptionSplit() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -l -w -m " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testLineWordCharOptionReorder() throws AbstractApplicationException, ShellException{
+	public void testLineWordCharOptionReorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -m -l " + strArg + " -w";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testMulitpleSameOption() throws AbstractApplicationException, ShellException{
+	public void testMulitpleSameOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline1 = "wc -llllll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
 		assertEquals("   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline2 = "wc -wwwww " + strArg;
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
 		assertEquals("   10 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline3 = "wc -mmmmm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
 		assertEquals("   65 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
-	
-	
+
 	@Test
-	public void testMulitpleMixedOption() throws AbstractApplicationException, ShellException{
+	public void testMulitpleMixedOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
-	
+
 		String cmdline1 = "wc -lllwmmll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline2 = "wc -wllwwwwllll " + strArg;
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline3 = "wc -mmmllllm " + strArg;
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
-	
+
 	@Test
-	public void testMulitpleMixedOptionMulitpleParts() throws AbstractApplicationException, ShellException{
+	public void testMulitpleMixedOptionMulitpleParts() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
-	
+
 		String cmdline1 = "wc -lllwmmll " + strArg + " -mmmmmmlll";
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
 		assertEquals("   65   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline2 = "wc -wllwwwwllll " + strArg + " -wwwwlllw";
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
 		assertEquals("   10   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
-		
+
 		String cmdline3 = "wc -mmmllllm " + strArg + " -mmmlllll";
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 		stdout = new ByteArrayOutputStream();
 	}
-	
+
 	@Test
-	public void testValidAndInvalidOption() throws AbstractApplicationException, ShellException{
+	public void testValidAndInvalidOption() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		String cmdline = "wc -lllmmll " + strArg + " -mmmnmmmllwl";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		assertEquals("   65   11 " + strArg + System.lineSeparator(), stdout.toString());
 	}
-	
+
 	@Test
-	public void testMulitpleFile() throws AbstractApplicationException, ShellException{
+	public void testMulitpleFile() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
-		
+
 		stdout = new ByteArrayOutputStream();
 
-				
 		stdout = new ByteArrayOutputStream();
 		String cmdline2 = "wc -m " + strArg + " " + strArg;
 		shellImpl.parseAndEvaluate(cmdline2, stdout);
-		String expectedResults2 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg + System.lineSeparator()
-			+ "   130 total" + System.lineSeparator();
+		String expectedResults2 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg
+				+ System.lineSeparator() + "   130 total" + System.lineSeparator();
 		assertEquals(expectedResults2, stdout.toString());
-		
+
 		stdout = new ByteArrayOutputStream();
 		String cmdline3 = "wc -w " + strArg + " " + strArg;
 		shellImpl.parseAndEvaluate(cmdline3, stdout);
-		String expectedResults3 = "   10 " + strArg + System.lineSeparator() + "   10 " + strArg + System.lineSeparator()
-			+ "   20 total" + System.lineSeparator();
+		String expectedResults3 = "   10 " + strArg + System.lineSeparator() + "   10 " + strArg
+				+ System.lineSeparator() + "   20 total" + System.lineSeparator();
 		assertEquals(expectedResults3, stdout.toString());
-		
+
 	}
-	
+
 	@Test
-	public void testMulitpleFileUnorder() throws AbstractApplicationException, ShellException{
+	public void testMulitpleFileUnorder() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
-		
+
 		stdout = new ByteArrayOutputStream();
 		String cmdline1 = "wc " + strArg + " -m " + strArg + " " + strArg;
 		shellImpl.parseAndEvaluate(cmdline1, stdout);
-		
-		String expectedResults5 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg + System.lineSeparator()
-		+ "   65 " + strArg + System.lineSeparator() + "   195 total" + System.lineSeparator();
+
+		String expectedResults5 = "   65 " + strArg + System.lineSeparator() + "   65 " + strArg
+				+ System.lineSeparator() + "   65 " + strArg + System.lineSeparator() + "   195 total"
+				+ System.lineSeparator();
 		assertEquals(expectedResults5, stdout.toString());
 	}
-	
+
 	@Test
-	public void testCatPipeWc() throws AbstractApplicationException, ShellException{
+	public void testCatPipeWc() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		stdout = new ByteArrayOutputStream();
 		String cmdline = "cat " + strArg + " | wc";
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		String expectedResults = "   65   10   11" + System.lineSeparator();
 		assertEquals(expectedResults, stdout.toString());
-		
+
 	}
-	
+
 	@Test
-	public void testRedirectionWc() throws AbstractApplicationException, ShellException{
+	public void testRedirectionWc() throws AbstractApplicationException, ShellException {
 		String strArg = filePath + WC_FILE;
 		stdout = new ByteArrayOutputStream();
-		String cmdline = "wc < " + strArg ;
+		String cmdline = "wc < " + strArg;
 		shellImpl.parseAndEvaluate(cmdline, stdout);
 		String expectedResults = "   65   10   11" + System.lineSeparator();
 		assertEquals(expectedResults, stdout.toString());
-		
+
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		shellImpl = null;
 	}
-	
+
 }

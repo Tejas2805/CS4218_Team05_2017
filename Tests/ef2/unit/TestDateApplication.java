@@ -19,9 +19,9 @@ public class TestDateApplication {
 
 	DateApplication dataApp;
 	OutputStream stdout;
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		dataApp = new DateApplication();
 		stdout = new ByteArrayOutputStream();
 	}
@@ -40,29 +40,30 @@ public class TestDateApplication {
 		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
 		String[] strDays = new String[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-		String[] strMonths = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+		String[] strMonths = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+				"Dec" };
 
 		TimeZone timeZone = TimeZone.getTimeZone("Asia/Singapore");
 		String strTimeZone = timeZone.getDisplayName(false, TimeZone.SHORT);
-		
-		String expectedResults = strDays[dayOfWeek -1] + " " + strMonths[month-1] + " " + String.format("%02d",day) + 
-	    		" " + String.format("%02d",hour) + ":" + String.format("%02d",minute) + ":" + String.format("%02d",second) + 
-	    		" " + strTimeZone + " "  + year + System.lineSeparator();
-		
+
+		String expectedResults = strDays[dayOfWeek - 1] + " " + strMonths[month - 1] + " " + String.format("%02d", day)
+				+ " " + String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":"
+				+ String.format("%02d", second) + " " + strTimeZone + " " + year + System.lineSeparator();
+
 		String args = "";
 		String actualResults = dataApp.printCurrentDate(args);
-		
+
 		assertEquals(expectedResults, actualResults);
 	}
-	
-	@Test (expected = DateException.class)
+
+	@Test(expected = DateException.class)
 	public void testInvalidtArgs() throws DateException {
-		String args[] = {"hello.txt"};
+		String args[] = { "hello.txt" };
 		dataApp.run(args, null, stdout);
 	}
 
 	@After
-	public void tearDown(){
+	public void tearDown() {
 		dataApp = null;
 	}
 

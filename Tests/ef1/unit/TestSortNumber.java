@@ -16,13 +16,13 @@ public class TestSortNumber {
 
 	SortNumber sortNumber;
 	SortRead sortRead;
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		sortNumber = new SortNumber();
 		sortRead = new SortRead();
 	}
-	
+
 	/*
 	 * Test if the numbers are sorted in numerical order
 	 * sortNumbersUnordered.txt contains the numbers arranged in random order
@@ -33,15 +33,15 @@ public class TestSortNumber {
 		String actualFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersUnordered.txt";
 		String actualData = sortRead.readFromFile(actualFile);
 		String actualResults = sortNumber.sortNumData(actualData);
-		
+
 		String expectedFile = "tests" + File.separator + "sortFiles" + File.separator + "sortNumbersOrdered.txt";
 		String expectedResults = sortRead.readFromFile(expectedFile).trim();
-		
+
 		assertEquals(expectedResults, actualResults);
 	}
-	
+
 	@After
-	public void tearDown(){
+	public void tearDown() {
 		sortNumber = null;
 		sortRead = null;
 	}

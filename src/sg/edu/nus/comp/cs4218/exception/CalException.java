@@ -1,6 +1,6 @@
 package sg.edu.nus.comp.cs4218.exception;
 
-public class CalException extends AbstractApplicationException{
+public class CalException extends AbstractApplicationException {
 
 	/**
 	 * 

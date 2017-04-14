@@ -20,11 +20,11 @@ public class FileHandler {
 	 * @return True if the file is readable.
 	 * @throws CatException
 	 *             If the file is not readable
-	 * @throws GrepException 
+	 * @throws GrepException
 	 */
-	
+
 	public boolean checkIfFileIsReadable(Path filePath) throws Exception {
-		
+
 		if (Files.isDirectory(filePath)) {
 			throw new Exception("This is a directory");
 		}
@@ -34,39 +34,39 @@ public class FileHandler {
 			throw new Exception("Could not read file");
 		}
 	}
-	
-	public List<String> readAllLines(String filePath)
-	{
+
+	public List<String> readAllLines(String filePath) {
 		Path path = Paths.get(filePath);
 		String[] output;
-		
+
 		try {
 			return Files.readAllLines(path);
 		} catch (IOException e) {
 			return null;
 		}
 	}
-	public List<Path> getValidFilePathsFromString(String[] strFilePaths, int start, int end){
+
+	public List<Path> getValidFilePathsFromString(String[] strFilePaths, int start, int end) {
 		List<Path> validFilePaths = new ArrayList<>();
 		Path filePath;
-		
-		for(int i = start; i <=end; i++){
-			
-			try{
+
+		for (int i = start; i <= end; i++) {
+
+			try {
 				filePath = Paths.get(strFilePaths[i]);
-			}catch(InvalidPathException e){
+			} catch (InvalidPathException e) {
 				continue;
 			}
-			
+
 			try {
-				if(checkIfFileIsReadable(filePath)){
+				if (checkIfFileIsReadable(filePath)) {
 					validFilePaths.add(filePath);
 				}
 			} catch (Exception e) {
 				continue;
 			}
 		}
-		
+
 		return validFilePaths;
 	}
 }

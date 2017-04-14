@@ -20,8 +20,9 @@ import sg.edu.nus.comp.cs4218.impl.ShellImpl;
 public class TestIntegrationCal {
 
 	ShellImpl shellImpl;
+
 	@Before
-    public void setUp() {
+	public void setUp() {
 		shellImpl = new ShellImpl();
 	}
 
@@ -32,11 +33,10 @@ public class TestIntegrationCal {
 		shellImpl.parseAndEvaluate(input, stdout);
 		List<String> lines = Files.readAllLines(Paths.get("Tests\\calFiles\\calTestOutput1.txt"));
 		String expected = "";
-		for(String line : lines)
+		for (String line : lines)
 			expected += line + "\n";
-		
-		assertEquals(expected+"\n", stdout.toString());
-	}
 
+		assertEquals(expected + "\n", stdout.toString());
+	}
 
 }
