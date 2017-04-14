@@ -23,7 +23,6 @@ public class TestIntegrationCMDSubstitution {
 			String actual = e.getMessage();
 			assertEquals("123452" + NEWLINE + "aadfa" + NEWLINE, actual);
 		}
-		assertEquals(1, 1);
 
 	}
 
