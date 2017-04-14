@@ -1,4 +1,0 @@
-stmt s1;
-Select s1 such that Follows (150, _)
-afa23
-341234

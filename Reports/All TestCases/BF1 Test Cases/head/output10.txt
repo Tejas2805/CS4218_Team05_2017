@@ -1,6 +1,0 @@
-Select BOOLEAN such that Follows (5, 6)
-false
-asdnfas;fnka
-sanla;fn;akdf;
-Select BOOLEAN such that Follows (5, 6)
-false

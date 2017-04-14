@@ -1,1 +1,0 @@
-wc wc1.txt wc2.txt wc2.txt
